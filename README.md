@@ -1,5 +1,5 @@
 # GL Project  
-(Name to be changed)
+(Temporary name)
 
 
 ## Overview
