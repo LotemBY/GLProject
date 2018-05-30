@@ -2,6 +2,7 @@ package com.gl.main;
 
 import com.gl.game.GameLevel;
 import com.gl.graphics.ScheduleManager;
+import com.gl.graphics.views.game_view.GameMenu;
 import com.gl.graphics.views.game_view.GamePanel;
 
 import java.awt.*;
@@ -11,15 +12,16 @@ public class LevelsManager {
     private static final int FIRST_LEVEL = 0;
 
     private GamePanel gamePanel;
+    private GameMenu gameMenu;
     private int currLevelId;
     private GameLevel currLevel;
 
     public LevelsManager(){
-        this(null);
+        this(null, null);
     }
 
-    public LevelsManager(GamePanel gamePanel){
-        setGamePanel(gamePanel);
+    public LevelsManager(GamePanel gamePanel, GameMenu menu){
+        setPanelAndMenu(gamePanel, menu);
         currLevelId = FIRST_LEVEL;
     }
 
@@ -27,8 +29,9 @@ public class LevelsManager {
         return currLevelId;
     }
 
-    public void setGamePanel(GamePanel gamePanel){
+    public void setPanelAndMenu(GamePanel gamePanel, GameMenu gameMenu){
         this.gamePanel = gamePanel;
+        this.gameMenu = gameMenu;
     }
 
     public void startNextLevel(){
@@ -57,6 +60,7 @@ public class LevelsManager {
         currLevel = Levels.getLevel(currLevelId);
         gamePanel.setGameLevel(currLevel);
 
+        //TODO: remaster onCompletion
         currLevel.start(() -> {
             // On completion:
 
@@ -69,6 +73,8 @@ public class LevelsManager {
 
             ScheduleManager.addTask(this::startNextLevel, 1000);
         });
+
+        gameMenu.repaint();
     }
 
     public void resetLevel(){
