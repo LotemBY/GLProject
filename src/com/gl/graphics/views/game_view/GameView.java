@@ -21,9 +21,9 @@ public class GameView extends View {
         gamePanel = new GamePanel();
         gamePanel.addGameInputHandler(levelsManager);
 
-        levelsManager.setGamePanel(gamePanel);
-
         gameMenu = new GameMenu(levelsManager);
+
+        levelsManager.setPanelAndMenu(gamePanel, gameMenu);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setBorder(null); // remove the default border
