@@ -16,15 +16,15 @@ You are more than welcome to submit new levels, using the ingame level editor!
 
 ## Screenshots
 ### The main menu and the first levels
-<img src="https://i.imgur.com/JQwT8fR.gif" width="500">
+<img src="https://i.imgur.com/JQwT8fR.gif" width="400">
 
 
 ### More simple levels example
-<img src="https://i.imgur.com/RtJIShW.gif" width="500">
+<img src="https://i.imgur.com/RtJIShW.gif" width="400">
 
 
 ### The level editor
-<img src="https://i.imgur.com/LiQlCI1.gif" width="500">
+<img src="https://i.imgur.com/bQKsyG7.gif" width="400">
 
 ## Planned Features
 * More tile types and game mechanics
