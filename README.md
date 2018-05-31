@@ -15,16 +15,16 @@ You are more than welcome to submit new levels, using the ingame level editor!
 * In-Game level editor, for creating new levels and experimenting with the mechanics
 
 ## Screenshots
-### The main menu and the first level
-<img src="https://i.gyazo.com/03864bcf88301328efc3a7e7c8cadc7a.gif" width="500">
+### The main menu and the first levels
+<img src="https://i.imgur.com/JQwT8fR.gif" width="500">
 
 
-### Another level example
-<img src="https://i.gyazo.com/391c66202ec907384388b4270c9bda42.gif" width="500">
+### More simple levels example
+<img src="https://i.imgur.com/RtJIShW.gif" width="500">
 
 
 ### The level editor
-<img src="https://i.gyazo.com/120021428e5e66a03c0a3d3f9d5973a2.gif" width="500">
+<img src="https://i.imgur.com/LiQlCI1.gif" width="500">
 
 ## Planned Features
 * More tile types and game mechanics
