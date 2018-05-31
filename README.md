@@ -3,15 +3,15 @@
 
 
 ## Overview
-This is a work-in-progress 2D game, made with java using swing.  
+This is a work-in-progress 2D game, written in java using swing.
 It is based on the mobile app "Flow", with extended mechanics.  
 
-You are more than welcome to submit new levels, using the ingame level editor!
+You are more than welcome to submit new levels, using the in-game level editor!
 
 ## Features
 * Full abstraction, allowing easy implementations of new mechanics
-* Custom game GUI and menus, made by scratch
-* Few example levels, with well-designed increasing difficulty curve
+* Custom game GUI and menus, made entirely from scratch
+* Few level examples, with a well-designed difficulty curve
 * In-Game level editor, for creating new levels and experimenting with the mechanics
 
 ## Screenshots
@@ -25,6 +25,7 @@ You are more than welcome to submit new levels, using the ingame level editor!
 
 ### The level editor
 <img src="https://i.imgur.com/bQKsyG7.gif" width="400">
+
 
 ## Planned Features
 * More tile types and game mechanics
