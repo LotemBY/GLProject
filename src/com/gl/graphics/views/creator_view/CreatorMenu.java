@@ -10,8 +10,8 @@ import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.ScheduleManager;
 import com.gl.graphics.menus.Menu;
 import com.gl.graphics.menus.MenuButton;
-import com.gl.graphics.menus.MenuImage;
-import com.gl.graphics.menus.MenuLabel;
+import com.gl.graphics.menus.RelativeImage;
+import com.gl.graphics.menus.RelativeLabel;
 import com.gl.graphics.views.main_view.MainView;
 
 import javax.swing.*;
@@ -44,7 +44,7 @@ public class CreatorMenu extends Menu {
 
     // Tile preview
     private GameTile tilePreview;
-    private MenuImage tilePreviewImage;
+    private RelativeImage tilePreviewImage;
 
     private boolean enabledTesting;
     private MenuButton playBtn;
@@ -121,22 +121,22 @@ public class CreatorMenu extends Menu {
         addItem(changeTileBtn);
 
 
-        MenuImage previewBgImg = new MenuImage(this,
+        RelativeImage previewBgImg = new RelativeImage(this,
                 TILE_SELECTION_X_RATIO, TILE_SELECTION_Y_RATIO, 0.55, 0.55, PREVIEW_BG_IMG);
         addItem(previewBgImg);
 
-        tilePreviewImage = new MenuImage(this,
+        tilePreviewImage = new RelativeImage(this,
                 TILE_SELECTION_X_RATIO, TILE_SELECTION_Y_RATIO, 0.4, 0.4, null);
         addItem(tilePreviewImage);
     }
 
     private void createLevelSizeSelection(LevelCreator levelCreator) {
         // Rows
-        MenuLabel rowsTitle = new MenuLabel(this,
+        RelativeLabel rowsTitle = new RelativeLabel(this,
                 SIZE_SELECTION_X_RATIO, 0.2, 0.2, 0.17, () -> "Rows:");
         addItem(rowsTitle);
 
-        MenuLabel rowsNumber = new MenuLabel(this,
+        RelativeLabel rowsNumber = new RelativeLabel(this,
                 SIZE_SELECTION_X_RATIO, 0.4, 0.2, 0.2, () -> "" + levelCreator.getLevel().getRows());
         addItem(rowsNumber);
 
@@ -152,11 +152,11 @@ public class CreatorMenu extends Menu {
 
 
         // Cols
-        MenuLabel colsTitle = new MenuLabel(this,
+        RelativeLabel colsTitle = new RelativeLabel(this,
                 SIZE_SELECTION_X_RATIO, 0.6, 0.2, 0.17, () -> "Columns:");
         addItem(colsTitle);
 
-        MenuLabel colsNumber = new MenuLabel(this,
+        RelativeLabel colsNumber = new RelativeLabel(this,
                 SIZE_SELECTION_X_RATIO, 0.8, 0.2, 0.2, () -> "" + levelCreator.getLevel().getCols());
         addItem(colsNumber);
 

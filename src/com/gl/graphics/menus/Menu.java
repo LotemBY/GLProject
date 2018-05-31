@@ -1,22 +1,23 @@
 package com.gl.graphics.menus;
 
 import com.gl.graphics.GraphicUtils;
+import com.gl.graphics.JPanelWithBackground;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Menu extends JPanel implements MenuParent {
+public class Menu extends JPanelWithBackground implements RelativeParent {
 
-    private MenuItem background;
-    private List<MenuItem> items;
+    private static final Image BACKGROUND_IMG = GraphicUtils.loadImage("MenuBG");
+
+    private List<RelativeItem> items;
     private List<MenuButton> buttons;
 
     public Menu(){
-        background = null;
+        setBackground(BACKGROUND_IMG);
 
         items = new ArrayList<>();
         buttons = new ArrayList<>();
@@ -42,11 +43,7 @@ public class Menu extends JPanel implements MenuParent {
         addMouseMotionListener(mouseListener);
     }
 
-    protected void setBackground(Image bg) {
-        this.background = new MenuImage(this, 0.5, 0.5, 1, 1, bg, false);
-    }
-
-    protected void addItem(MenuItem item){
+    protected void addItem(RelativeItem item){
         items.add(item);
 
         if (item instanceof MenuButton){
@@ -59,10 +56,6 @@ public class Menu extends JPanel implements MenuParent {
         super.paintComponent(g);
 
         Graphics2D g2d = GraphicUtils.getGraphicsWithHints(g);
-
-        if (background != null) {
-            background.draw(g2d);
-        }
 
         items.forEach(i -> i.draw(g2d));
     }

@@ -3,7 +3,7 @@ package com.gl.graphics.views.game_view;
 import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.ScheduleManager;
 import com.gl.graphics.menus.MenuButton;
-import com.gl.graphics.menus.MenuLabel;
+import com.gl.graphics.menus.RelativeLabel;
 import com.gl.graphics.views.main_view.MainView;
 import com.gl.main.Levels;
 import com.gl.main.LevelsManager;
@@ -23,7 +23,7 @@ public class GameMenu extends com.gl.graphics.menus.Menu {
     public GameMenu(LevelsManager levelsManager){
         setBackground(BACKGROUND_COLOR);
 
-        MenuLabel levelName = new MenuLabel(this,
+        RelativeLabel levelName = new RelativeLabel(this,
                 0.5, 0.2, 0.3, 0.3,
                 () -> String.format("Level %d/%d", levelsManager.getCurrLevelId() + 1, Levels.getLevelsNum()));
         addItem(levelName);

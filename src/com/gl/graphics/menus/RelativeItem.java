@@ -6,9 +6,9 @@ import com.gl.graphics.GraphicUtils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class MenuItem implements Drawable {
+public abstract class RelativeItem implements Drawable {
 
-    protected MenuParent parent;
+    protected RelativeParent parent;
 
     private double midXRatio;
     private double midYRatio;
@@ -19,7 +19,7 @@ public abstract class MenuItem implements Drawable {
     private int lastMenuHeight;
     private Image cachedDraw;
 
-    public MenuItem(MenuParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio){
+    public RelativeItem(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio){
         this.parent = parent;
         this.midXRatio = midXRatio;
         this.midYRatio = midYRatio;
@@ -33,6 +33,9 @@ public abstract class MenuItem implements Drawable {
 
     public void draw(Graphics g){
         if (cachedDraw == null || parent.getWidth() != lastMenuWidth || parent.getHeight() != lastMenuHeight) {
+            lastMenuWidth = parent.getWidth();
+            lastMenuHeight = parent.getHeight();
+
             int width = getWidth();
             int height = getHeight();
             cachedDraw = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);

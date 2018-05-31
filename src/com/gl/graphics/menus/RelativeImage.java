@@ -4,18 +4,18 @@ import com.gl.graphics.GraphicUtils;
 
 import java.awt.*;
 
-public class MenuImage extends MenuItem {
+public class RelativeImage extends RelativeItem {
 
     private Image img;
     private boolean keepOriginalRatio;
 
 
-    public MenuImage(MenuParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, Image img){
+    public RelativeImage(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, Image img){
         this(parent, midXRatio, midYRatio, widthRatio, heightRatio, img, true);
     }
 
-    public MenuImage(MenuParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio,
-                     Image img, boolean keepOriginalRatio){
+    public RelativeImage(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio,
+                         Image img, boolean keepOriginalRatio){
         super(parent, midXRatio, midYRatio, widthRatio, heightRatio);
         this.img = img;
         this.keepOriginalRatio = keepOriginalRatio;

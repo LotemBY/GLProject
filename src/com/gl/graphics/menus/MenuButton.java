@@ -5,7 +5,7 @@ import com.gl.graphics.ScheduleManager;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class MenuButton extends MenuItem implements MenuParent {
+public class MenuButton extends RelativeItem implements RelativeParent {
 
     private static final double OUTLINE_SCALE = 0.05;
     private static final double ARC_SCALE = 0.6;
@@ -21,7 +21,7 @@ public class MenuButton extends MenuItem implements MenuParent {
     private static final double CONTENT_SCALE = 0.9;
     private static final int PRESS_DELAY = 300;
 
-    private MenuItem content;
+    private RelativeItem content;
     private Runnable action;
 
     private boolean isSelected;
@@ -31,9 +31,9 @@ public class MenuButton extends MenuItem implements MenuParent {
     public MenuButton(Menu menu, double ratioX, double ratioY, double ratioWidth, double ratioHeight,
                       String strContent, Runnable action){
 
-        this(menu, ratioX, ratioY, ratioWidth, ratioHeight, (MenuItem) null, action);
+        this(menu, ratioX, ratioY, ratioWidth, ratioHeight, (RelativeItem) null, action);
 
-        MenuLabel contentLabel = new MenuLabel(this, 0.5, 0.5,
+        RelativeLabel contentLabel = new RelativeLabel(this, 0.5, 0.5,
                 CONTENT_SCALE, CONTENT_SCALE, () -> strContent);
         contentLabel.setFontColor(Color.BLACK);
 
@@ -43,13 +43,13 @@ public class MenuButton extends MenuItem implements MenuParent {
     public MenuButton(Menu menu, double ratioX, double ratioY, double ratioWidth, double ratioHeight,
                       Image imgContent, Runnable action){
 
-        this(menu, ratioX, ratioY, ratioWidth, ratioHeight, (MenuItem) null, action);
+        this(menu, ratioX, ratioY, ratioWidth, ratioHeight, (RelativeItem) null, action);
 
-        setContent(new MenuImage(this, 0.5, 0.5, CONTENT_SCALE, CONTENT_SCALE, imgContent));
+        setContent(new RelativeImage(this, 0.5, 0.5, CONTENT_SCALE, CONTENT_SCALE, imgContent));
     }
 
     public MenuButton(Menu menu, double ratioX, double ratioY, double ratioWidth, double ratioHeight,
-                      MenuItem content, Runnable action){
+                      RelativeItem content, Runnable action){
 
         super(menu, ratioX, ratioY, ratioWidth, ratioHeight);
         this.action = action;
@@ -58,7 +58,7 @@ public class MenuButton extends MenuItem implements MenuParent {
         isEnabled = true;
     }
 
-    public void setContent(MenuItem content){
+    public void setContent(RelativeItem content){
         this.content = content;
     }
 

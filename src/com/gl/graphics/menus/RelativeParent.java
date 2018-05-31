@@ -1,6 +1,6 @@
 package com.gl.graphics.menus;
 
-public interface MenuParent {
+public interface RelativeParent {
     int getWidth();
     int getHeight();
     void repaint();

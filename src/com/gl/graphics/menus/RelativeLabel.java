@@ -4,7 +4,7 @@ import com.gl.graphics.GraphicUtils;
 
 import java.awt.*;
 
-public class MenuLabel extends MenuItem {
+public class RelativeLabel extends RelativeItem {
 
     private static final String DEFAULT_FONT_NAME = "Verdana";
     private static final int DEFAULT_FONT_STYLE = Font.PLAIN;
@@ -18,7 +18,7 @@ public class MenuLabel extends MenuItem {
     private String fontName;
     private Color fontColor;
 
-    public MenuLabel(MenuParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, StringGetter getStr){
+    public RelativeLabel(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, StringGetter getStr){
         super(parent, midXRatio, midYRatio, widthRatio, heightRatio);
         this.getStr = getStr;
         fontName = DEFAULT_FONT_NAME;

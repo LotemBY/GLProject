@@ -4,16 +4,17 @@ import com.gl.game.GameLevel;
 import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.ModifiedTileManager;
 import com.gl.graphics.GraphicUtils;
+import com.gl.graphics.JPanelWithBackground;
 import com.gl.main.LevelsManager;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.EventListener;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanelWithBackground {
 
-    private static final Color BACKGROUND_COLOR = new Color(17, 17, 35);
+    //private static final Color BACKGROUND_COLOR = new Color(17, 17, 35);
+    private static final Image BACKGROUND_IMG = GraphicUtils.loadImage("GameBG");
 
     // Level
     private static final int SPACE_FROM_BOUNDS = 10;
@@ -27,7 +28,7 @@ public class GamePanel extends JPanel {
     private EventListener listener;
 
     public GamePanel(){
-        setBackground(BACKGROUND_COLOR);
+        setBackground(BACKGROUND_IMG);
 
         addComponentListener(new ComponentAdapter() {
             @Override
