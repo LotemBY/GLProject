@@ -18,8 +18,8 @@ public class MenuLabel extends MenuItem {
     private String fontName;
     private Color fontColor;
 
-    public MenuLabel(Menu menu, double midXRatio, double midYRatio, double widthRatio, double heightRatio, StringGetter getStr){
-        super(menu, midXRatio, midYRatio, widthRatio, heightRatio);
+    public MenuLabel(MenuParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, StringGetter getStr){
+        super(parent, midXRatio, midYRatio, widthRatio, heightRatio);
         this.getStr = getStr;
         fontName = DEFAULT_FONT_NAME;
         fontColor = DEFAULT_FONT_COLOR;
@@ -27,10 +27,12 @@ public class MenuLabel extends MenuItem {
 
     public void setFontName(String fontName){
         this.fontName = fontName;
+        clearCachedDraw();
     }
 
     public void setFontColor(Color fontColor){
         this.fontColor = fontColor;
+        clearCachedDraw();
     }
 
     private void updateFont(Graphics g, int width, int height, String str){
@@ -38,7 +40,6 @@ public class MenuLabel extends MenuItem {
 
         int newFontSize = GraphicUtils.getMaxFittingFontSize(g, font, str, width, height);
         g.setFont(new Font(fontName, DEFAULT_FONT_STYLE, newFontSize));
-
     }
 
     @Override

@@ -9,8 +9,8 @@ It is based on the mobile app "Flow", with extended mechanics.
 You are more than welcome to submit new levels, using the ingame level editor!
 
 ## Features
-* Full abstraction, allowing easy implimitations of new mechanics
-* Custom game GUI and menues, made by scratch
+* Full abstraction, allowing easy implementations of new mechanics
+* Custom game GUI and menus, made by scratch
 * Few example levels, with well-designed increasing difficulty curve
 * In-Game level editor, for creating new levels and experimenting with the mechanics
 
@@ -27,7 +27,7 @@ You are more than welcome to submit new levels, using the ingame level editor!
 <img src="https://i.gyazo.com/120021428e5e66a03c0a3d3f9d5973a2.gif" width="500">
 
 ## Planned Features
-* More tile types and game machanics
+* More tile types and game mechanics
 * Level selection menus
 * Keep track on level completion and unlock new levels
 * Export and import levels from the level editor

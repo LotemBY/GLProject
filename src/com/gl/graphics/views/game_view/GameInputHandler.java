@@ -140,9 +140,8 @@ public class GameInputHandler extends MouseAdapter implements KeyListener {
                 break;
 
             case KeyEvent.VK_E:
-                if (MainClass.DEVELOPER_MODE){
-                    Throwable throwable = new Throwable("[!!!] You found an easter-egg, and that's really great for you!");
-                    MainClass.setThrowable(throwable);
+                if (MainClass.developerMode){
+                    throw new RuntimeException("Exception test!");
                 }
                 break;
 

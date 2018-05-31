@@ -5,27 +5,28 @@ import com.gl.graphics.GraphicUtils;
 import java.awt.*;
 
 public enum TileColor implements ColorExp, TileModifier {
-    RED('r', new Color(1, 0, 0), false),
-    GREEN('g', new Color(0, 1, 0), true),
-    BLUE('b', new Color(0, 0, 1), false),
-    YELLOW('y', new Color(1, 1, 0), true),
-    CYAN('c', new Color(0, 1, 1), true),
-    WHITE(new Color(1, 1, 1));
+    RED('r', 1, 0, 0, false),
+    GREEN('g', 0, 1, 0, true),
+    BLUE('b', 0, 0, 1, false),
+    YELLOW('y', 1, 1, 0, true),
+    CYAN('c', 0, 1, 1, true),
+    PURPLE('p', 1, 0, 1, false),
+    ORANGE('o', 1, 0.3, 0, true),
+    WHITE('w', 1, 1, 1, true);
 
-    private static final int COLOR_TONE = 200;
+    private static final int COLOR_BASE_SCALE = 200;
 
     private char c;
-    private Color color;
+    private double baseR;
+    private double baseG;
+    private double baseB;
     private boolean isBright;
 
-    TileColor(Color color){
-        this('\0', color, false);
-    }
-
-    TileColor(char c, Color color, boolean isBright){
+    TileColor(char c, double baseR, double baseG, double baseB, boolean isBright){
         this.c = c;
-        this.color = color;
-        this.color = changeTone(COLOR_TONE);
+        this.baseR = baseR;
+        this.baseG = baseG;
+        this.baseB = baseB;
         this.isBright = isBright;
     }
 
@@ -33,8 +34,14 @@ public enum TileColor implements ColorExp, TileModifier {
         return !equals(WHITE);
     }
 
-    public char getChar(){
-        return c;
+    public static TileColor getColor(char c) {
+        for (TileColor t : values()) {
+            if (t.c == c) {
+                return t;
+            }
+        }
+
+        return null;
     }
 
     public String toString(){
@@ -46,19 +53,25 @@ public enum TileColor implements ColorExp, TileModifier {
     }
 
     public Color getColor(){
-        return color;
+        return changeTone(1, baseR, baseG, baseB);
     }
 
     public boolean isBright(){
         return isBright;
     }
 
-    public Color changeTone(double tone){
-        double r = Math.min(color.getRed() * tone, GraphicUtils.MAX_RGB_VALUE);
-        double g = Math.min(color.getGreen() * tone, GraphicUtils.MAX_RGB_VALUE);
-        double b = Math.min(color.getBlue() * tone, GraphicUtils.MAX_RGB_VALUE);
+    public static Color changeTone(double tone, double baseR, double baseG, double baseB){
+        tone *= COLOR_BASE_SCALE;
+
+        double r = Math.min(baseR * tone, GraphicUtils.MAX_RGB_VALUE);
+        double g = Math.min(baseG * tone, GraphicUtils.MAX_RGB_VALUE);
+        double b = Math.min(baseB * tone, GraphicUtils.MAX_RGB_VALUE);
 
         return new Color((int) r, (int) g, (int) b);
+    }
+
+    public Color changeTone(double tone){
+        return changeTone(tone, baseR, baseG, baseB);
     }
 
     @Override

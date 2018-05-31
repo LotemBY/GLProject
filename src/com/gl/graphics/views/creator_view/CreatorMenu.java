@@ -36,6 +36,12 @@ public class CreatorMenu extends Menu {
 
     private static final String CHANGE_TILE_TEXT = "Change Tile";
 
+    // Ratios
+    public static final double TILE_SELECTION_X_RATIO = 0.8;
+    public static final double TILE_SELECTION_Y_RATIO = 0.7;
+    public static final double SIZE_SELECTION_X_RATIO = 0.25;
+    public static final double SIZE_BUTTONS_SPACE_RATIO = 0.05;
+
     // Tile preview
     private GameTile tilePreview;
     private MenuImage tilePreviewImage;
@@ -62,13 +68,13 @@ public class CreatorMenu extends Menu {
         addItem(playBtn);
 
         undoBtn = new MenuButton(this,
-                0.45, 0.75, 0.08, 0.3,
+                0.5 - SIZE_BUTTONS_SPACE_RATIO, 0.75, 0.08, 0.3,
                 UNDO_IMG, levelCreator::undo);
         undoBtn.setEnabled(false);
         addItem(undoBtn);
 
         redoBtn = new MenuButton(this,
-                0.55, 0.75, 0.08, 0.3,
+                0.5 + SIZE_BUTTONS_SPACE_RATIO, 0.75, 0.08, 0.3,
                 REDO_IMG, levelCreator::redo);
         redoBtn.setEnabled(false);
         addItem(redoBtn);
@@ -95,18 +101,19 @@ public class CreatorMenu extends Menu {
 
     private void createTileSelection(LevelCreator levelCreator) {
         MenuButton changeTileBtn = new MenuButton(this,
-                0.8, 0.25, 0.25, 0.2, CHANGE_TILE_TEXT,
+                TILE_SELECTION_X_RATIO, 0.25, 0.25, 0.2, CHANGE_TILE_TEXT,
                 () -> {
                     String formatInput = getTileFormatInput();
 
                     if (formatInput != null){
-                        GameTile newTile = TilesFactory.parseTile(formatInput);
+                        StringBuffer parsingErrorBuffer = new StringBuffer();
+                        GameTile newTile = TilesFactory.parseTile(formatInput, parsingErrorBuffer);
 
                         if (newTile != null){
                             levelCreator.setUsedTile(newTile);
                             setTilePreview(newTile);
                         } else {
-                            showTileParsingError();
+                            showTileParsingError(parsingErrorBuffer.toString());
                         }
                     }
                 }
@@ -115,54 +122,58 @@ public class CreatorMenu extends Menu {
 
 
         MenuImage previewBgImg = new MenuImage(this,
-                0.8, 0.7, 0.55, 0.55, PREVIEW_BG_IMG);
+                TILE_SELECTION_X_RATIO, TILE_SELECTION_Y_RATIO, 0.55, 0.55, PREVIEW_BG_IMG);
         addItem(previewBgImg);
 
         tilePreviewImage = new MenuImage(this,
-                0.8, 0.7, 0.4, 0.4, null);
+                TILE_SELECTION_X_RATIO, TILE_SELECTION_Y_RATIO, 0.4, 0.4, null);
         addItem(tilePreviewImage);
     }
 
     private void createLevelSizeSelection(LevelCreator levelCreator) {
         // Rows
         MenuLabel rowsTitle = new MenuLabel(this,
-                0.25, 0.2, 0.2, 0.2, () -> "Rows:");
+                SIZE_SELECTION_X_RATIO, 0.2, 0.2, 0.17, () -> "Rows:");
         addItem(rowsTitle);
 
         MenuLabel rowsNumber = new MenuLabel(this,
-                0.25, 0.4, 0.2, 0.2, () -> "" + levelCreator.getLevel().getRows());
+                SIZE_SELECTION_X_RATIO, 0.4, 0.2, 0.2, () -> "" + levelCreator.getLevel().getRows());
         addItem(rowsNumber);
 
         MenuButton rowsDecBtn = new MenuButton(this,
-                0.2, 0.4, 0.05, 0.17, MINUS_IMG, () -> levelCreator.changeGameSize(-1, 0));
+                SIZE_SELECTION_X_RATIO - SIZE_BUTTONS_SPACE_RATIO, 0.4,
+                0.05, 0.17, MINUS_IMG, () -> levelCreator.changeGameSize(true, false));
         addItem(rowsDecBtn);
 
         MenuButton rowsIncBtn = new MenuButton(this,
-                0.3, 0.4, 0.05, 0.17, PLUS_IMG, () -> levelCreator.changeGameSize(1, 0));
+                SIZE_SELECTION_X_RATIO + SIZE_BUTTONS_SPACE_RATIO, 0.4,
+                0.05, 0.17, PLUS_IMG, () -> levelCreator.changeGameSize(true, true));
         addItem(rowsIncBtn);
 
 
         // Cols
         MenuLabel colsTitle = new MenuLabel(this,
-                0.25, 0.6, 0.2, 0.2, () -> "Columns:");
+                SIZE_SELECTION_X_RATIO, 0.6, 0.2, 0.17, () -> "Columns:");
         addItem(colsTitle);
 
         MenuLabel colsNumber = new MenuLabel(this,
-                0.25, 0.8, 0.2, 0.2, () -> "" + levelCreator.getLevel().getCols());
+                SIZE_SELECTION_X_RATIO, 0.8, 0.2, 0.2, () -> "" + levelCreator.getLevel().getCols());
         addItem(colsNumber);
 
         MenuButton colsDecBtn = new MenuButton(this,
-                0.2, 0.8, 0.05, 0.17, MINUS_IMG, () -> levelCreator.changeGameSize(0, -1));
+                SIZE_SELECTION_X_RATIO - SIZE_BUTTONS_SPACE_RATIO, 0.8,
+                0.05, 0.17, MINUS_IMG, () -> levelCreator.changeGameSize(false, false));
         addItem(colsDecBtn);
 
         MenuButton colsIncBtn = new MenuButton(this,
-                0.3, 0.8, 0.05, 0.17, PLUS_IMG, () -> levelCreator.changeGameSize(0, 1));
+                SIZE_SELECTION_X_RATIO + SIZE_BUTTONS_SPACE_RATIO, 0.8,
+                0.05, 0.17, PLUS_IMG, () -> levelCreator.changeGameSize(false, true));
         addItem(colsIncBtn);
     }
 
-    private void showTileParsingError(){
+    private void showTileParsingError(String error){
         JOptionPane.showMessageDialog(this,
-                "Wrong file format!",
+                error,
                 "Error",
                 JOptionPane.ERROR_MESSAGE
         );

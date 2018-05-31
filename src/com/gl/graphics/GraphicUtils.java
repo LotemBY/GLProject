@@ -11,6 +11,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 
 public final class GraphicUtils {
 
@@ -133,9 +134,8 @@ public final class GraphicUtils {
         try{
             return ImageIO.read(GameTile.class.getClassLoader().getResourceAsStream("com/gl/assets/" + name + ".png"));
         } catch (IOException e){
-            System.err.println("Error: could not find " + name + ".png in the 'assets' folder");
+           throw new UncheckedIOException("Error: could not find " + name + ".png in the 'assets' folder", e);
         }
-        return null;
     }
 
     public static Image copyImage(Image source){

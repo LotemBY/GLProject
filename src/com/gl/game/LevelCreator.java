@@ -158,30 +158,32 @@ public class LevelCreator {
         creatorMenu.repaint();
     }
 
-    public void changeGameSize(int rowsDiff, int colsDiff) {
+    public void changeGameSize(boolean changeRows, boolean increase) {
         saveStateToStack(undoStack, false);
 
         int cols = getLevel().getCols();
         int rows = getLevel().getRows();
 
-        if (rowsDiff == 1 && colsDiff == 0) {
+        if (changeRows && increase) {
+            // Add row
             if (rows < MAX_LEVEL_SIZE) {
                 level.addRow();
             }
-        } else if (rowsDiff == -1 && colsDiff == 0) {
+        } else if (changeRows) {
+            // Remove row
             if (rows > MIN_LEVEL_SIZE) {
                 level.removeRow();
             }
-        } else if (colsDiff == 1 && rowsDiff == 0) {
+        } else if (increase) {
+            // Add col
             if (cols < MAX_LEVEL_SIZE) {
                 level.addCol();
             }
-        } else if (colsDiff == -1 && rowsDiff == 0) {
+        } else {
+            // Remove col
             if (cols > MIN_LEVEL_SIZE) {
                 level.removeCol();
             }
-        } else {
-            throw new AssertionError("Unexpected parameters! One param should be 0, and the other is -1 or 1.");
         }
 
         commitLevelChanges();

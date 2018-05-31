@@ -13,12 +13,13 @@ public class MainMenu extends com.gl.graphics.menus.Menu {
 
     private static final Color BACKGROUND_COLOR = new Color(162, 162, 162);
 
+    private static final Image BACKGROUND_IMG = GraphicUtils.loadImage("MainMenuBG");
     private static final Image PLAY_IMG = GraphicUtils.loadImage("playIcon");
     private static final Image EDITOR_IMG = GraphicUtils.loadImage("editorIcon");
     private static final Image EXIT_IMG = GraphicUtils.loadImage("exitIcon");
 
     public MainMenu(){
-        setBackground(BACKGROUND_COLOR);
+        setBackground(BACKGROUND_IMG);
 
         MenuLabel gameName = new MenuLabel(this,
                 0.5, 0.2, 0.9, 0.4,

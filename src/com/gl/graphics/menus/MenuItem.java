@@ -1,44 +1,66 @@
 package com.gl.graphics.menus;
 
 import com.gl.graphics.Drawable;
+import com.gl.graphics.GraphicUtils;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class MenuItem implements Drawable {
 
-    protected Menu menu;
+    protected MenuParent parent;
 
     private double midXRatio;
     private double midYRatio;
     private double widthRatio;
     private double heightRatio;
 
-    public MenuItem(Menu menu, double midXRatio, double midYRatio, double widthRatio, double heightRatio){
-        this.menu = menu;
+    private int lastMenuWidth;
+    private int lastMenuHeight;
+    private Image cachedDraw;
+
+    public MenuItem(MenuParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio){
+        this.parent = parent;
         this.midXRatio = midXRatio;
         this.midYRatio = midYRatio;
         this.widthRatio = widthRatio;
         this.heightRatio = heightRatio;
+
+        lastMenuWidth = -1;
+        lastMenuHeight = -1;
+        cachedDraw = null;
     }
 
     public void draw(Graphics g){
-        draw(g, getX(), getY(), getWidth(), getHeight());
+        if (cachedDraw == null || parent.getWidth() != lastMenuWidth || parent.getHeight() != lastMenuHeight) {
+            int width = getWidth();
+            int height = getHeight();
+            cachedDraw = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+
+            draw(GraphicUtils.getGraphicsWithHints(cachedDraw.getGraphics()), 0, 0, getWidth(), getHeight());
+        }
+
+        GraphicUtils.drawImage(g, cachedDraw, getX(), getY());
+    }
+
+    protected void clearCachedDraw() {
+        cachedDraw = null;
     }
 
     public int getX(){
-        return (int) (midXRatio * menu.getWidth() - (getWidth() / 2));
+        return (int) (midXRatio * parent.getWidth() - (getWidth() / 2));
     }
 
     public int getY(){
-        return (int) (midYRatio * menu.getHeight() - (getHeight() / 2));
+        return (int) (midYRatio * parent.getHeight() - (getHeight() / 2));
     }
 
     public int getWidth(){
-        return (int) (widthRatio * menu.getWidth());
+        return (int) (widthRatio * parent.getWidth());
     }
 
     public int getHeight(){
-        return (int) (heightRatio * menu.getHeight());
+        return (int) (heightRatio * parent.getHeight());
     }
 
 }

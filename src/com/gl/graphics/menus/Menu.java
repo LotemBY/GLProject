@@ -9,12 +9,15 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Menu extends JPanel {
+public class Menu extends JPanel implements MenuParent {
 
+    private MenuItem background;
     private List<MenuItem> items;
     private List<MenuButton> buttons;
 
     public Menu(){
+        background = null;
+
         items = new ArrayList<>();
         buttons = new ArrayList<>();
 
@@ -39,6 +42,10 @@ public class Menu extends JPanel {
         addMouseMotionListener(mouseListener);
     }
 
+    protected void setBackground(Image bg) {
+        this.background = new MenuImage(this, 0.5, 0.5, 1, 1, bg, false);
+    }
+
     protected void addItem(MenuItem item){
         items.add(item);
 
@@ -52,11 +59,16 @@ public class Menu extends JPanel {
         super.paintComponent(g);
 
         Graphics2D g2d = GraphicUtils.getGraphicsWithHints(g);
+
+        if (background != null) {
+            background.draw(g2d);
+        }
+
         items.forEach(i -> i.draw(g2d));
     }
 
     public void reset() {
-    Point mousePos = null;
+    Point mousePos = null; // TODO
 
         buttons.forEach(b -> {
             if (mousePos == null) {

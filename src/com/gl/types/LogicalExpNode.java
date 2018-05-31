@@ -13,8 +13,8 @@ public class LogicalExpNode implements ColorExp {
         first = exp;
     }
 
-    public void setOperation(boolean op){
-        isAnd = op;
+    public void setOperation(boolean isAnd){
+        this.isAnd = isAnd;
     }
 
     public void setSecond(ColorExp exp){

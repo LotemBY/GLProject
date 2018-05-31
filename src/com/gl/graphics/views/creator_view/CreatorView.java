@@ -27,7 +27,7 @@ public class CreatorView extends View {
         levelCreator = new LevelCreator(gamePanel);
 
         creatorMenu = new CreatorMenu(this, levelCreator);
-        testingMenu = new TestingMenu(this);
+        testingMenu = new TestingMenu(this, levelCreator);
 
         levelCreator.setCreatorMenu(creatorMenu);
 

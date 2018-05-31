@@ -3,8 +3,9 @@ package com.gl.graphics.menus;
 import com.gl.graphics.ScheduleManager;
 
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 
-public class MenuButton extends MenuItem {
+public class MenuButton extends MenuItem implements MenuParent {
 
     private static final double OUTLINE_SCALE = 0.05;
     private static final double ARC_SCALE = 0.6;
@@ -29,30 +30,36 @@ public class MenuButton extends MenuItem {
 
     public MenuButton(Menu menu, double ratioX, double ratioY, double ratioWidth, double ratioHeight,
                       String strContent, Runnable action){
-        this(menu, ratioX, ratioY, ratioWidth, ratioHeight,
-                new MenuLabel(menu, ratioX, ratioY,
-                        ratioWidth * CONTENT_SCALE, ratioHeight * CONTENT_SCALE, () -> strContent),
-                action
-        );
-        ((MenuLabel) content).setFontColor(Color.BLACK);
+
+        this(menu, ratioX, ratioY, ratioWidth, ratioHeight, (MenuItem) null, action);
+
+        MenuLabel contentLabel = new MenuLabel(this, 0.5, 0.5,
+                CONTENT_SCALE, CONTENT_SCALE, () -> strContent);
+        contentLabel.setFontColor(Color.BLACK);
+
+        setContent(contentLabel);
     }
 
     public MenuButton(Menu menu, double ratioX, double ratioY, double ratioWidth, double ratioHeight,
                       Image imgContent, Runnable action){
-        this(menu, ratioX, ratioY, ratioWidth, ratioHeight,
-                new MenuImage(menu, ratioX, ratioY,
-                        ratioWidth * CONTENT_SCALE, ratioHeight * CONTENT_SCALE, imgContent),
-                action
-        );
+
+        this(menu, ratioX, ratioY, ratioWidth, ratioHeight, (MenuItem) null, action);
+
+        setContent(new MenuImage(this, 0.5, 0.5, CONTENT_SCALE, CONTENT_SCALE, imgContent));
     }
 
     public MenuButton(Menu menu, double ratioX, double ratioY, double ratioWidth, double ratioHeight,
                       MenuItem content, Runnable action){
+
         super(menu, ratioX, ratioY, ratioWidth, ratioHeight);
-        this.content = content;
         this.action = action;
 
+        setContent(content);
         isEnabled = true;
+    }
+
+    public void setContent(MenuItem content){
+        this.content = content;
     }
 
     private Color getBackgroundColor(){
@@ -76,28 +83,27 @@ public class MenuButton extends MenuItem {
         int minSize = Math.min(width, height);
         int arcSize = (int) (minSize * ARC_SCALE);
 
+        float strokeSize = (float) (minSize * OUTLINE_SCALE);
+        ((Graphics2D) g).setStroke(new BasicStroke(strokeSize));
+
+        Shape btn = new RoundRectangle2D.Double(
+                x + strokeSize / 2, y + strokeSize / 2,
+                width - strokeSize, height - strokeSize,
+                arcSize, arcSize
+        );
+
         g.setColor(getBackgroundColor());
-        g.fillRoundRect(x, y, width, height, arcSize, arcSize);
+        ((Graphics2D) g).fill(btn);
 
         g.setColor(getOutlineColor());
-        ((Graphics2D) g).setStroke(new BasicStroke((float) (minSize * OUTLINE_SCALE)));
-        g.drawRoundRect(x, y, width, height, arcSize, arcSize);
+        ((Graphics2D) g).draw(btn);
 
         content.draw(g);
     }
 
-
     private void press(){
-        isPressed = true;
-        menu.repaint();
-
-        ScheduleManager.addTask(() -> {
-                    isPressed = false;
-                    menu.repaint();
-                },
-                PRESS_DELAY
-        );
-
+        setPressed(true);
+        ScheduleManager.addTask(() -> setPressed(false), PRESS_DELAY);
         action.run();
     }
 
@@ -109,17 +115,24 @@ public class MenuButton extends MenuItem {
 
     public void sendMousePos(int x, int y){
         if (isEnabled){
-            boolean oldSelected = isSelected;
-            isSelected = inBorders(x, y);
-
-            if (oldSelected != isSelected){
-                menu.repaint();
-            }
+            setSelected(inBorders(x, y));
         }
     }
 
     public void setSelected(boolean selected){
-        isSelected = selected;
+        if (isSelected != selected){
+            isSelected = selected;
+            clearCachedDraw();
+            parent.repaint();
+        }
+    }
+
+    public void setPressed(boolean pressed){
+        if (isPressed != pressed){
+            isPressed = pressed;
+            clearCachedDraw();
+            parent.repaint();
+        }
     }
 
     private boolean inBorders(int x, int y){
@@ -133,10 +146,20 @@ public class MenuButton extends MenuItem {
     }
 
     public void setEnabled(boolean enabled){
-        this.isEnabled = enabled;
+        if (isEnabled != enabled){
+            isEnabled = enabled;
 
-        if (!enabled) {
-            setSelected(false);
+            if (!enabled){
+                setSelected(false);
+            }
+
+            clearCachedDraw();
+            parent.repaint();
         }
+    }
+
+    @Override
+    public void repaint(){
+        parent.repaint();
     }
 }

@@ -90,19 +90,19 @@ public final class Levels {
 
             // Arrows 1 color easy
             {
-                    {"e:b", "a:d", "t", "t", "t", "st"},
-                    {"w", "t", "a:d", "w", "b:b", "t"},
-                    {"p:r", "t", "t", "st", "t", "t"},
+                    {"e:o", "a:d", "t", "t", "t", "st"},
+                    {"w", "t", "a:d", "w", "b:o", "t"},
+                    {"p:w", "t", "t", "st", "t", "t"},
                     {"t", "t", "t", "w", "w", "t"},
                     {"t", "t", "t", "t", "t", "st"}
             },
 
             // Arrows 1 color medium
             {
-                    {"b:r", "t", "t", "a:d", "e:r"},
-                    {"a:d", "st", "t", "b:g", "a:l"},
+                    {"b:p", "t", "t", "a:d", "e:p"},
+                    {"a:d", "st", "t", "b:c", "a:l"},
                     {"t", "t", "t", "t", "t"},
-                    {"t", "t", "t", "p:r", "t"},
+                    {"t", "t", "t", "p:p", "t"},
                     {"st", "a:u", "t", "t", "st"},
             },
 
@@ -121,7 +121,7 @@ public final class Levels {
                     {"t", "t", "t", "a:d", "t", "s:rt", "t"},
                     {"t", "e:y", "t", "a:d", "t", "b:y", "t"},
                     {"a:r", "t", "t", "a:d", "t", "t", "t"},
-                    {"s:bt", "t", "t", "b:g", "t", "e:bt", "st"}
+                    {"s:bt", "t", "t", "b:g", "t", "e:b", "st"}
             },
 
             // Hard arrow & bucket
@@ -142,8 +142,8 @@ public final class Levels {
                     {"a:r", "a:r", "a:d", "a:u", "a:d", "a:u", "a:d", "a:u", "a:r", "a:u"},
                     {"a:u", "a:d", "a:l", "a:u", "a:r", "a:u", "a:d", "a:u", "a:l", "a:l"},
                     {"a:u", "a:r", "a:r", "a:u", "a:d", "a:l", "a:r", "a:d", "a:r", "a:u"},
-                    {"sa:u", "a:l", "a:d", "a:l", "a:l", "a:u", "a:l", "a:l", "a:u", "a:l"},
-                    {"p:r", "sa:u", "a:r", "a:r", "a:r", "a:r", "a:r", "a:r", "a:r", "a:u"}
+                    {"a:u", "a:l", "a:d", "a:l", "a:l", "a:u", "a:l", "a:l", "a:u", "a:l"},
+                    {"p:r", "a:u", "a:r", "a:r", "a:r", "a:r", "a:r", "a:r", "a:r", "a:u"}
             },
 
     };

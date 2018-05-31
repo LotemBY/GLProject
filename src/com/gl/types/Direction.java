@@ -7,27 +7,33 @@ import com.gl.graphics.GraphicUtils;
 import java.awt.*;
 
 public enum Direction implements TileModifier {
-    UP(0),
-    DOWN(Math.PI),
-    RIGHT(Math.PI * 0.5),
-    LEFT(Math.PI * 1.5);
+    // The declaration order matters ;)
+    UP('u'),
+    RIGHT('r'),
+    DOWN('d'),
+    LEFT('l');
 
-    private double radians;
+    private char c;
 
-    Direction(double radians){
-        this.radians = radians;
+    Direction(char c){
+        this.c = c;
     }
 
-    private static final Direction[] opposites = new Direction[]{DOWN, UP, LEFT, RIGHT};
+    private static final Direction[] opposites = new Direction[]{DOWN, LEFT, UP, RIGHT};
 
     public Direction getOpposite(){
         return opposites[ordinal()];
     }
 
-    /*public boolean isVertical(){
-        return !isHorizontal()
-    }*/
+    public static Direction getDirection(char c) {
+        for (Direction d : values()) {
+            if (d.c == c) {
+                return d;
+            }
+        }
 
+        return null;
+    }
 
     public boolean isHorizontal(){
         return (this == LEFT || this == RIGHT);
@@ -53,12 +59,6 @@ public enum Direction implements TileModifier {
         }
     }
 
-    /*
-    public static Direction getDirection(int fromCol, int fromRow, GameTile toTile){
-        if (toTile == null) return null;
-        return getDirection(fromCol, fromRow, toTile.getCol(), toTile.getRow());
-    }*/
-
     public static Direction getDirection(GamePlayer player, GameTile toTile){
         if (player == null || toTile == null) return null;
         return getDirection(player.getCol(), player.getRow(), toTile.getCol(), toTile.getRow());
@@ -70,6 +70,6 @@ public enum Direction implements TileModifier {
 
     @Override
     public Image modify(Image img){
-        return GraphicUtils.rotateBy(img, radians);
+        return GraphicUtils.rotateBy(img, Math.PI * (0.5 * ordinal()));
     }
 }
