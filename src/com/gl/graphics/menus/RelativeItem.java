@@ -15,6 +15,7 @@ public abstract class RelativeItem implements Drawable {
     private double widthRatio;
     private double heightRatio;
 
+    private boolean hasUpdated;
     private int lastMenuWidth;
     private int lastMenuHeight;
     private Image cachedDraw;
@@ -26,13 +27,15 @@ public abstract class RelativeItem implements Drawable {
         this.widthRatio = widthRatio;
         this.heightRatio = heightRatio;
 
+        hasUpdated = false;
         lastMenuWidth = -1;
         lastMenuHeight = -1;
         cachedDraw = null;
     }
 
     public void draw(Graphics g){
-        if (cachedDraw == null || parent.getWidth() != lastMenuWidth || parent.getHeight() != lastMenuHeight) {
+        if (cachedDraw == null || hasUpdated()) {
+            hasUpdated = false;
             lastMenuWidth = parent.getWidth();
             lastMenuHeight = parent.getHeight();
 
@@ -46,8 +49,12 @@ public abstract class RelativeItem implements Drawable {
         GraphicUtils.drawImage(g, cachedDraw, getX(), getY());
     }
 
-    protected void clearCachedDraw() {
-        cachedDraw = null;
+    protected boolean hasUpdated() {
+        return hasUpdated || parent.getWidth() != lastMenuWidth || parent.getHeight() != lastMenuHeight;
+    }
+
+    protected void setUpdated() {
+        hasUpdated = true;
     }
 
     public int getX(){

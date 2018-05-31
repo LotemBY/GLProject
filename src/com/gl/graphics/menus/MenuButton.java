@@ -79,6 +79,11 @@ public class MenuButton extends RelativeItem implements RelativeParent {
     }
 
     @Override
+    protected boolean hasUpdated(){
+        return super.hasUpdated() || content.hasUpdated();
+    }
+
+    @Override
     public void draw(Graphics g, int x, int y, int width, int height){
         int minSize = Math.min(width, height);
         int arcSize = (int) (minSize * ARC_SCALE);
@@ -122,7 +127,7 @@ public class MenuButton extends RelativeItem implements RelativeParent {
     public void setSelected(boolean selected){
         if (isSelected != selected){
             isSelected = selected;
-            clearCachedDraw();
+            setUpdated();
             parent.repaint();
         }
     }
@@ -130,7 +135,7 @@ public class MenuButton extends RelativeItem implements RelativeParent {
     public void setPressed(boolean pressed){
         if (isPressed != pressed){
             isPressed = pressed;
-            clearCachedDraw();
+            setUpdated();
             parent.repaint();
         }
     }
@@ -153,7 +158,7 @@ public class MenuButton extends RelativeItem implements RelativeParent {
                 setSelected(false);
             }
 
-            clearCachedDraw();
+            setUpdated();
             parent.repaint();
         }
     }

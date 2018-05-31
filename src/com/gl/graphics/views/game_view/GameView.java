@@ -1,5 +1,6 @@
 package com.gl.graphics.views.game_view;
 
+import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.views.View;
 import com.gl.main.LevelsManager;
 
@@ -7,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameView extends View {
+
+    private static final Image BACKGROUND_IMG = GraphicUtils.loadImage("GameBG");
 
     private static final double MENU_SIZE_RATIO = 0.15;
 
@@ -18,7 +21,7 @@ public class GameView extends View {
     public GameView(){
         levelsManager = new LevelsManager();
 
-        gamePanel = new GamePanel();
+        gamePanel = new GamePanel(BACKGROUND_IMG);
         gamePanel.addGameInputHandler(levelsManager);
 
         gameMenu = new GameMenu(levelsManager);

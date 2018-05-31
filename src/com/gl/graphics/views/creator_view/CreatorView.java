@@ -3,6 +3,7 @@ package com.gl.graphics.views.creator_view;
 import com.gl.game.LevelCreator;
 import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.tile_types.EndTile;
+import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.views.View;
 import com.gl.graphics.views.game_view.GamePanel;
 
@@ -10,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CreatorView extends View {
+    private static final Image BACKGROUND_IMG = GraphicUtils.loadImage("EditorBG");
 
     private static final double MENU_SIZE_RATIO = 0.2;
 
@@ -23,7 +25,7 @@ public class CreatorView extends View {
     private Timer updateEndTiles;
 
     public CreatorView(){
-        gamePanel = new GamePanel();
+        gamePanel = new GamePanel(BACKGROUND_IMG);
         levelCreator = new LevelCreator(gamePanel);
 
         creatorMenu = new CreatorMenu(this, levelCreator);
@@ -73,6 +75,7 @@ public class CreatorView extends View {
     }
 
     public void startCreating() {
+        levelCreator.getLevel().setFinished();
         levelCreator.getLevel().reset();
         gamePanel.changeListener(creatorInputHandler);
 

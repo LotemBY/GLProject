@@ -9,7 +9,6 @@ public class RelativeImage extends RelativeItem {
     private Image img;
     private boolean keepOriginalRatio;
 
-
     public RelativeImage(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, Image img){
         this(parent, midXRatio, midYRatio, widthRatio, heightRatio, img, true);
     }
@@ -23,7 +22,7 @@ public class RelativeImage extends RelativeItem {
 
     public void setImg(Image img){
         this.img = img;
-        clearCachedDraw();
+        setUpdated();
     }
 
     @Override

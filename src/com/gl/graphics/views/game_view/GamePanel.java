@@ -14,7 +14,7 @@ import java.util.EventListener;
 public class GamePanel extends JPanelWithBackground {
 
     //private static final Color BACKGROUND_COLOR = new Color(17, 17, 35);
-    private static final Image BACKGROUND_IMG = GraphicUtils.loadImage("GameBG");
+
 
     // Level
     private static final int SPACE_FROM_BOUNDS = 10;
@@ -27,8 +27,8 @@ public class GamePanel extends JPanelWithBackground {
 
     private EventListener listener;
 
-    public GamePanel(){
-        setBackground(BACKGROUND_IMG);
+    public GamePanel(Image bg){
+        setBackground(bg);
 
         addComponentListener(new ComponentAdapter() {
             @Override

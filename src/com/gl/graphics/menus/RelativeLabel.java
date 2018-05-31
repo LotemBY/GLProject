@@ -15,24 +15,31 @@ public class RelativeLabel extends RelativeItem {
     }
 
     private StringGetter getStr;
+    private String currString;
+
     private String fontName;
+    private String currFontName;
+
     private Color fontColor;
+    private Color currContColor;
 
     public RelativeLabel(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, StringGetter getStr){
         super(parent, midXRatio, midYRatio, widthRatio, heightRatio);
         this.getStr = getStr;
+
+        currString = null;
         fontName = DEFAULT_FONT_NAME;
         fontColor = DEFAULT_FONT_COLOR;
     }
 
     public void setFontName(String fontName){
         this.fontName = fontName;
-        clearCachedDraw();
+        setUpdated();
     }
 
     public void setFontColor(Color fontColor){
         this.fontColor = fontColor;
-        clearCachedDraw();
+        setUpdated();
     }
 
     private void updateFont(Graphics g, int width, int height, String str){
@@ -43,11 +50,16 @@ public class RelativeLabel extends RelativeItem {
     }
 
     @Override
+    protected boolean hasUpdated(){
+        return super.hasUpdated() || !getStr.getSting().equals(currString);
+    }
+
+    @Override
     public void draw(Graphics g, int x, int y, int width, int height){
         g.setColor(fontColor);
-        String str = getStr.getSting();
+        currString = getStr.getSting();
 
-        updateFont(g, width, height, str);
+        updateFont(g, width, height, currString);
 
 //        int textWidth = g.getFontMetrics().stringWidth(str);
 //        int textHeight = g.getFontMetrics().getMaxAscent();
@@ -62,9 +74,9 @@ public class RelativeLabel extends RelativeItem {
 //        g.drawString(str, stringX, stringY);
 
         FontMetrics metrics = g.getFontMetrics();
-        int stringX = x + (width - metrics.stringWidth(str)) / 2;
+        int stringX = x + (width - metrics.stringWidth(currString)) / 2;
         int stringY = y + ((height - metrics.getHeight()) / 2) + metrics.getMaxAscent();
 
-        g.drawString(str, stringX, stringY);
+        g.drawString(currString, stringX, stringY);
     }
 }
