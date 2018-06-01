@@ -19,7 +19,7 @@ You are more than welcome to submit new levels, using the in-game level editor!
 <img src="https://i.imgur.com/JQwT8fR.gif" width="400">
 
 
-### More simple levels example
+### More simple level examples
 <img src="https://i.imgur.com/RtJIShW.gif" width="400">
 
 
