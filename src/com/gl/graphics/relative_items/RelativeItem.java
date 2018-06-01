@@ -1,4 +1,4 @@
-package com.gl.graphics.menus;
+package com.gl.graphics.relative_items;
 
 import com.gl.graphics.Drawable;
 import com.gl.graphics.GraphicUtils;
@@ -49,7 +49,7 @@ public abstract class RelativeItem implements Drawable {
         GraphicUtils.drawImage(g, cachedDraw, getX(), getY());
     }
 
-    protected boolean hasUpdated() {
+    public boolean hasUpdated() {
         return hasUpdated || parent.getWidth() != lastMenuWidth || parent.getHeight() != lastMenuHeight;
     }
 

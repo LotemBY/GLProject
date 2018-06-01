@@ -1,21 +1,24 @@
 package com.gl.graphics.views.creator_view;
 
+import com.gl.game.EditableLevel;
 import com.gl.game.GamePlayer;
 import com.gl.game.LevelCreator;
 import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.ModifiedTileManager;
 import com.gl.game.tiles.TilesFactory;
 import com.gl.game.tiles.tile_types.PlayerSpawnTile;
+import com.gl.game.tiles.tile_types.SerializeUtils;
 import com.gl.graphics.GraphicUtils;
+import com.gl.graphics.Menu;
+import com.gl.graphics.MenuButton;
 import com.gl.graphics.ScheduleManager;
-import com.gl.graphics.menus.Menu;
-import com.gl.graphics.menus.MenuButton;
-import com.gl.graphics.menus.RelativeImage;
-import com.gl.graphics.menus.RelativeLabel;
+import com.gl.graphics.relative_items.RelativeImage;
+import com.gl.graphics.relative_items.RelativeLabel;
 import com.gl.graphics.views.main_view.MainView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -74,6 +77,20 @@ public class CreatorMenu extends Menu {
         createTileSelection(levelCreator);
         createLevelSizeSelection(levelCreator);
 
+        MenuButton exportBtn = new MenuButton(this,
+                0.06, 0.2, 0.1, 0.2,
+                "Export",
+                () -> exportLevel(levelCreator)
+            );
+        addItem(exportBtn);
+
+        MenuButton importBtn = new MenuButton(this,
+                0.06, 0.45, 0.1, 0.2,
+                "Import",
+                () -> importLevel(levelCreator)
+        );
+        addItem(importBtn);
+
         MenuButton backBtn = new MenuButton(this,
                 0.06, 0.8, 0.1, 0.3,
                 BACK_IMG, () -> ScheduleManager.getFrame().setView(new MainView()));
@@ -105,7 +122,7 @@ public class CreatorMenu extends Menu {
                             levelCreator.setUsedTile(newTile);
                             setTilePreview(newTile);
                         } else {
-                            showTileParsingError(parsingErrorBuffer.toString());
+                            showError(parsingErrorBuffer.toString());
                         }
                     }
                 }
@@ -163,7 +180,7 @@ public class CreatorMenu extends Menu {
         addItem(colsIncBtn);
     }
 
-    private void showTileParsingError(String error){
+    private void showError(String error){
         JOptionPane.showMessageDialog(this,
                 error,
                 "Error",
@@ -177,6 +194,49 @@ public class CreatorMenu extends Menu {
                 "Select New Tile",
                 JOptionPane.QUESTION_MESSAGE
                 );
+    }
+
+    private String getBoardFormatInput() {
+        return JOptionPane.showInputDialog(this,
+                "Enter an exported board:",
+                "Import Level",
+                JOptionPane.QUESTION_MESSAGE
+        );
+    }
+
+    private void showExportConfirmation() {
+        JOptionPane.showMessageDialog(this,
+                "Level format was copied to clipboard.",
+                "Export Level",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+    private void exportLevel(LevelCreator levelCreator) {
+        StringSelection selection = new StringSelection(
+                SerializeUtils.boardToString(levelCreator.getLevel().getTilesList())
+        );
+
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
+        showExportConfirmation();
+    }
+
+    private void importLevel(LevelCreator levelCreator){
+        String input = getBoardFormatInput();
+
+        if (input != null){
+            if (input.isEmpty()){
+                showError("Empty input!");
+            } else {
+                java.util.List<java.util.List<GameTile>> board = SerializeUtils.boardFromString(input);
+
+                if (board == null){
+                    showError("Invalid board encoding.");
+                } else {
+                    levelCreator.setLevel(new EditableLevel(board));
+                }
+            }
+        }
     }
 
     public GameTile getTilePreview(){

@@ -4,6 +4,7 @@ import com.gl.game.LevelCreator;
 import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.tile_types.EndTile;
 import com.gl.graphics.GraphicUtils;
+import com.gl.graphics.ScheduleManager;
 import com.gl.graphics.views.View;
 import com.gl.graphics.views.game_view.GamePanel;
 
@@ -47,6 +48,7 @@ public class CreatorView extends View {
 
         setLayout(new BorderLayout());
         add(splitPane, BorderLayout.CENTER);
+        splitPane.updateUI();
 
         updateEndTiles = new Timer((int) (1000 * EndTile.SECS_PER_CHANGE),
                 e -> {
@@ -80,9 +82,11 @@ public class CreatorView extends View {
         gamePanel.changeListener(creatorInputHandler);
 
         updateEndTiles.start();
-        creatorMenu.reset();
 
         splitPane.setBottomComponent(creatorMenu);
+        ScheduleManager.getFrame().pack();
+
+        creatorMenu.reset();
     }
 
     public void startTesting(){
@@ -91,7 +95,9 @@ public class CreatorView extends View {
         gamePanel.addGameInputHandler();
         levelCreator.getLevel().start(this::startCreating);
 
-        testingMenu.reset();
         splitPane.setBottomComponent(testingMenu);
+        ScheduleManager.getFrame().pack();
+
+        testingMenu.reset();
     }
 }

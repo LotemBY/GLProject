@@ -1,8 +1,8 @@
 package com.gl.graphics;
 
-import com.gl.graphics.menus.RelativeImage;
-import com.gl.graphics.menus.RelativeItem;
-import com.gl.graphics.menus.RelativeParent;
+import com.gl.graphics.relative_items.RelativeImage;
+import com.gl.graphics.relative_items.RelativeItem;
+import com.gl.graphics.relative_items.RelativeParent;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,9 @@
-package com.gl.graphics.menus;
+package com.gl.graphics;
 
-import com.gl.graphics.ScheduleManager;
+import com.gl.graphics.relative_items.RelativeImage;
+import com.gl.graphics.relative_items.RelativeItem;
+import com.gl.graphics.relative_items.RelativeLabel;
+import com.gl.graphics.relative_items.RelativeParent;
 
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
@@ -18,7 +21,7 @@ public class MenuButton extends RelativeItem implements RelativeParent {
     public static final Color SELECTED_OUTLINE_COLOR = new Color(0xCCBC05);
     public static final Color DISABLED_OUTLINE_COLOR = new Color(0x171717);
 
-    private static final double CONTENT_SCALE = 0.9;
+    private static final double CONTENT_SCALE = 0.85;
     private static final int PRESS_DELAY = 300;
 
     private RelativeItem content;
@@ -79,7 +82,7 @@ public class MenuButton extends RelativeItem implements RelativeParent {
     }
 
     @Override
-    protected boolean hasUpdated(){
+    public boolean hasUpdated(){
         return super.hasUpdated() || content.hasUpdated();
     }
 
@@ -92,8 +95,8 @@ public class MenuButton extends RelativeItem implements RelativeParent {
         ((Graphics2D) g).setStroke(new BasicStroke(strokeSize));
 
         Shape btn = new RoundRectangle2D.Double(
-                x + strokeSize / 2, y + strokeSize / 2,
-                width - strokeSize, height - strokeSize,
+                x + strokeSize, y + strokeSize,
+                width - 2 * strokeSize, height - 2 * strokeSize,
                 arcSize, arcSize
         );
 
@@ -148,10 +151,6 @@ public class MenuButton extends RelativeItem implements RelativeParent {
 
         return minX <= x && x <= maxX &&
                 minY <= y && y <= maxY;
-    }
-
-    public boolean isEnabled(){
-        return isEnabled;
     }
 
     public void setEnabled(boolean enabled){

@@ -13,6 +13,7 @@ You are more than welcome to submit new levels, using the in-game level editor!
 * Custom game GUI and menus, made entirely from scratch
 * Few level examples, with a well-designed difficulty curve
 * In-Game level editor, for creating new levels and experimenting with the mechanics
+* Export and import levels from the level editor, to share your creations
 
 ## Screenshots
 ### The main menu and the first levels
@@ -31,4 +32,3 @@ You are more than welcome to submit new levels, using the in-game level editor!
 * More tile types and game mechanics
 * Level selection menus
 * Keep track on level completion and unlock new levels
-* Export and import levels from the level editor

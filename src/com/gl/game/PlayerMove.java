@@ -75,10 +75,6 @@ public class PlayerMove implements Drawable {
                 break;
         }
 
-        // todo: wtf is this?
-        // Copying the next player move reference to a local variable to be thread-safety
-        PlayerMove nextMove = this.nextMove;
-
         // Create buffer for full circle
         BufferedImage buffer = new BufferedImage(cornerDiameter, cornerDiameter, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics g2d = GraphicUtils.getGraphicsWithHints(buffer.getGraphics());

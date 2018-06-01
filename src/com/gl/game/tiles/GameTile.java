@@ -9,9 +9,10 @@ import com.gl.types.TileColor;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class GameTile implements Drawable {
+public abstract class GameTile implements Drawable, Serializable {
 
     // Outline
     public static final int TILE_OUTLINE_SIZE = 4;   // Corners Size
@@ -26,16 +27,16 @@ public abstract class GameTile implements Drawable {
     private static final double STAR_OUTLINE_RATIO = 0.2;
 
     // Tile info
-    private int col;
-    private int row;
-    private GamePlayer player;
-    private PlayerMove playerMove;
+    private transient int col;
+    private transient int row;
+    private transient GamePlayer player;
+    private transient PlayerMove playerMove;
 
     // Drawing info
-    private BufferedImage outline;
-    private int x;
-    private int y;
-    private int tileSize;
+    private transient BufferedImage outline;
+    private transient int x;
+    private transient int y;
+    private transient int tileSize;
 
     // Star
     private boolean hasStar;

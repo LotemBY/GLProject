@@ -21,7 +21,7 @@ public class CustomFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         Dimension size = new Dimension(FRAME_SIZE, FRAME_SIZE);
-        setPreferredSize(size);
+        setSize(size);
         setMinimumSize(new Dimension(FRAME_MIN_SIZE, FRAME_MIN_SIZE));
         pack();
 
@@ -36,6 +36,12 @@ public class CustomFrame extends JFrame {
         setVisible(true);
     }
 
+    @Override
+    public void pack(){
+        setPreferredSize(getSize());
+        super.pack();
+    }
+
     public void setView(View newView){
         if (view != null){
             this.view.onEnd();
@@ -44,7 +50,6 @@ public class CustomFrame extends JFrame {
 
         view = newView;
         add(view, BorderLayout.CENTER);
-        setPreferredSize(getSize());
         pack();
 
         view.onStart();

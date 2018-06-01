@@ -1,4 +1,4 @@
-package com.gl.graphics.menus;
+package com.gl.graphics.relative_items;
 
 import com.gl.graphics.GraphicUtils;
 

@@ -14,7 +14,7 @@ public class EndTile extends ColorLogicTile {
 
     public static final double SECS_PER_CHANGE = 1;
 
-    private BufferedImage[] textures;
+    private transient BufferedImage[] textures;
     private int currTexture;
 
     public EndTile(EndTile other){

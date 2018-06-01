@@ -1,4 +1,4 @@
-package com.gl.graphics.menus;
+package com.gl.graphics.relative_items;
 
 public interface RelativeParent {
     int getWidth();

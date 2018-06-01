@@ -1,8 +1,9 @@
 package com.gl.types;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class LogicalExpNode implements ColorExp {
+public class LogicalExpNode implements ColorExp, Serializable {
 
     private boolean isAnd;
 

@@ -2,8 +2,8 @@ package com.gl.graphics.views.creator_view;
 
 import com.gl.game.LevelCreator;
 import com.gl.graphics.GraphicUtils;
-import com.gl.graphics.menus.Menu;
-import com.gl.graphics.menus.MenuButton;
+import com.gl.graphics.Menu;
+import com.gl.graphics.MenuButton;
 
 import java.awt.*;
 

@@ -1,15 +1,14 @@
 package com.gl.graphics.views.main_view;
 
-import com.gl.graphics.GraphicUtils;
-import com.gl.graphics.ScheduleManager;
-import com.gl.graphics.menus.MenuButton;
-import com.gl.graphics.menus.RelativeLabel;
+import com.gl.graphics.*;
+import com.gl.graphics.MenuButton;
+import com.gl.graphics.relative_items.RelativeLabel;
 import com.gl.graphics.views.creator_view.CreatorView;
 import com.gl.graphics.views.game_view.GameView;
 
 import java.awt.*;
 
-public class MainMenu extends com.gl.graphics.menus.Menu {
+public class MainMenu extends com.gl.graphics.Menu {
 
     //private static final Color BACKGROUND_COLOR = new Color(162, 162, 162);
     private static final Image PLAY_IMG = GraphicUtils.loadImage("playIcon");
@@ -37,7 +36,5 @@ public class MainMenu extends com.gl.graphics.menus.Menu {
                 0.5, 0.85, 0.2, 0.1,
                 EXIT_IMG, () -> System.exit(0));
         addItem(exitBtn);
-
-        reset();
     }
 }

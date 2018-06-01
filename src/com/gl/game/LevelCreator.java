@@ -135,7 +135,7 @@ public class LevelCreator {
     }
 
     public void start() {
-        level = new EditableLevel(DEFAULT_LEVEL_SIZE, DEFAULT_LEVEL_SIZE);
+        EditableLevel level = new EditableLevel(DEFAULT_LEVEL_SIZE, DEFAULT_LEVEL_SIZE);
 
         GameTile spawn = new PlayerSpawnTile(new ArrayList<>(Arrays.asList(new TileColor[]{TileColor.RED})));
         level.setTile(spawn, 2, 0);
@@ -143,8 +143,12 @@ public class LevelCreator {
         GameTile end = new EndTile(TileColor.RED);
         level.setTile(end, 3, DEFAULT_LEVEL_SIZE - 1);
 
-        checkForLevelValidation();
+        setLevel(level);
+    }
 
+    public void setLevel(EditableLevel level) {
+        this.level = level;
+        checkForLevelValidation();
         gamePanel.setGameLevel(level);
     }
 
@@ -152,7 +156,7 @@ public class LevelCreator {
         return level;
     }
 
-    private void commitLevelChanges() {
+    public void commitLevelChanges() {
         level.updateGame();
         checkForLevelValidation();
         creatorMenu.repaint();

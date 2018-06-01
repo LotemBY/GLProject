@@ -1,16 +1,15 @@
 package com.gl.graphics.views.game_view;
 
-import com.gl.graphics.GraphicUtils;
-import com.gl.graphics.ScheduleManager;
-import com.gl.graphics.menus.MenuButton;
-import com.gl.graphics.menus.RelativeLabel;
+import com.gl.graphics.*;
+import com.gl.graphics.MenuButton;
+import com.gl.graphics.relative_items.RelativeLabel;
 import com.gl.graphics.views.main_view.MainView;
 import com.gl.main.Levels;
 import com.gl.types.Direction;
 
 import java.awt.*;
 
-public class GameMenu extends com.gl.graphics.menus.Menu {
+public class GameMenu extends com.gl.graphics.Menu {
 
     private static final Color BACKGROUND_COLOR = Color.GRAY;
 

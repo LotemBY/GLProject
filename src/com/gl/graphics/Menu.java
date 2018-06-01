@@ -1,7 +1,7 @@
-package com.gl.graphics.menus;
+package com.gl.graphics;
 
-import com.gl.graphics.GraphicUtils;
-import com.gl.graphics.JPanelWithBackground;
+import com.gl.graphics.relative_items.RelativeItem;
+import com.gl.graphics.relative_items.RelativeParent;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -60,11 +60,11 @@ public class Menu extends JPanelWithBackground implements RelativeParent {
         items.forEach(i -> i.draw(g2d));
     }
 
-    public void reset() {
-    Point mousePos = null; // TODO
+    public void reset(){
+        Point mousePos = getMousePosition(true);
 
         buttons.forEach(b -> {
-            if (mousePos == null) {
+            if (mousePos == null){
                 b.setSelected(false);
             } else {
                 b.sendMousePos((int) mousePos.getX(), (int) mousePos.getY());

@@ -1,4 +1,4 @@
-package com.gl.graphics.menus;
+package com.gl.graphics.relative_items;
 
 import com.gl.graphics.GraphicUtils;
 
@@ -50,7 +50,7 @@ public class RelativeLabel extends RelativeItem {
     }
 
     @Override
-    protected boolean hasUpdated(){
+    public boolean hasUpdated(){
         return super.hasUpdated() || !getStr.getSting().equals(currString);
     }
 

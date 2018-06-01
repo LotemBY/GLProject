@@ -24,6 +24,11 @@ public class EditableLevel extends GameLevel {
        initGame(getListAsMatrix());
     }
 
+    public EditableLevel(List<List<GameTile>> tilesList){
+        this.tilesList = tilesList;
+        initGame(getListAsMatrix());
+    }
+
     public void setTilesList(List<List<GameTile>> tilesList){
         this.tilesList = tilesList;
     }
@@ -75,19 +80,14 @@ public class EditableLevel extends GameLevel {
     }
 
     public void addCol() {
-        int rows = tilesList.size();
-
-        for (int i = 0; i < rows; i++){
-            tilesList.get(i).add(new BlankTile());
+        for (List<GameTile> row : tilesList){
+            row.add(new BlankTile());
         }
     }
 
-    public void removeCol() {
-        int rows = tilesList.size();
-
-        for (int i = 0; i < rows; i++){
-            if (tilesList.size() > 1) {
-                List<GameTile> row = tilesList.get(i);
+    public void removeCol(){
+        for (List<GameTile> row : tilesList){
+            if (row.size() > 1){
                 row.remove(row.size() - 1);
             }
         }
