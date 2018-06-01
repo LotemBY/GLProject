@@ -150,6 +150,10 @@ public class MenuButton extends RelativeItem implements RelativeParent {
                 minY <= y && y <= maxY;
     }
 
+    public boolean isEnabled(){
+        return isEnabled;
+    }
+
     public void setEnabled(boolean enabled){
         if (isEnabled != enabled){
             isEnabled = enabled;

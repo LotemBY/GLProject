@@ -2,7 +2,6 @@ package com.gl.graphics.views.game_view;
 
 import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.views.View;
-import com.gl.main.LevelsManager;
 
 import javax.swing.*;
 import java.awt.*;

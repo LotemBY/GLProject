@@ -1,9 +1,9 @@
-package com.gl.main;
+package com.gl.graphics.views.game_view;
 
 import com.gl.game.GameLevel;
 import com.gl.graphics.ScheduleManager;
-import com.gl.graphics.views.game_view.GameMenu;
-import com.gl.graphics.views.game_view.GamePanel;
+import com.gl.graphics.views.main_view.MainView;
+import com.gl.main.Levels;
 
 import java.awt.*;
 
@@ -37,18 +37,16 @@ public class LevelsManager {
     public void startNextLevel(){
         if (currLevelId + 1 < Levels.getLevelsNum()){
             currLevelId++;
+            gameMenu.setEnabledPrev(true);
             startLevel();
-        } else {
-            System.out.println("No more levels!");
         }
     }
 
     public void startPreviousLevel(){
         if (currLevelId - 1 >= FIRST_LEVEL){
             currLevelId--;
+            gameMenu.setEnabledNext(true);
             startLevel();
-        } else {
-            System.out.println("No more levels!");
         }
     }
 
@@ -71,8 +69,18 @@ public class LevelsManager {
                 sound1.run();
             }
 
-            ScheduleManager.addTask(this::startNextLevel, 1000);
+            if (currLevelId < Levels.getLevelsNum() - 1){
+                ScheduleManager.addTask(this::startNextLevel, 1000);
+            } else {
+                ScheduleManager.addTask(() -> ScheduleManager.getFrame().setView(new MainView()), 1000);
+            }
         });
+
+        if (currLevelId == FIRST_LEVEL) {
+            gameMenu.setEnabledPrev(false);
+        } else if (currLevelId == Levels.getLevelsNum() - 1) {
+            gameMenu.setEnabledNext(false);
+        }
 
         gameMenu.repaint();
     }

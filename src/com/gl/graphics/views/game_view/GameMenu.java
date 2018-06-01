@@ -6,7 +6,6 @@ import com.gl.graphics.menus.MenuButton;
 import com.gl.graphics.menus.RelativeLabel;
 import com.gl.graphics.views.main_view.MainView;
 import com.gl.main.Levels;
-import com.gl.main.LevelsManager;
 import com.gl.types.Direction;
 
 import java.awt.*;
@@ -19,6 +18,9 @@ public class GameMenu extends com.gl.graphics.menus.Menu {
     private static final Image NEXT_IMG = GraphicUtils.loadImage("nextIcon");
     private static final Image PREV_IMG = Direction.DOWN.modify(NEXT_IMG);
     private static final Image BACK_IMG = GraphicUtils.loadImage("backToMenuIcon");
+
+    private MenuButton prevBtn;
+    private MenuButton nextBtn;
 
     public GameMenu(LevelsManager levelsManager){
         setBackground(BACKGROUND_COLOR);
@@ -33,12 +35,12 @@ public class GameMenu extends com.gl.graphics.menus.Menu {
                 RESET_IMG, levelsManager::resetLevel);
         addItem(resetBtn);
 
-        MenuButton prevBtn = new MenuButton(this,
+        prevBtn = new MenuButton(this,
                 0.25, 0.5, 0.15, 0.4,
                 PREV_IMG, levelsManager::startPreviousLevel);
         addItem(prevBtn);
 
-        MenuButton nextBtn = new MenuButton(this,
+        nextBtn = new MenuButton(this,
                 0.75, 0.5, 0.15, 0.4,
                 NEXT_IMG, levelsManager::startNextLevel);
         addItem(nextBtn);
@@ -47,5 +49,13 @@ public class GameMenu extends com.gl.graphics.menus.Menu {
                 0.06, 0.8, 0.1, 0.3,
                 BACK_IMG, () -> ScheduleManager.getFrame().setView(new MainView()));
         addItem(backBtn);
+    }
+
+    public void setEnabledPrev(boolean newEnabled){
+        prevBtn.setEnabled(newEnabled);
+    }
+
+    public void setEnabledNext(boolean newEnabled){
+        nextBtn.setEnabled(newEnabled);
     }
 }

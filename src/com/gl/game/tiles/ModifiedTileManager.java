@@ -9,47 +9,52 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// TODO: merge with modified tile class
 public class ModifiedTileManager {
 
-    private static List<ModifiedTileManager> managers = new ArrayList<>();
+    private static List<ModifiedTileManager> currentManagers = new ArrayList<>();
 
-    private Map<Integer, Map<TileModifier, Image>> imageTypesMap; // maps tree: tilesize -> modifer -> picture
+    private Map<Integer, Map<TileModifier, Image>> imageTypesCache; // maps tree: tilesize -> modifer -> picture
     private Image original;
     private double sizeRatio;
 
     public ModifiedTileManager(Image original, double sizeRatio){
         this.original = original;
         this.sizeRatio = sizeRatio;
-        imageTypesMap = new HashMap<>();
-
-        managers.add(this);
+        imageTypesCache = new HashMap<>();
     }
 
     public static void clearAllCache(){
-        for (ModifiedTileManager manager : managers){
+        for (ModifiedTileManager manager : currentManagers){
             manager.clearCache();
         }
+
+        currentManagers.clear();
     }
 
     private void clearCache(){
-        imageTypesMap.clear();
+        imageTypesCache.clear();
     }
 
     public Image getImageFor(int tileSize, TileModifier modifier){
-        if (!imageTypesMap.containsKey(tileSize)) {
-            imageTypesMap.put(tileSize, new HashMap<>());
+        if (!currentManagers.contains(this)) {
+            currentManagers.add(this);
+        }
+
+        if (!imageTypesCache.containsKey(tileSize)) {
+            imageTypesCache.put(tileSize, new HashMap<>());
 
             // Create the first scaled image, without any modifies
             int scaledSize = getScaledSize(tileSize);
             Image scaled = GraphicUtils.getScaledImage(original, scaledSize, scaledSize);
-            imageTypesMap.get(tileSize).put(null, scaled);
+            imageTypesCache.get(tileSize).put(null, scaled);
         }
 
-        if (!imageTypesMap.get(tileSize).containsKey(modifier)){
-            imageTypesMap.get(tileSize).put(modifier, modifier.modify(imageTypesMap.get(tileSize).get(null)));
+        if (!imageTypesCache.get(tileSize).containsKey(modifier)){
+            imageTypesCache.get(tileSize).put(modifier, modifier.modify(imageTypesCache.get(tileSize).get(null)));
         }
 
-        return imageTypesMap.get(tileSize).get(modifier);
+        return imageTypesCache.get(tileSize).get(modifier);
     }
 
     public int getScaledSize(int tileSize){

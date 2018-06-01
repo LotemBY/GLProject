@@ -46,19 +46,11 @@ public class CreatorMenu extends Menu {
     private GameTile tilePreview;
     private RelativeImage tilePreviewImage;
 
-    private boolean enabledTesting;
     private MenuButton playBtn;
-
-    private boolean enabledUndo;
     private MenuButton undoBtn;
-
-    private boolean enabledRedo;
     private MenuButton redoBtn;
 
     public CreatorMenu(CreatorView view, LevelCreator levelCreator){
-        enabledTesting = false;
-        enabledUndo = false;
-
         setBackground(BACKGROUND_COLOR);
 
         playBtn = new MenuButton(this,
@@ -214,26 +206,14 @@ public class CreatorMenu extends Menu {
     }
 
     public void setEnabledTesting(boolean newEnabled){
-        if (newEnabled != enabledTesting) {
-            enabledTesting = newEnabled;
-            playBtn.setEnabled(enabledTesting);
-            repaint();
-        }
+        playBtn.setEnabled(newEnabled);
     }
 
     public void setEnabledUndo(boolean newEnabled){
-        if (newEnabled != enabledUndo) {
-            enabledUndo = newEnabled;
-            undoBtn.setEnabled(enabledUndo);
-            repaint();
-        }
+        undoBtn.setEnabled(newEnabled);
     }
 
     public void setEnabledRedo(boolean newEnabled){
-        if (newEnabled != enabledRedo) {
-            enabledRedo = newEnabled;
-            redoBtn.setEnabled(enabledRedo);
-            repaint();
-        }
+        redoBtn.setEnabled(newEnabled);
     }
 }

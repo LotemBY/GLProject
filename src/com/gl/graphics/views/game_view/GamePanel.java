@@ -5,7 +5,6 @@ import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.ModifiedTileManager;
 import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.JPanelWithBackground;
-import com.gl.main.LevelsManager;
 
 import java.awt.*;
 import java.awt.event.*;
