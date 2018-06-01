@@ -1,4 +1,4 @@
-package com.gl.graphics.views.creator_view;
+package com.gl.views.creator_view;
 
 import com.gl.game.LevelCreator;
 import com.gl.graphics.GraphicUtils;

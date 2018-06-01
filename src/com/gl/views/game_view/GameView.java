@@ -1,7 +1,8 @@
-package com.gl.graphics.views.game_view;
+package com.gl.views.game_view;
 
+import com.gl.game.LevelsManager;
 import com.gl.graphics.GraphicUtils;
-import com.gl.graphics.views.View;
+import com.gl.views.View;
 
 import javax.swing.*;
 import java.awt.*;

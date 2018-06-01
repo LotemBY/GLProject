@@ -4,7 +4,7 @@ import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.tile_types.EndTile;
 import com.gl.game.tiles.tile_types.PlayerSpawnTile;
 import com.gl.graphics.Drawable;
-import com.gl.graphics.views.game_view.GamePanel;
+import com.gl.views.game_view.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;

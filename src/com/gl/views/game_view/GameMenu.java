@@ -1,10 +1,11 @@
-package com.gl.graphics.views.game_view;
+package com.gl.views.game_view;
 
+import com.gl.game.LevelsManager;
 import com.gl.graphics.*;
 import com.gl.graphics.MenuButton;
 import com.gl.graphics.relative_items.RelativeLabel;
-import com.gl.graphics.views.main_view.MainView;
-import com.gl.main.Levels;
+import com.gl.views.main_view.MainView;
+import com.gl.levels.Levels;
 import com.gl.types.Direction;
 
 import java.awt.*;
@@ -26,7 +27,7 @@ public class GameMenu extends com.gl.graphics.Menu {
 
         RelativeLabel levelName = new RelativeLabel(this,
                 0.5, 0.2, 0.3, 0.3,
-                () -> String.format("Level %d/%d", levelsManager.getCurrLevelId() + 1, Levels.getLevelsNum()));
+                () -> String.format("Level %d/%d", levelsManager.getCurrLevelId() + 1, Levels.getLevelsAmount()));
         addItem(levelName);
 
         MenuButton resetBtn = new MenuButton(this,

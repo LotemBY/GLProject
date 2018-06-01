@@ -1,4 +1,4 @@
-package com.gl.main;
+package com.gl.levels;
 
 import com.gl.game.GameLevel;
 import com.gl.game.tiles.TilesFactory;
@@ -9,16 +9,6 @@ import java.util.Arrays;
 public final class Levels {
 
     private static final String[][][] levelArr = new String[][][]{
-
-//            {
-//                    {"e:r", "e:b+r", "e:g+(b+r)|(y)", "t", "t", "t", "e:(g+(y+(r+(b+c))))|(r+(b|g))"},
-//                    {"t", "t", "t", "t", "t", "t", "t"},
-//                    {"t", "t", "t", "t", "t", "t", "t"},
-//                    {"p:rb", "t", "t", "r:g", "t", "t", "t"},
-//                    {"t", "t", "t", "p:y", "t", "r:y", "t"},
-//                    {"t", "r:g", "t", "p:r", "t", "t", "t"},
-//                    {"t", "r:b", "t", "p:rb", "t", "t", "t"}
-//            },
 
             // First Level
             {
@@ -150,16 +140,27 @@ public final class Levels {
 
     private static final ArrayList<String[][]> levels = new ArrayList<>(Arrays.asList(levelArr));
 
-    public static GameLevel getLevel(int index){
+    public static GameLevel loadLevel(int index){
         return new GameLevel(TilesFactory.parseTilesMatrix(levels.get(index)));
     }
 
-    public static int getLevelsNum(){
+    public static int getLevelsAmount(){
         return levels.size();
     }
 }
 
 /*
+            {
+                    {"e:r", "e:b+r", "e:g+(b+r)|(y)", "t", "t", "t", "e:(g+(y+(r+(b+c))))|(r+(b|g))"},
+                    {"t", "t", "t", "t", "t", "t", "t"},
+                    {"t", "t", "t", "t", "t", "t", "t"},
+                    {"p:rb", "t", "t", "r:g", "t", "t", "t"},
+                    {"t", "t", "t", "p:y", "t", "r:y", "t"},
+                    {"t", "r:g", "t", "p:r", "t", "t", "t"},
+                    {"t", "r:b", "t", "p:rb", "t", "t", "t"}
+            },
+
+
 
     {
             {"t", "t", "t", "t", "t", "t", "t"},

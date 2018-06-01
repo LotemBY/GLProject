@@ -1,9 +1,10 @@
-package com.gl.graphics.views.game_view;
+package com.gl.game;
 
-import com.gl.game.GameLevel;
 import com.gl.graphics.ScheduleManager;
-import com.gl.graphics.views.main_view.MainView;
-import com.gl.main.Levels;
+import com.gl.levels.Levels;
+import com.gl.views.game_view.GameMenu;
+import com.gl.views.game_view.GamePanel;
+import com.gl.views.main_view.MainView;
 
 import java.awt.*;
 
@@ -35,7 +36,7 @@ public class LevelsManager {
     }
 
     public void startNextLevel(){
-        if (currLevelId + 1 < Levels.getLevelsNum()){
+        if (currLevelId + 1 < Levels.getLevelsAmount()){
             currLevelId++;
             gameMenu.setEnabledPrev(true);
             startLevel();
@@ -55,7 +56,7 @@ public class LevelsManager {
             currLevel.setFinished();
         }
 
-        currLevel = Levels.getLevel(currLevelId);
+        currLevel = Levels.loadLevel(currLevelId);
         gamePanel.setGameLevel(currLevel);
 
         //TODO: remaster onCompletion
@@ -69,7 +70,7 @@ public class LevelsManager {
                 sound1.run();
             }
 
-            if (currLevelId < Levels.getLevelsNum() - 1){
+            if (currLevelId < Levels.getLevelsAmount() - 1){
                 ScheduleManager.addTask(this::startNextLevel, 1000);
             } else {
                 ScheduleManager.addTask(() -> ScheduleManager.getFrame().setView(new MainView()), 1000);
@@ -78,7 +79,7 @@ public class LevelsManager {
 
         if (currLevelId == FIRST_LEVEL) {
             gameMenu.setEnabledPrev(false);
-        } else if (currLevelId == Levels.getLevelsNum() - 1) {
+        } else if (currLevelId == Levels.getLevelsAmount() - 1) {
             gameMenu.setEnabledNext(false);
         }
 

@@ -4,8 +4,8 @@ import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.tile_types.BlankTile;
 import com.gl.game.tiles.tile_types.EndTile;
 import com.gl.game.tiles.tile_types.PlayerSpawnTile;
-import com.gl.graphics.views.creator_view.CreatorMenu;
-import com.gl.graphics.views.game_view.GamePanel;
+import com.gl.views.creator_view.CreatorMenu;
+import com.gl.views.game_view.GamePanel;
 import com.gl.types.TileColor;
 
 import java.util.ArrayList;

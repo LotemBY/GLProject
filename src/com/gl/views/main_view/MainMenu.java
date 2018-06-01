@@ -1,10 +1,10 @@
-package com.gl.graphics.views.main_view;
+package com.gl.views.main_view;
 
 import com.gl.graphics.*;
 import com.gl.graphics.MenuButton;
 import com.gl.graphics.relative_items.RelativeLabel;
-import com.gl.graphics.views.creator_view.CreatorView;
-import com.gl.graphics.views.game_view.GameView;
+import com.gl.views.creator_view.CreatorView;
+import com.gl.views.game_view.GameView;
 
 import java.awt.*;
 
@@ -16,24 +16,30 @@ public class MainMenu extends com.gl.graphics.Menu {
     private static final Image EXIT_IMG = GraphicUtils.loadImage("exitIcon");
 
     public MainMenu(){
-        RelativeLabel gameName = new RelativeLabel(this,
+        RelativeLabel gameLbl = new RelativeLabel(this,
                 0.5, 0.2, 0.9, 0.4,
                 () -> "GL Project");
-        gameName.setFontColor(Color.BLACK);
-        addItem(gameName);
+        gameLbl.setFontColor(Color.BLACK);
+        addItem(gameLbl);
+
+        RelativeLabel creditLbl = new RelativeLabel(this,
+                0.5, 0.4, 0.3, 0.2,
+                () -> "By Lotem");
+        gameLbl.setFontColor(Color.BLACK);
+        addItem(creditLbl);
 
         MenuButton playBtn = new MenuButton(this,
-                0.5, 0.5, 0.3, 0.15,
+                0.5, 0.6, 0.3, 0.15,
                 PLAY_IMG, () -> ScheduleManager.getFrame().setView(new GameView()));
         addItem(playBtn);
 
         MenuButton creatorBtn = new MenuButton(this,
-                0.5, 0.72, 0.2, 0.1,
+                0.5, 0.78, 0.2, 0.1,
                 EDITOR_IMG, () -> ScheduleManager.getFrame().setView(new CreatorView()));
         addItem(creatorBtn);
 
         MenuButton exitBtn = new MenuButton(this,
-                0.5, 0.85, 0.2, 0.1,
+                0.5, 0.9, 0.2, 0.1,
                 EXIT_IMG, () -> System.exit(0));
         addItem(exitBtn);
     }

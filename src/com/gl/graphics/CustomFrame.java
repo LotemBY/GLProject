@@ -1,7 +1,7 @@
 package com.gl.graphics;
 
-import com.gl.graphics.views.View;
-import com.gl.graphics.views.main_view.MainView;
+import com.gl.views.View;
+import com.gl.views.main_view.MainView;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
-package com.gl.graphics.views.main_view;
+package com.gl.views.main_view;
 
-import com.gl.graphics.views.View;
+import com.gl.views.View;
 
 import java.awt.*;
 

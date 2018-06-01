@@ -1,4 +1,4 @@
-package com.gl.graphics.views;
+package com.gl.views;
 
 import javax.swing.*;
 

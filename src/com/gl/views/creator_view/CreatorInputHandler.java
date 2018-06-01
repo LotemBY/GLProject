@@ -1,8 +1,8 @@
-package com.gl.graphics.views.creator_view;
+package com.gl.views.creator_view;
 
 import com.gl.game.LevelCreator;
 import com.gl.game.tiles.GameTile;
-import com.gl.graphics.views.game_view.GamePanel;
+import com.gl.views.game_view.GamePanel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

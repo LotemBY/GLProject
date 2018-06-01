@@ -1,4 +1,4 @@
-package com.gl.graphics.views.creator_view;
+package com.gl.views.creator_view;
 
 import com.gl.game.EditableLevel;
 import com.gl.game.GamePlayer;
@@ -14,7 +14,7 @@ import com.gl.graphics.MenuButton;
 import com.gl.graphics.ScheduleManager;
 import com.gl.graphics.relative_items.RelativeImage;
 import com.gl.graphics.relative_items.RelativeLabel;
-import com.gl.graphics.views.main_view.MainView;
+import com.gl.views.main_view.MainView;
 
 import javax.swing.*;
 import java.awt.*;

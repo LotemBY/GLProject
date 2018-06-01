@@ -1,6 +1,7 @@
-package com.gl.graphics.views.game_view;
+package com.gl.views.game_view;
 
 import com.gl.game.GameLevel;
+import com.gl.game.LevelsManager;
 import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.ModifiedTileManager;
 import com.gl.graphics.GraphicUtils;

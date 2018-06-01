@@ -1,12 +1,12 @@
-package com.gl.graphics.views.creator_view;
+package com.gl.views.creator_view;
 
 import com.gl.game.LevelCreator;
 import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.tile_types.EndTile;
 import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.ScheduleManager;
-import com.gl.graphics.views.View;
-import com.gl.graphics.views.game_view.GamePanel;
+import com.gl.views.View;
+import com.gl.views.game_view.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
