@@ -94,7 +94,7 @@ public class GamePlayer implements Drawable {
 
         GameTile toTile = level.getTileAt(newRow, newCol);
 
-        if (toTile.canPassFrom(dir.getOpposite(), colors)){
+        if (toTile != null &&  toTile.canPassFrom(dir.getOpposite(), colors)){
             //Add the player move to the tile
             GameTile fromTile = level.getTileAt(row, col);
             fromTile.setPlayerMove(new PlayerMove(this, colors, dir));

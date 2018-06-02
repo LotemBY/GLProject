@@ -1,32 +1,29 @@
 package com.gl.game;
 
 import com.gl.game.tiles.GameTile;
-import com.gl.game.tiles.tile_types.BlankTile;
+import com.gl.game.tiles.TilesFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EditableLevel extends GameLevel {
 
+    public static final GameTile DEFAULT_TILE = TilesFactory.parseTile("t");
+
+    // TODO: consider removing this and working with the matrix alone
     List<List<GameTile>> tilesList;
 
-    public EditableLevel(int rows, int cols){
+    public EditableLevel(GameTile[][] matrix){
+        super(matrix);
+
         tilesList = new ArrayList<>();
-        for (int i = 0; i < rows; i++){
+        for (int i = 0; i < matrix.length; i++){
             List<GameTile> row = new ArrayList<>();
-            tilesList.add(row);
-
-            for (int j = 0; j < cols; j++){
-                row.add(new BlankTile());
+            for (int j = 0; j < matrix[i].length; j++){
+                row.add(matrix[i][j]);
             }
+            tilesList.add(row);
         }
-
-       initGame(getListAsMatrix());
-    }
-
-    public EditableLevel(List<List<GameTile>> tilesList){
-        this.tilesList = tilesList;
-        initGame(getListAsMatrix());
     }
 
     public void setTilesList(List<List<GameTile>> tilesList){
@@ -69,7 +66,7 @@ public class EditableLevel extends GameLevel {
         List<GameTile> row = new ArrayList<>();
         tilesList.add(row);
         for (int j = 0; j < cols; j++){
-            row.add(new BlankTile());
+            row.add(DEFAULT_TILE.makeCopy());
         }
     }
 
@@ -81,7 +78,7 @@ public class EditableLevel extends GameLevel {
 
     public void addCol() {
         for (List<GameTile> row : tilesList){
-            row.add(new BlankTile());
+            row.add(DEFAULT_TILE.makeCopy());
         }
     }
 

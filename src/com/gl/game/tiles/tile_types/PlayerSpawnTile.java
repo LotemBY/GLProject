@@ -8,7 +8,6 @@ import com.gl.types.Direction;
 import com.gl.types.TileColor;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +21,8 @@ public class PlayerSpawnTile extends ModifiedTile {
     private List<TileColor> colors;
 
     public PlayerSpawnTile(PlayerSpawnTile other){
-        this(new ArrayList<>(other.colors));
+        super(other);
+        this.colors = other.colors;
     }
 
     public PlayerSpawnTile(List<TileColor> colors){

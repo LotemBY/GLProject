@@ -1,13 +1,11 @@
 package com.gl.views.creator_view;
 
-import com.gl.game.EditableLevel;
 import com.gl.game.GamePlayer;
 import com.gl.game.LevelCreator;
 import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.ModifiedTileManager;
 import com.gl.game.tiles.TilesFactory;
 import com.gl.game.tiles.tile_types.PlayerSpawnTile;
-import com.gl.game.tiles.tile_types.SerializeUtils;
 import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.Menu;
 import com.gl.graphics.MenuButton;
@@ -213,9 +211,7 @@ public class CreatorMenu extends Menu {
     }
 
     private void exportLevel(LevelCreator levelCreator) {
-        StringSelection selection = new StringSelection(
-                SerializeUtils.boardToString(levelCreator.getLevel().getTilesList())
-        );
+        StringSelection selection = new StringSelection(levelCreator.getLevelExport());
 
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
         showExportConfirmation();
@@ -228,12 +224,8 @@ public class CreatorMenu extends Menu {
             if (input.isEmpty()){
                 showError("Empty input!");
             } else {
-                java.util.List<java.util.List<GameTile>> board = SerializeUtils.boardFromString(input);
-
-                if (board == null){
+                if (!levelCreator.importLevel(input)){
                     showError("Invalid board encoding.");
-                } else {
-                    levelCreator.setLevel(new EditableLevel(board));
                 }
             }
         }

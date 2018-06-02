@@ -27,16 +27,18 @@ public abstract class GameTile implements Drawable, Serializable {
     private static final double STAR_OUTLINE_RATIO = 0.2;
 
     // Tile info
-    private transient int col;
-    private transient int row;
-    private transient GamePlayer player;
-    private transient PlayerMove playerMove;
+    private String tileStrFormat;
+
+    private int col;
+    private int row;
+    private GamePlayer player;
+    private PlayerMove playerMove;
 
     // Drawing info
-    private transient BufferedImage outline;
-    private transient int x;
-    private transient int y;
-    private transient int tileSize;
+    private BufferedImage outline;
+    private int x;
+    private int y;
+    private int tileSize;
 
     // Star
     private boolean hasStar;
@@ -44,6 +46,7 @@ public abstract class GameTile implements Drawable, Serializable {
 
     public GameTile(GameTile other){
         this(other.hasStar, other.starOutlineColor);
+        setTileStrFormat(other.tileStrFormat);
     }
 
     public GameTile(){
@@ -53,6 +56,14 @@ public abstract class GameTile implements Drawable, Serializable {
     public GameTile(boolean hasStar, TileColor starColor){
         this.hasStar = hasStar;
         this.starOutlineColor = starColor;
+    }
+
+    public String getTileStrFormat() {
+        return tileStrFormat;
+    }
+
+    public void setTileStrFormat(String format) {
+        this.tileStrFormat = format;
     }
 
     public void setBoardPosition(int row, int col){

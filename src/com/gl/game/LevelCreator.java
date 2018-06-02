@@ -1,23 +1,31 @@
 package com.gl.game;
 
 import com.gl.game.tiles.GameTile;
-import com.gl.game.tiles.tile_types.BlankTile;
+import com.gl.game.tiles.SerializeUtils;
+import com.gl.game.tiles.TilesFactory;
 import com.gl.game.tiles.tile_types.EndTile;
 import com.gl.game.tiles.tile_types.PlayerSpawnTile;
 import com.gl.views.creator_view.CreatorMenu;
 import com.gl.views.game_view.GamePanel;
-import com.gl.types.TileColor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
 public class LevelCreator {
 
-    private static final int DEFAULT_LEVEL_SIZE = 6;
     private static final int MIN_LEVEL_SIZE = 1;
     private static final int MAX_LEVEL_SIZE = 12;
+
+    private static final String[][] DEFAULT_LEVEL =
+            {
+                    {"t", "t", "t", "t", "t"},
+                    {"t", "t", "t", "t", "t"},
+                    {"p:b", "t", "t", "t", "e:b"},
+                    {"t", "t", "t", "t", "t"},
+                    {"t", "t", "t", "t", "t"},
+            };
+    public static final String DEFAULT_USED_TILE = "t";
 
     private GamePanel gamePanel;
     private CreatorMenu creatorMenu;
@@ -31,7 +39,7 @@ public class LevelCreator {
 
     public LevelCreator(GamePanel panel){
         this.gamePanel = panel;
-        usedTile = new BlankTile();
+        usedTile = TilesFactory.parseTile(DEFAULT_USED_TILE);
         undoStack = new Stack<>();
         redoStack = new Stack<>();
     }
@@ -62,7 +70,6 @@ public class LevelCreator {
         if (undoStack.size() == 1) {
             creatorMenu.setEnabledUndo(true);
         }
-
     }
 
     public void undo() {
@@ -135,18 +142,15 @@ public class LevelCreator {
     }
 
     public void start() {
-        EditableLevel level = new EditableLevel(DEFAULT_LEVEL_SIZE, DEFAULT_LEVEL_SIZE);
-
-        GameTile spawn = new PlayerSpawnTile(new ArrayList<>(Arrays.asList(new TileColor[]{TileColor.RED})));
-        level.setTile(spawn, 2, 0);
-
-        GameTile end = new EndTile(TileColor.RED);
-        level.setTile(end, 3, DEFAULT_LEVEL_SIZE - 1);
-
+        EditableLevel level = new EditableLevel(TilesFactory.parseTilesMatrix(DEFAULT_LEVEL));
         setLevel(level);
     }
 
     public void setLevel(EditableLevel level) {
+        if (this.level != null){
+            saveStateToStack(undoStack, false);
+        }
+
         this.level = level;
         checkForLevelValidation();
         gamePanel.setGameLevel(level);
@@ -191,5 +195,36 @@ public class LevelCreator {
         }
 
         commitLevelChanges();
+    }
+
+    public String getLevelExport() {
+        List<List<GameTile>> board = level.getTilesList();
+
+        int rows = board.size();
+        int cols = board.get(0).size();
+        String[][] boardFormat = new String[rows][cols];
+
+        for (int i = 0; i < rows; i++){
+            for (int j = 0; j < cols; j++){
+                boardFormat[i][j] = board.get(i).get(j).getTileStrFormat();
+            }
+        }
+
+        return SerializeUtils.matrixToString(boardFormat);
+    }
+
+    public boolean importLevel(String boardFormat) {
+        String[][] tilesMatrix = SerializeUtils.matrixFromString(boardFormat);
+
+        if (tilesMatrix != null){
+            GameTile[][] board = TilesFactory.parseTilesMatrix(tilesMatrix);
+
+            if (board != null) {
+                setLevel(new EditableLevel(board));
+                return true;
+            }
+        }
+
+        return false;
     }
 }

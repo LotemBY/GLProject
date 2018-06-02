@@ -167,6 +167,7 @@ public final class TilesFactory {
 
         //Remove whitespace and make lowercase
         tileFormat = tileFormat.replaceAll("[ \n\r\t]", "").toLowerCase();
+        String originalFormat = tileFormat;
 
         boolean hasStar = false;
         TileColor starColor = null;
@@ -194,7 +195,9 @@ public final class TilesFactory {
                     throw new TileParsingException(parsingInfo.name + " can't have a star.");
                 } else {
                     String modifiers = tileFormat.substring(tileFormat.indexOf(MODIFIERS_SEPARATOR) + 1);
-                    return parsingInfo.parser.createTile(modifiers, hasStar, starColor);
+                    GameTile tile =  parsingInfo.parser.createTile(modifiers, hasStar, starColor);
+                    tile.setTileStrFormat(originalFormat);
+                    return tile;
                 }
             }
         }
@@ -272,8 +275,8 @@ public final class TilesFactory {
                 try {
                     tileMatrix[row][col] = parseTile(matrix[row][col]);
                 } catch (TileParsingException e) {
-                    System.err.println("ERROR AT TILE: " + matrix[row][col]);
                     e.printStackTrace();
+                    return null;
                 }
             }
         }
