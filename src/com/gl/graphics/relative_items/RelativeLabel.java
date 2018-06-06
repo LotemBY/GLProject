@@ -18,12 +18,13 @@ public class RelativeLabel extends RelativeItem {
     private String currString;
 
     private String fontName;
-    private String currFontName;
-
     private Color fontColor;
-    private Color currContColor;
 
-    public RelativeLabel(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, StringGetter getStr){
+    public RelativeLabel(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, String str) {
+        this(parent, midXRatio, midYRatio, widthRatio, heightRatio, () -> str);
+    }
+
+    public RelativeLabel(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, StringGetter getStr) {
         super(parent, midXRatio, midYRatio, widthRatio, heightRatio);
         this.getStr = getStr;
 
@@ -32,46 +33,34 @@ public class RelativeLabel extends RelativeItem {
         fontColor = DEFAULT_FONT_COLOR;
     }
 
-    public void setFontName(String fontName){
+    public void setFontName(String fontName) {
         this.fontName = fontName;
         setUpdated();
     }
 
-    public void setFontColor(Color fontColor){
+    public void setFontColor(Color fontColor) {
         this.fontColor = fontColor;
         setUpdated();
     }
 
-    private void updateFont(Graphics g, int width, int height, String str){
+    private void updateFont(Graphics g, int width, int height, String str) {
         Font font = new Font(fontName, DEFAULT_FONT_STYLE, 10);
 
-        int newFontSize = GraphicUtils.getMaxFittingFontSize(g, font, str, width, height);
+        int newFontSize = (int) (GraphicUtils.getMaxFittingFontSize(g, font, str, width, height) * 0.9);
         g.setFont(new Font(fontName, DEFAULT_FONT_STYLE, newFontSize));
     }
 
     @Override
-    public boolean hasUpdated(){
+    public boolean hasUpdated() {
         return super.hasUpdated() || !getStr.getSting().equals(currString);
     }
 
     @Override
-    public void draw(Graphics g, int x, int y, int width, int height){
+    public void draw(Graphics g, int x, int y, int width, int height) {
         g.setColor(fontColor);
         currString = getStr.getSting();
 
         updateFont(g, width, height, currString);
-
-//        int textWidth = g.getFontMetrics().stringWidth(str);
-//        int textHeight = g.getFontMetrics().getMaxAscent();
-//        System.out.println("y = " + y);
-//        System.out.println("textHeight = " + textHeight);
-//
-//        int stringX = x + (width - textWidth) / 2;
-//        int stringY = y; //+ (height - textHeight) / 2;
-//
-//        System.out.println("stringX = " + stringX);
-//        System.out.println("stringY = " + stringY);
-//        g.drawString(str, stringX, stringY);
 
         FontMetrics metrics = g.getFontMetrics();
         int stringX = x + (width - metrics.stringWidth(currString)) / 2;

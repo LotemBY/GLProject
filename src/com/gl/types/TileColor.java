@@ -22,7 +22,7 @@ public enum TileColor implements ColorExp, TileModifier {
     private double baseB;
     private boolean isBright;
 
-    TileColor(char c, double baseR, double baseG, double baseB, boolean isBright){
+    TileColor(char c, double baseR, double baseG, double baseB, boolean isBright) {
         this.c = c;
         this.baseR = baseR;
         this.baseG = baseG;
@@ -30,7 +30,7 @@ public enum TileColor implements ColorExp, TileModifier {
         this.isBright = isBright;
     }
 
-    public boolean isColor(){
+    public boolean isColor() {
         return !equals(WHITE);
     }
 
@@ -44,23 +44,23 @@ public enum TileColor implements ColorExp, TileModifier {
         return null;
     }
 
-    public String toString(){
+    public String toString() {
         return name().toLowerCase();
     }
 
-    public boolean matches(java.util.List<TileColor> colors){
+    public boolean matches(java.util.List<TileColor> colors) {
         return colors.contains(this);
     }
 
-    public Color getColor(){
+    public Color getColor() {
         return changeTone(1, baseR, baseG, baseB);
     }
 
-    public boolean isBright(){
+    public boolean isBright() {
         return isBright;
     }
 
-    public static Color changeTone(double tone, double baseR, double baseG, double baseB){
+    public static Color changeTone(double tone, double baseR, double baseG, double baseB) {
         tone *= COLOR_BASE_SCALE;
 
         double r = Math.min(baseR * tone, GraphicUtils.MAX_RGB_VALUE);
@@ -70,12 +70,12 @@ public enum TileColor implements ColorExp, TileModifier {
         return new Color((int) r, (int) g, (int) b);
     }
 
-    public Color changeTone(double tone){
+    public Color changeTone(double tone) {
         return changeTone(tone, baseR, baseG, baseB);
     }
 
     @Override
-    public Image modify(Image img){
+    public Image modify(Image img) {
         return GraphicUtils.paintWithColor(img, getColor());
     }
 }

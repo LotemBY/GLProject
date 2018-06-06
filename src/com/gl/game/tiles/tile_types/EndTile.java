@@ -17,32 +17,32 @@ public class EndTile extends ColorLogicTile {
     private transient BufferedImage[] textures;
     private int currTexture;
 
-    public EndTile(EndTile other){
+    public EndTile(EndTile other) {
         super(other);
         this.textures = other.textures;
         this.currTexture = other.currTexture;
     }
 
-    public EndTile(ColorExp expression){
+    public EndTile(ColorExp expression) {
         super(expression);
         currTexture = 0;
     }
 
     @Override
-    public GameTile makeCopy(){
+    public GameTile makeCopy() {
         return new EndTile(this);
     }
 
-    public void updateTextures(int tileSize){
+    public void updateTextures(int tileSize) {
         textures = new BufferedImage[colorTextures.size()];
         int i = 0;
-        for (HashSet<TileColor> set : colorTextures){
+        for (HashSet<TileColor> set : colorTextures) {
             textures[i] = createTexture(tileSize - 2 * TILE_OUTLINE_SIZE, set);
             i++;
         }
     }
 
-    private BufferedImage createTexture(int tileSize, HashSet<TileColor> tileColors){
+    private BufferedImage createTexture(int tileSize, HashSet<TileColor> tileColors) {
         BufferedImage buffer = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics g = GraphicUtils.getGraphicsWithHints(buffer.getGraphics());
 
@@ -57,37 +57,37 @@ public class EndTile extends ColorLogicTile {
                 interRight = new Point(3 * tileSize / 4, tileSize / 2);
 
         Color[] textureColors = new Color[tileColors.size()];
-        for (int i = 0; i < tileColors.size(); i++){
+        for (int i = 0; i < tileColors.size(); i++) {
             textureColors[i] = ((TileColor) (tileColors.toArray()[i])).changeTone(COLORS_TONE);
         }
 
-        switch (tileColors.size()){
+        switch (tileColors.size()) {
             case 1:
                 GraphicUtils.fillRect(g, 0, 0, tileSize, tileSize, textureColors[0]);
                 break;
             case 2:
-                GraphicUtils.drawPolygon(g, new int[]{tl.x, br.x, bl.x}, new int[]{tl.y, br.y, bl.y}, textureColors[0]);
-                GraphicUtils.drawPolygon(g, new int[]{tl.x, tr.x, br.x}, new int[]{tl.y, tr.y, br.y}, textureColors[1]);
+                GraphicUtils.drawPolygon(g, new int[] {tl.x, br.x, bl.x}, new int[] {tl.y, br.y, bl.y}, textureColors[0]);
+                GraphicUtils.drawPolygon(g, new int[] {tl.x, tr.x, br.x}, new int[] {tl.y, tr.y, br.y}, textureColors[1]);
                 break;
             case 3:
-                GraphicUtils.drawPolygon(g, new int[]{tl.x, br.x, bl.x}, new int[]{tl.y, br.y, bl.y}, textureColors[0]);
-                GraphicUtils.drawPolygon(g, new int[]{tl.x, tr.x, br.x}, new int[]{tl.y, tr.y, br.y}, textureColors[1]);
-                GraphicUtils.drawPolygon(g, new int[]{interLeft.x, interTop.x, interRight.x, interBottom.x},
-                        new int[]{interLeft.y, interTop.y, interRight.y, interBottom.y}, textureColors[2]);
+                GraphicUtils.drawPolygon(g, new int[] {tl.x, br.x, bl.x}, new int[] {tl.y, br.y, bl.y}, textureColors[0]);
+                GraphicUtils.drawPolygon(g, new int[] {tl.x, tr.x, br.x}, new int[] {tl.y, tr.y, br.y}, textureColors[1]);
+                GraphicUtils.drawPolygon(g, new int[] {interLeft.x, interTop.x, interRight.x, interBottom.x},
+                        new int[] {interLeft.y, interTop.y, interRight.y, interBottom.y}, textureColors[2]);
                 break;
             case 4:
-                GraphicUtils.drawPolygon(g, new int[]{tl.x, mid.x, tr.x}, new int[]{tl.y, mid.y, tr.y}, textureColors[0]);
-                GraphicUtils.drawPolygon(g, new int[]{bl.x, mid.x, br.x}, new int[]{bl.y, mid.y, br.y}, textureColors[1]);
-                GraphicUtils.drawPolygon(g, new int[]{tl.x, mid.x, bl.x}, new int[]{tl.y, mid.y, bl.y}, textureColors[2]);
-                GraphicUtils.drawPolygon(g, new int[]{tr.x, mid.x, br.x}, new int[]{tr.y, mid.y, br.y}, textureColors[3]);
+                GraphicUtils.drawPolygon(g, new int[] {tl.x, mid.x, tr.x}, new int[] {tl.y, mid.y, tr.y}, textureColors[0]);
+                GraphicUtils.drawPolygon(g, new int[] {bl.x, mid.x, br.x}, new int[] {bl.y, mid.y, br.y}, textureColors[1]);
+                GraphicUtils.drawPolygon(g, new int[] {tl.x, mid.x, bl.x}, new int[] {tl.y, mid.y, bl.y}, textureColors[2]);
+                GraphicUtils.drawPolygon(g, new int[] {tr.x, mid.x, br.x}, new int[] {tr.y, mid.y, br.y}, textureColors[3]);
                 break;
             case 5:
-                GraphicUtils.drawPolygon(g, new int[]{tl.x, mid.x, tr.x}, new int[]{tl.y, mid.y, tr.y}, textureColors[0]);
-                GraphicUtils.drawPolygon(g, new int[]{bl.x, mid.x, br.x}, new int[]{bl.y, mid.y, br.y}, textureColors[1]);
-                GraphicUtils.drawPolygon(g, new int[]{tl.x, mid.x, bl.x}, new int[]{tl.y, mid.y, bl.y}, textureColors[2]);
-                GraphicUtils.drawPolygon(g, new int[]{tr.x, mid.x, br.x}, new int[]{tr.y, mid.y, br.y}, textureColors[3]);
-                GraphicUtils.drawPolygon(g, new int[]{interLeft.x, interTop.x, interRight.x, interBottom.x},
-                        new int[]{interLeft.y, interTop.y, interRight.y, interBottom.y}, textureColors[4]);
+                GraphicUtils.drawPolygon(g, new int[] {tl.x, mid.x, tr.x}, new int[] {tl.y, mid.y, tr.y}, textureColors[0]);
+                GraphicUtils.drawPolygon(g, new int[] {bl.x, mid.x, br.x}, new int[] {bl.y, mid.y, br.y}, textureColors[1]);
+                GraphicUtils.drawPolygon(g, new int[] {tl.x, mid.x, bl.x}, new int[] {tl.y, mid.y, bl.y}, textureColors[2]);
+                GraphicUtils.drawPolygon(g, new int[] {tr.x, mid.x, br.x}, new int[] {tr.y, mid.y, br.y}, textureColors[3]);
+                GraphicUtils.drawPolygon(g, new int[] {interLeft.x, interTop.x, interRight.x, interBottom.x},
+                        new int[] {interLeft.y, interTop.y, interRight.y, interBottom.y}, textureColors[4]);
                 break;
             default:
                 System.err.println("Unexpected tile colors number!");
@@ -97,16 +97,16 @@ public class EndTile extends ColorLogicTile {
     }
 
     @Override
-    public void drawTileContent(Graphics g, int x, int y, int size){
+    public void drawTileContent(Graphics g, int x, int y, int size) {
         GraphicUtils.drawImage(g, textures[currTexture], x, y);
     }
 
-    public void scrollTexture(){
+    public void scrollTexture() {
         currTexture = (currTexture + 1) % textures.length;
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         return o instanceof EndTile && super.equals(o);
     }
 }

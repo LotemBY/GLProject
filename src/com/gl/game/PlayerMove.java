@@ -18,12 +18,25 @@ public class PlayerMove implements Drawable {
 
     private GamePlayer player;
     private List<TileColor> colors;
+
     private Direction direction;
     private PlayerMove nextMove;
     private boolean isFirstMove;
+
     private int spaceBetweenTiles;
 
-    public PlayerMove(GamePlayer player, List<TileColor> colors, Direction direction){
+    public PlayerMove(GamePlayer player, PlayerMove other) {
+        this.player = player;
+
+        this.colors = new ArrayList<>();
+        this.colors.addAll(other.colors);
+
+        this.direction = other.direction;
+        this.nextMove = other.nextMove;
+        this.isFirstMove = other.isFirstMove;
+    }
+
+    public PlayerMove(GamePlayer player, List<TileColor> colors, Direction direction) {
         this.player = player;
         this.colors = new ArrayList<>(colors);
         this.direction = direction;
@@ -32,15 +45,15 @@ public class PlayerMove implements Drawable {
         isFirstMove = false;
     }
 
-    public void setSpaceBetweenTiles(int spaceBetweenTiles){
+    public void setSpaceBetweenTiles(int spaceBetweenTiles) {
         this.spaceBetweenTiles = spaceBetweenTiles;
     }
 
-    private void drawStartCircle(Graphics g, int diameter, int x, int y, Color[] drawColor){
+    private void drawStartCircle(Graphics g, int diameter, int x, int y, Color[] drawColor) {
         double colorThickness = (double) diameter / (colors.size() * 2 - 1);
         double ringDiameter, ringExtraLocation;
 
-        for (int i = 0; i < colors.size(); i++){
+        for (int i = 0; i < colors.size(); i++) {
             ringDiameter = ((colors.size() - i) * 2 - 1) * colorThickness;
             ringExtraLocation = (diameter - ringDiameter) / 2;
 
@@ -49,15 +62,15 @@ public class PlayerMove implements Drawable {
         }
     }
 
-    private void drawCorner(Graphics g, int cornerDiameter, int length, int thickness, int x, int y, Color[] drawColor){
-        if (nextMove == null || nextMove.direction == direction){
+    private void drawCorner(Graphics g, int cornerDiameter, int length, int thickness, int x, int y, Color[] drawColor) {
+        if (nextMove == null || nextMove.direction == direction) {
             return;
         }
 
         //PaintingUtils.fillCircle(g, x-7, y-7, 15, Color.CYAN);
 
         // Move to the fromTile where the corner should be drawn
-        switch (direction){
+        switch (direction) {
             case RIGHT:
                 x += length;
                 break;
@@ -83,7 +96,7 @@ public class PlayerMove implements Drawable {
         double colorThickness = (double) thickness / (colors.size() * 2 - 1);
         double ringDiameter, ringExtraLocation, currThickness;
 
-        for (int i = 0; i < colors.size(); i++){
+        for (int i = 0; i < colors.size(); i++) {
             ringExtraLocation = i * colorThickness;
             ringDiameter = cornerDiameter - 2 * ringExtraLocation;
             currThickness = thickness - 2 * ringExtraLocation;
@@ -96,8 +109,8 @@ public class PlayerMove implements Drawable {
         int extraLoc = (cornerRadius - thickness);
         int croppingX = 0, croppingY = 0;
 
-        for (Direction dir : new Direction[]{direction, nextMove.direction.getOpposite()})
-            switch (dir){
+        for (Direction dir : new Direction[] {direction, nextMove.direction.getOpposite()})
+            switch (dir) {
                 case RIGHT:
                     x -= extraLoc;
                     croppingX = cornerRadius;
@@ -119,7 +132,7 @@ public class PlayerMove implements Drawable {
 //        GraphicUtils.fillCircle(g, x + cornerRadius - 7, y + cornerRadius - thickness - 7, 14, Color.YELLOW);
     }
 
-    private void drawLine(Graphics g, int thickness, int length, int cornerDistanceFromLine, int x, int y, Color[] drawColor){
+    private void drawLine(Graphics g, int thickness, int length, int cornerDistanceFromLine, int x, int y, Color[] drawColor) {
         boolean lastMove = (nextMove == null);
         boolean sameDirection = (!lastMove && (direction == nextMove.direction));
 
@@ -128,17 +141,17 @@ public class PlayerMove implements Drawable {
         int y1 = 0;
         int x2 = 0;
         int y2 = 0;
-        switch (direction){
+        switch (direction) {
             case RIGHT:
                 // Start point
                 x1 = x + (isFirstMove ? thickness / 2 : thickness + cornerDistanceFromLine);
                 y1 = y;
 
                 // End point
-                if (lastMove){
+                if (lastMove) {
                     // Draw to the middle of the fromTile
                     x2 = x + length + (thickness / 2);
-                } else if (sameDirection){
+                } else if (sameDirection) {
                     // Draw the length to the next identical move
                     x2 = x + length + thickness + cornerDistanceFromLine;
                 } else {
@@ -155,10 +168,10 @@ public class PlayerMove implements Drawable {
                 y1 = y;
 
                 // End point
-                if (lastMove){
+                if (lastMove) {
                     // Draw to the middle of the fromTile
                     x2 = x - length + (thickness / 2);
-                } else if (sameDirection){
+                } else if (sameDirection) {
                     // Draw the length to the next identical move
                     x2 = x - length - cornerDistanceFromLine;
                 } else {
@@ -176,10 +189,10 @@ public class PlayerMove implements Drawable {
 
                 // End point
                 x2 = x + thickness;
-                if (lastMove){
+                if (lastMove) {
                     // Draw to the middle of the fromTile
                     y2 = y + length + (thickness / 2);
-                } else if (sameDirection){
+                } else if (sameDirection) {
                     // Draw the length to the next identical move
                     y2 = y + length + thickness + cornerDistanceFromLine;
                 } else {
@@ -196,10 +209,10 @@ public class PlayerMove implements Drawable {
 
                 // End point
                 x2 = x + thickness;
-                if (lastMove){
+                if (lastMove) {
                     // Draw to the middle of the fromTile
                     y2 = y - length + (thickness / 2);
-                } else if (sameDirection){
+                } else if (sameDirection) {
                     // Draw the length to the next identical move
                     y2 = y - length - cornerDistanceFromLine;
                 } else {
@@ -220,10 +233,10 @@ public class PlayerMove implements Drawable {
         int colorX = 0, colorY = 0;
         int currThickness;
 
-        for (int i = 0; i < colors.size(); i++){
+        for (int i = 0; i < colors.size(); i++) {
             currThickness = (int) (((colors.size() - 1 - i) * 2 + 1) * colorThickness);
 
-            if (direction.isHorizontal()){
+            if (direction.isHorizontal()) {
                 colorY = (int) (i * colorThickness);
                 GraphicUtils.fillRect(g, lineX + colorX, lineY + colorY, lineWidth, currThickness, drawColor[i]);
             } else {
@@ -238,12 +251,12 @@ public class PlayerMove implements Drawable {
     }
 
     @Override
-    public void draw(Graphics g, int x, int y, int width, int height){
+    public void draw(Graphics g, int x, int y, int width, int height) {
         int tileSize = Math.min(width, height); // Should be equal
 
         //Get the new colorExp
         Color drawColor[] = new Color[colors.size()];
-        for (int i = 0; i < colors.size(); i++){
+        for (int i = 0; i < colors.size(); i++) {
             drawColor[i] = colors.get(i).changeTone(COLORS_TONE);
         }
 
@@ -260,7 +273,7 @@ public class PlayerMove implements Drawable {
         y += locationExtra;
 
         //Draw the onStart if needed
-        if (isFirstMove){
+        if (isFirstMove) {
             drawStartCircle(g, thickness, x, y, drawColor);
         }
 
@@ -268,19 +281,19 @@ public class PlayerMove implements Drawable {
         drawLine(g, thickness, length, cornerDistanceFromLine, x, y, drawColor);
     }
 
-    public GamePlayer getPlayer(){
+    public GamePlayer getPlayer() {
         return player;
     }
 
-    public List<TileColor> getColors(){
+    public List<TileColor> getColors() {
         return colors;
     }
 
-    public void setNextMove(PlayerMove nextMove){
+    public void setNextMove(PlayerMove nextMove) {
         this.nextMove = nextMove;
     }
 
-    public void setFirstMove(){
+    public void setFirstMove() {
         isFirstMove = true;
     }
 }

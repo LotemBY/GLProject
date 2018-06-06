@@ -11,7 +11,7 @@ public class JPanelWithBackground extends JPanel implements RelativeParent {
 
     private RelativeItem background;
 
-    public JPanelWithBackground(){
+    public JPanelWithBackground() {
         background = null;
     }
 
@@ -26,7 +26,7 @@ public class JPanelWithBackground extends JPanel implements RelativeParent {
 
 
     @Override
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         if (background != null) {

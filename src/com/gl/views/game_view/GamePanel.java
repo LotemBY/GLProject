@@ -27,27 +27,27 @@ public class GamePanel extends JPanelWithBackground {
 
     private EventListener listener;
 
-    public GamePanel(Image bg){
+    public GamePanel(Image bg) {
         setBackground(bg);
 
         addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e){
+            public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 updateTileSize();
             }
         });
     }
 
-    public void setGameLevel(GameLevel gameLevel){
+    public void setGameLevel(GameLevel gameLevel) {
         this.gameLevel = gameLevel;
         gameLevel.setPanel(this);
         updateTileSize();
         repaint();
     }
 
-    public void updateTileSize(){
-        if (gameLevel != null){
+    public void updateTileSize() {
+        if (gameLevel != null) {
             int cols = gameLevel.getCols();
             int rows = gameLevel.getRows();
 
@@ -60,15 +60,15 @@ public class GamePanel extends JPanelWithBackground {
         }
     }
 
-    public int getTileSize(){
+    public int getTileSize() {
         return tileSize;
     }
 
-    public int getSpaceBetweenTiles(){
+    public int getSpaceBetweenTiles() {
         return (int) (tileSize * SPACE_BETWEEN_TILES_RATIO);
     }
 
-    public int getLevelX(){
+    public int getLevelX() {
         int tilesNum = gameLevel.getCols();
         return (int) (SPACE_FROM_BOUNDS +
                 (getLevelMaxWidth() -
@@ -78,7 +78,7 @@ public class GamePanel extends JPanelWithBackground {
         );
     }
 
-    public int getLevelY(){
+    public int getLevelY() {
         int tilesNum = gameLevel.getRows();
         return (int) (SPACE_FROM_BOUNDS +
                 (getLevelMaxHeight() -
@@ -88,22 +88,22 @@ public class GamePanel extends JPanelWithBackground {
         );
     }
 
-    public int getLevelMaxHeight(){
+    public int getLevelMaxHeight() {
         return getHeight() - 2 * SPACE_FROM_BOUNDS;
     }
 
-    public int getLevelMaxWidth(){
+    public int getLevelMaxWidth() {
         return getWidth() - 2 * SPACE_FROM_BOUNDS;
     }
 
-    public int getLevelHeight(){
+    public int getLevelHeight() {
         return (int) (
                 gameLevel.getRows() * tileSize +
                         (gameLevel.getRows() - 1) * SPACE_BETWEEN_TILES_RATIO * tileSize
         );
     }
 
-    public int getLevelWidth(){
+    public int getLevelWidth() {
         return (int) (
                 gameLevel.getCols() * tileSize +
                         (gameLevel.getCols() - 1) * SPACE_BETWEEN_TILES_RATIO * tileSize
@@ -111,7 +111,7 @@ public class GamePanel extends JPanelWithBackground {
     }
 
     @Override
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         Graphics2D g2d = GraphicUtils.getGraphicsWithHints(g); // (Graphics2D) g;
@@ -122,53 +122,53 @@ public class GamePanel extends JPanelWithBackground {
         gameLevel.draw(g2d, getLevelX(), getLevelY(), getWidth(), getWidth());
     }
 
-    public GameLevel getLevel(){
+    public GameLevel getLevel() {
         return gameLevel;
     }
 
-    public int getTileX(int col){
+    public int getTileX(int col) {
         return getLevelX() + col * (tileSize + getSpaceBetweenTiles());
     }
 
-    public int getTileY(int row){
+    public int getTileY(int row) {
         return getLevelY() + row * (tileSize + getSpaceBetweenTiles());
     }
 
-    public GameTile getTileFromLoc(int x, int y){
+    public GameTile getTileFromLoc(int x, int y) {
         int col = getColFromX(x);
         int row = getRowFromY(y);
 
         if (col < 0 || row < 0 ||
-                row >= gameLevel.getRows() || col >= gameLevel.getCols()){
+                row >= gameLevel.getRows() || col >= gameLevel.getCols()) {
             return null;
         }
 
         return gameLevel.getTileAt(row, col);
     }
 
-    public int getColFromX(int x){
+    public int getColFromX(int x) {
         return (int) (
                 (x - getLevelX()) /
                         (tileSize * (1 + SPACE_BETWEEN_TILES_RATIO))
         );
     }
 
-    public int getRowFromY(int y){
+    public int getRowFromY(int y) {
         return (int) (
                 (y - getLevelY()) /
                         (tileSize * (1 + SPACE_BETWEEN_TILES_RATIO))
         );
     }
 
-    public boolean isInLevelScreen(int x, int y){
+    public boolean isInLevelScreen(int x, int y) {
         return isInArea(x, y, getLevelX(), getLevelY(), getLevelWidth(), getLevelHeight());
     }
 
-    private boolean isInArea(int x, int y, int areaX, int areaY, int areaWidth, int areaHeight){
+    private boolean isInArea(int x, int y, int areaX, int areaY, int areaWidth, int areaHeight) {
         return (x > areaX && x < areaX + areaWidth) && (y > areaY && y < areaY + areaHeight);
     }
 
-    public void changeListener(EventListener newListener) {
+    public void removeListener() {
         // Remove old
         if (listener instanceof MouseListener) {
             removeMouseListener((MouseListener) listener);
@@ -181,6 +181,12 @@ public class GamePanel extends JPanelWithBackground {
         if (listener instanceof KeyListener) {
             removeKeyListener((KeyListener) listener);
         }
+
+        listener = null;
+    }
+
+    public void changeListener(EventListener newListener) {
+        removeListener();
 
         // Add new
         listener = newListener;
@@ -202,6 +208,6 @@ public class GamePanel extends JPanelWithBackground {
     }
 
     public void addGameInputHandler(LevelsManager manager) {
-       changeListener(new GameInputHandler(this, manager));
+        changeListener(new GameInputHandler(this, manager));
     }
 }

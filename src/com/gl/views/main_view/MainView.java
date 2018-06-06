@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class MainView extends View {
 
-    public MainView(){
+    public MainView() {
         setLayout(new BorderLayout());
         add(new MainMenu(), BorderLayout.CENTER);
     }

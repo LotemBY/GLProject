@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public final class Levels {
 
-    private static final String[][][] levelArr = new String[][][]{
+    private static final String[][][] levelArr = new String[][][] {
 
             // First Level
             {
@@ -67,14 +67,14 @@ public final class Levels {
                     {"t", "s:rt", "t", "t", "t", "t", "p:r"}
             },
 
-            // Bucket easy
+            // Bucket medium
             {
                     {"p:r", "t", "t", "t", "t", "t", "t", "p:y", "t"},
                     {"t", "t", "t", "t", "t", "t", "t", "s:rt", "t"},
                     {"t", "p:r", "t", "t", "t", "t", "b:g", "t", "t"},
                     {"t", "t", "t", "b:b", "t", "t", "t", "t", "t"},
-                    {"s:gt", "t", "t", "s:gt", "t", "t", "t", "t", "t"},
-                    {"t", "e:b", "t", "t", "t", "t", "t", "e:r", "t"},
+                    {"s:gt", "t", "t", "t", "t", "t", "t", "t", "t"},
+                    {"t", "e:b", "s:rt", "t", "t", "t", "t", "e:r", "t"},
                     {"t", "t", "t", "e:g", "t", "t", "t", "t", "t"}
             },
 
@@ -140,11 +140,11 @@ public final class Levels {
 
     private static final ArrayList<String[][]> levels = new ArrayList<>(Arrays.asList(levelArr));
 
-    public static GameLevel loadLevel(int index){
+    public static GameLevel loadLevel(int index) {
         return new GameLevel(TilesFactory.parseTilesMatrix(levels.get(index)));
     }
 
-    public static int getLevelsAmount(){
+    public static int getLevelsAmount() {
         return levels.size();
     }
 }

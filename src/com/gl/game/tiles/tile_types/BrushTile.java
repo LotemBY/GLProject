@@ -16,31 +16,31 @@ public class BrushTile extends ModifiedTile {
 
     private static ModifiedTileManager manager = new ModifiedTileManager(ORIGINAL_BRUSH, BRUSH_SIZE_RATIO);
 
-    public BrushTile(BrushTile other){
+    public BrushTile(BrushTile other) {
         super(other);
     }
 
-    public BrushTile(TileColor color){
+    public BrushTile(TileColor color) {
         super(color);
     }
 
     @Override
-    public GameTile makeCopy(){
+    public GameTile makeCopy() {
         return new BrushTile(this);
     }
 
     @Override
-    public void playerAction(GamePlayer player){
+    public void playerAction(GamePlayer player) {
         player.addColor((TileColor) modifier);
     }
 
     @Override
-    protected ModifiedTileManager getManager(){
+    protected ModifiedTileManager getManager() {
         return manager;
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         return o instanceof BrushTile && super.equals(o);
     }
 }

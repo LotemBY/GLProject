@@ -18,36 +18,36 @@ public class ArrowTile extends ModifiedTile {
 
     private static ModifiedTileManager manager = new ModifiedTileManager(ORIGINAL_ARROW, ARROW_SIZE_RATIO);
 
-    public ArrowTile(ArrowTile other){
+    public ArrowTile(ArrowTile other) {
         super(other);
     }
 
-    public ArrowTile(Direction direction){
+    public ArrowTile(Direction direction) {
         super(direction);
     }
 
     @Override
-    public boolean canPassFrom(Direction from, List<TileColor> color){
+    public boolean canPassFrom(Direction from, List<TileColor> color) {
         return super.canPassFrom(from, color) && from != modifier;
     }
 
     @Override
-    public GameTile makeCopy(){
+    public GameTile makeCopy() {
         return new ArrowTile(this);
     }
 
     @Override
-    public void playerAction(GamePlayer player){
+    public void playerAction(GamePlayer player) {
         player.move((Direction) modifier);
     }
 
     @Override
-    protected ModifiedTileManager getManager(){
+    protected ModifiedTileManager getManager() {
         return manager;
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         return o instanceof ArrowTile && super.equals(o);
     }
 }

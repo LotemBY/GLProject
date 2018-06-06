@@ -9,27 +9,27 @@ public class RelativeImage extends RelativeItem {
     private Image img;
     private boolean keepOriginalRatio;
 
-    public RelativeImage(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, Image img){
+    public RelativeImage(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio, Image img) {
         this(parent, midXRatio, midYRatio, widthRatio, heightRatio, img, true);
     }
 
     public RelativeImage(RelativeParent parent, double midXRatio, double midYRatio, double widthRatio, double heightRatio,
-                         Image img, boolean keepOriginalRatio){
+                         Image img, boolean keepOriginalRatio) {
         super(parent, midXRatio, midYRatio, widthRatio, heightRatio);
         this.img = img;
         this.keepOriginalRatio = keepOriginalRatio;
     }
 
-    public void setImg(Image img){
+    public void setImg(Image img) {
         this.img = img;
         setUpdated();
     }
 
     @Override
-    public void draw(Graphics g, int x, int y, int width, int height){
-        if (keepOriginalRatio){
+    public void draw(Graphics g, int x, int y, int width, int height) {
+        if (keepOriginalRatio) {
             double scale;
-            if (width > height){
+            if (width > height) {
                 scale = (double) height / img.getHeight(null);
             } else {
                 scale = (double) width / img.getWidth(null);
@@ -42,7 +42,7 @@ public class RelativeImage extends RelativeItem {
 
             Image scaled = GraphicUtils.getScaledImage(img, buttonWidth, buttonHeight);
             GraphicUtils.drawImage(g, scaled, buttonX, buttonY);
-        } else  {
+        } else {
             GraphicUtils.drawImage(g, img.getScaledInstance(width, height, Image.SCALE_SMOOTH), x, y);
         }
     }

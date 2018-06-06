@@ -32,7 +32,7 @@ public class MenuButton extends RelativeItem implements RelativeParent {
     private boolean isEnabled;
 
     public MenuButton(Menu menu, double ratioX, double ratioY, double ratioWidth, double ratioHeight,
-                      String strContent, Runnable action){
+                      String strContent, Runnable action) {
 
         this(menu, ratioX, ratioY, ratioWidth, ratioHeight, (RelativeItem) null, action);
 
@@ -44,7 +44,7 @@ public class MenuButton extends RelativeItem implements RelativeParent {
     }
 
     public MenuButton(Menu menu, double ratioX, double ratioY, double ratioWidth, double ratioHeight,
-                      Image imgContent, Runnable action){
+                      Image imgContent, Runnable action) {
 
         this(menu, ratioX, ratioY, ratioWidth, ratioHeight, (RelativeItem) null, action);
 
@@ -52,7 +52,7 @@ public class MenuButton extends RelativeItem implements RelativeParent {
     }
 
     public MenuButton(Menu menu, double ratioX, double ratioY, double ratioWidth, double ratioHeight,
-                      RelativeItem content, Runnable action){
+                      RelativeItem content, Runnable action) {
 
         super(menu, ratioX, ratioY, ratioWidth, ratioHeight);
         this.action = action;
@@ -61,11 +61,11 @@ public class MenuButton extends RelativeItem implements RelativeParent {
         isEnabled = true;
     }
 
-    public void setContent(RelativeItem content){
+    public void setContent(RelativeItem content) {
         this.content = content;
     }
 
-    private Color getBackgroundColor(){
+    private Color getBackgroundColor() {
         if (!isEnabled) {
             return DISABLED_BACKGROUND_COLOR;
         }
@@ -82,12 +82,12 @@ public class MenuButton extends RelativeItem implements RelativeParent {
     }
 
     @Override
-    public boolean hasUpdated(){
+    public boolean hasUpdated() {
         return super.hasUpdated() || content.hasUpdated();
     }
 
     @Override
-    public void draw(Graphics g, int x, int y, int width, int height){
+    public void draw(Graphics g, int x, int y, int width, int height) {
         int minSize = Math.min(width, height);
         int arcSize = (int) (minSize * ARC_SCALE);
 
@@ -109,41 +109,41 @@ public class MenuButton extends RelativeItem implements RelativeParent {
         content.draw(g);
     }
 
-    private void press(){
+    private void press() {
         setPressed(true);
         ScheduleManager.addTask(() -> setPressed(false), PRESS_DELAY);
         action.run();
     }
 
-    public void sendMouseClick(){
-        if (isEnabled && isSelected){
+    public void sendMouseClick() {
+        if (isVisible && isEnabled && isSelected) {
             press();
         }
     }
 
-    public void sendMousePos(int x, int y){
-        if (isEnabled){
+    public void sendMousePos(int x, int y) {
+        if (isVisible && isEnabled) {
             setSelected(inBorders(x, y));
         }
     }
 
-    public void setSelected(boolean selected){
-        if (isSelected != selected){
+    public void setSelected(boolean selected) {
+        if (isSelected != selected) {
             isSelected = selected;
             setUpdated();
             parent.repaint();
         }
     }
 
-    public void setPressed(boolean pressed){
-        if (isPressed != pressed){
+    public void setPressed(boolean pressed) {
+        if (isPressed != pressed) {
             isPressed = pressed;
             setUpdated();
             parent.repaint();
         }
     }
 
-    private boolean inBorders(int x, int y){
+    private boolean inBorders(int x, int y) {
         int minX = getX();
         int minY = getY();
         int maxX = minX + getWidth();
@@ -153,11 +153,11 @@ public class MenuButton extends RelativeItem implements RelativeParent {
                 minY <= y && y <= maxY;
     }
 
-    public void setEnabled(boolean enabled){
-        if (isEnabled != enabled){
+    public void setEnabled(boolean enabled) {
+        if (isEnabled != enabled) {
             isEnabled = enabled;
 
-            if (!enabled){
+            if (!enabled) {
                 setSelected(false);
             }
 
@@ -167,7 +167,7 @@ public class MenuButton extends RelativeItem implements RelativeParent {
     }
 
     @Override
-    public void repaint(){
+    public void repaint() {
         parent.repaint();
     }
 }

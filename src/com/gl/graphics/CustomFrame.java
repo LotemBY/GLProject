@@ -14,7 +14,7 @@ public class CustomFrame extends JFrame {
 
     private View view;
 
-    public CustomFrame(boolean developerMode) throws HeadlessException{
+    public CustomFrame(boolean developerMode) throws HeadlessException {
         super(TITLE + (developerMode ? " - DEVELOPERS MODE" : ""));
 
         getContentPane().setBackground(Color.RED);
@@ -37,13 +37,13 @@ public class CustomFrame extends JFrame {
     }
 
     @Override
-    public void pack(){
+    public void pack() {
         setPreferredSize(getSize());
         super.pack();
     }
 
-    public void setView(View newView){
-        if (view != null){
+    public void setView(View newView) {
+        if (view != null) {
             this.view.onEnd();
             getContentPane().removeAll();
         }

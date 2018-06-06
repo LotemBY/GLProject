@@ -13,20 +13,28 @@ public class EditableLevel extends GameLevel {
     // TODO: consider removing this and working with the matrix alone
     List<List<GameTile>> tilesList;
 
-    public EditableLevel(GameTile[][] matrix){
-        super(matrix);
+    public EditableLevel(GameLevel level) {
+        super(level);
+        setTilesList(tilesMatrix);
+    }
 
+    public EditableLevel(GameTile[][] matrix) {
+        super(matrix);
+        setTilesList(matrix);
+    }
+
+    public void setTilesList(GameTile[][] matrix) {
         tilesList = new ArrayList<>();
-        for (int i = 0; i < matrix.length; i++){
+        for (int i = 0; i < matrix.length; i++) {
             List<GameTile> row = new ArrayList<>();
-            for (int j = 0; j < matrix[i].length; j++){
+            for (int j = 0; j < matrix[i].length; j++) {
                 row.add(matrix[i][j]);
             }
             tilesList.add(row);
         }
     }
 
-    public void setTilesList(List<List<GameTile>> tilesList){
+    public void setTilesList(List<List<GameTile>> tilesList) {
         this.tilesList = tilesList;
     }
 
@@ -34,13 +42,13 @@ public class EditableLevel extends GameLevel {
         return tilesList;
     }
 
-    private GameTile[][] getListAsMatrix(){
+    private GameTile[][] getListAsMatrix() {
         int rows = tilesList.size();
         int cols = tilesList.get(0).size();
 
         GameTile[][] matrix = new GameTile[rows][cols];
-        for (int i = 0; i < rows; i++){
-            for (int j = 0; j < cols; j++){
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 matrix[i][j] = tilesList.get(i).get(j);
             }
         }
@@ -65,7 +73,7 @@ public class EditableLevel extends GameLevel {
 
         List<GameTile> row = new ArrayList<>();
         tilesList.add(row);
-        for (int j = 0; j < cols; j++){
+        for (int j = 0; j < cols; j++) {
             row.add(DEFAULT_TILE.makeCopy());
         }
     }
@@ -77,14 +85,14 @@ public class EditableLevel extends GameLevel {
     }
 
     public void addCol() {
-        for (List<GameTile> row : tilesList){
+        for (List<GameTile> row : tilesList) {
             row.add(DEFAULT_TILE.makeCopy());
         }
     }
 
-    public void removeCol(){
-        for (List<GameTile> row : tilesList){
-            if (row.size() > 1){
+    public void removeCol() {
+        for (List<GameTile> row : tilesList) {
+            if (row.size() > 1) {
                 row.remove(row.size() - 1);
             }
         }

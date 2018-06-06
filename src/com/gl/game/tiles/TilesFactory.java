@@ -22,7 +22,7 @@ public final class TilesFactory {
     private static final char MODIFIERS_SEPARATOR = ':';
 
     private static class TileParsingException extends RuntimeException {
-        public TileParsingException(String message){
+        public TileParsingException(String message) {
             super(message);
         }
     }
@@ -38,7 +38,7 @@ public final class TilesFactory {
         private boolean canHaveStar;
         private TileParser parser;
 
-        public TileParsingInfo(String name, String tilePattern, String modifierPattern, boolean canHaveStar, TileParser parser){
+        public TileParsingInfo(String name, String tilePattern, String modifierPattern, boolean canHaveStar, TileParser parser) {
             this.name = name;
             this.tilePattern = tilePattern;
             this.modifierPattern = modifierPattern;
@@ -47,7 +47,7 @@ public final class TilesFactory {
         }
 
         private String getFullFormat() {
-            if (!modifierPattern.isEmpty()){
+            if (!modifierPattern.isEmpty()) {
                 return tilePattern + MODIFIERS_SEPARATOR + modifierPattern;
             } else {
                 return tilePattern;
@@ -83,7 +83,7 @@ public final class TilesFactory {
                     false,
                     (format, hasStar, starColor) -> {
                         List<TileColor> colors = new ArrayList<>();
-                        for (int i = 0; i < format.length(); i++){
+                        for (int i = 0; i < format.length(); i++) {
                             colors.add(parseColor(format.charAt(i)));
                         }
 
@@ -151,17 +151,17 @@ public final class TilesFactory {
         return direction;
     }
 
-    public static GameTile parseTile(String tileFormat, StringBuffer error){
-        try{
+    public static GameTile parseTile(String tileFormat, StringBuffer error) {
+        try {
             return parseTile(tileFormat);
-        } catch (TileParsingException e){
+        } catch (TileParsingException e) {
             error.append(e.getMessage());
             return null;
         }
     }
 
-    public static GameTile parseTile(String tileFormat) throws TileParsingException{
-        if (tileFormat == null || tileFormat.isEmpty()){
+    public static GameTile parseTile(String tileFormat) throws TileParsingException {
+        if (tileFormat == null || tileFormat.isEmpty()) {
             throw new TileParsingException("Can't parse an empty string.");
         }
 
@@ -173,12 +173,12 @@ public final class TilesFactory {
         TileColor starColor = null;
 
         //Check for star
-        if (tileFormat.charAt(0) == 's'){
+        if (tileFormat.charAt(0) == 's') {
             hasStar = true;
 
             tileFormat = tileFormat.substring(1);
-            if (tileFormat.charAt(0) == ':'){
-                if (tileFormat.length() < 3){
+            if (tileFormat.charAt(0) == ':') {
+                if (tileFormat.length() < 3) {
                     throw new TileParsingException("Star tile length is too short.");
                 }
 
@@ -195,7 +195,7 @@ public final class TilesFactory {
                     throw new TileParsingException(parsingInfo.name + " can't have a star.");
                 } else {
                     String modifiers = tileFormat.substring(tileFormat.indexOf(MODIFIERS_SEPARATOR) + 1);
-                    GameTile tile =  parsingInfo.parser.createTile(modifiers, hasStar, starColor);
+                    GameTile tile = parsingInfo.parser.createTile(modifiers, hasStar, starColor);
                     tile.setTileStrFormat(originalFormat);
                     return tile;
                 }
@@ -205,27 +205,27 @@ public final class TilesFactory {
         throw new TileParsingException("\"" + tileFormat + "\" doesn't match any tile format");
     }
 
-    private static ColorExp parseColor(String colorFormat) throws TileParsingException{
+    private static ColorExp parseColor(String colorFormat) throws TileParsingException {
         ColorExp lastExp = null;
         ColorExp curExp;
 
         boolean secElement = false;
 
-        for (int i = 0; i < colorFormat.length(); i++){
+        for (int i = 0; i < colorFormat.length(); i++) {
             curExp = null;
             char currChar = colorFormat.charAt(i);
 
-            switch (currChar){
+            switch (currChar) {
                 case '(':
                     int bracketCount = 1;
                     int idxEnc = i;
-                    for (char enclosed : colorFormat.substring(i + 1).toCharArray()){
-                        if (enclosed == '('){
+                    for (char enclosed : colorFormat.substring(i + 1).toCharArray()) {
+                        if (enclosed == '(') {
                             bracketCount++;
-                        } else if (enclosed == ')'){
+                        } else if (enclosed == ')') {
                             bracketCount--;
                         }
-                        if (bracketCount == 0){
+                        if (bracketCount == 0) {
                             curExp = parseColor(colorFormat.substring(i + 1, idxEnc + 1));
                             i = idxEnc;
                             break;
@@ -245,19 +245,19 @@ public final class TilesFactory {
                 default:
                     curExp = TileColor.getColor(currChar);
 
-                    if (curExp == null){
+                    if (curExp == null) {
                         throw new TileParsingException("Unable to parse color expression: \"" + colorFormat + "\"");
                     }
 
                     break;
             }
 
-            if (lastExp == null){
+            if (lastExp == null) {
                 lastExp = curExp;
-            } else if (lastExp instanceof LogicalExpNode && secElement){
+            } else if (lastExp instanceof LogicalExpNode && secElement) {
                 ((LogicalExpNode) lastExp).setSecond(curExp);
                 secElement = false;
-            } else if (curExp instanceof LogicalExpNode){
+            } else if (curExp instanceof LogicalExpNode) {
                 ((LogicalExpNode) curExp).setFirst(lastExp);
                 lastExp = curExp;
                 secElement = true;
@@ -267,11 +267,11 @@ public final class TilesFactory {
         return lastExp;
     }
 
-    public static GameTile[][] parseTilesMatrix(String[][] matrix){
+    public static GameTile[][] parseTilesMatrix(String[][] matrix) {
         GameTile[][] tileMatrix = new GameTile[matrix.length][matrix[0].length];
 
-        for (int row = 0; row < matrix.length; row++){
-            for (int col = 0; col < matrix[row].length; col++){
+        for (int row = 0; row < matrix.length; row++) {
+            for (int col = 0; col < matrix[row].length; col++) {
                 try {
                     tileMatrix[row][col] = parseTile(matrix[row][col]);
                 } catch (TileParsingException e) {

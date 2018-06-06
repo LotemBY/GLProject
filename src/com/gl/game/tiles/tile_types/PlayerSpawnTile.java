@@ -20,37 +20,37 @@ public class PlayerSpawnTile extends ModifiedTile {
 
     private List<TileColor> colors;
 
-    public PlayerSpawnTile(PlayerSpawnTile other){
+    public PlayerSpawnTile(PlayerSpawnTile other) {
         super(other);
         this.colors = other.colors;
     }
 
-    public PlayerSpawnTile(List<TileColor> colors){
+    public PlayerSpawnTile(List<TileColor> colors) {
         super();
         this.colors = colors;
     }
 
     @Override
-    public GameTile makeCopy(){
+    public GameTile makeCopy() {
         return new PlayerSpawnTile(this);
     }
 
     @Override
-    public boolean canPassFrom(Direction from, List<TileColor> playerColors){
+    public boolean canPassFrom(Direction from, List<TileColor> playerColors) {
         return false;
     }
 
-    public List<TileColor> getColors(){
+    public List<TileColor> getColors() {
         return colors;
     }
 
     @Override
-    protected ModifiedTileManager getManager(){
+    protected ModifiedTileManager getManager() {
         return manager;
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PlayerSpawnTile)) return false;
         if (!super.equals(o)) return false;
@@ -59,7 +59,7 @@ public class PlayerSpawnTile extends ModifiedTile {
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return Objects.hash(super.hashCode(), colors);
     }
 }

@@ -6,11 +6,11 @@ public final class ScheduleManager {
 
     private static CustomFrame frame;
 
-    public static void addTask(Runnable runnable, long delay){
+    public static void addTask(Runnable runnable, long delay) {
         new Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
-                    public void run(){
+                    public void run() {
                         runnable.run();
                     }
                 },
@@ -18,11 +18,11 @@ public final class ScheduleManager {
         );
     }
 
-    public static void setFrame(CustomFrame customFrame){
+    public static void setFrame(CustomFrame customFrame) {
         frame = customFrame;
     }
 
-    public static CustomFrame getFrame(){
+    public static CustomFrame getFrame() {
         return frame;
     }
 }

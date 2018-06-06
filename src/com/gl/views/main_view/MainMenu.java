@@ -1,7 +1,8 @@
 package com.gl.views.main_view;
 
-import com.gl.graphics.*;
+import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.MenuButton;
+import com.gl.graphics.ScheduleManager;
 import com.gl.graphics.relative_items.RelativeLabel;
 import com.gl.views.creator_view.CreatorView;
 import com.gl.views.game_view.GameView;
@@ -15,16 +16,16 @@ public class MainMenu extends com.gl.graphics.Menu {
     private static final Image EDITOR_IMG = GraphicUtils.loadImage("editorIcon");
     private static final Image EXIT_IMG = GraphicUtils.loadImage("exitIcon");
 
-    public MainMenu(){
+    public MainMenu() {
         RelativeLabel gameLbl = new RelativeLabel(this,
                 0.5, 0.2, 0.9, 0.4,
-                () -> "GL Project");
+                "GL Project");
         gameLbl.setFontColor(Color.BLACK);
         addItem(gameLbl);
 
         RelativeLabel creditLbl = new RelativeLabel(this,
                 0.5, 0.4, 0.3, 0.2,
-                () -> "By Lotem");
+                "By Lotem");
         gameLbl.setFontColor(Color.BLACK);
         addItem(creditLbl);
 

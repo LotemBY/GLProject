@@ -17,30 +17,30 @@ public abstract class ColorLogicTile extends GameTile {
 
     protected HashSet<HashSet<TileColor>> colorTextures;
 
-    public ColorLogicTile(ColorLogicTile other){
+    public ColorLogicTile(ColorLogicTile other) {
         super(other);
         this.colorExp = other.colorExp;
         this.colorTextures = (HashSet<HashSet<TileColor>>) other.colorTextures.clone();
     }
 
-    public ColorLogicTile(ColorExp expression){
+    public ColorLogicTile(ColorExp expression) {
         super();
         this.colorExp = expression;
         colorTextures = initTextureData(expression);
     }
 
-    private static HashSet<HashSet<TileColor>> initTextureData(ColorExp exp){
+    private static HashSet<HashSet<TileColor>> initTextureData(ColorExp exp) {
         HashSet<HashSet<TileColor>> options = new HashSet<>();
 
-        if (exp instanceof LogicalExpNode){
+        if (exp instanceof LogicalExpNode) {
             LogicalExpNode logic = (LogicalExpNode) exp;
             HashSet<HashSet<TileColor>> first = initTextureData(logic.getFirst());
             HashSet<HashSet<TileColor>> second = initTextureData(logic.getSecond());
-            if (logic.isAndOp()){
-                for (HashSet<TileColor> colors : first){
+            if (logic.isAndOp()) {
+                for (HashSet<TileColor> colors : first) {
                     HashSet<TileColor> copy = (HashSet<TileColor>) colors.clone();
 
-                    for (HashSet<TileColor> colorsSecond : second){
+                    for (HashSet<TileColor> colorsSecond : second) {
                         copy.addAll(colorsSecond);
                         options.add(copy);
                         copy = (HashSet<TileColor>) colors.clone();
@@ -60,14 +60,14 @@ public abstract class ColorLogicTile extends GameTile {
         return options;
     }
 
-    public boolean canPassFrom(Direction from, List<TileColor> playerColors){
+    public boolean canPassFrom(Direction from, List<TileColor> playerColors) {
         return super.canPassFrom(from, playerColors) &&
                 colorTextures.contains(new HashSet<>(playerColors));
 
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ColorLogicTile)) return false;
         if (!super.equals(o)) return false;
@@ -76,7 +76,7 @@ public abstract class ColorLogicTile extends GameTile {
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return Objects.hash(super.hashCode(), colorTextures);
     }
 }

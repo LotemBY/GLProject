@@ -5,6 +5,7 @@ import com.gl.game.tiles.SerializeUtils;
 import com.gl.game.tiles.TilesFactory;
 import com.gl.game.tiles.tile_types.EndTile;
 import com.gl.game.tiles.tile_types.PlayerSpawnTile;
+import com.gl.levels.Levels;
 import com.gl.views.creator_view.CreatorMenu;
 import com.gl.views.game_view.GamePanel;
 
@@ -25,6 +26,7 @@ public class LevelCreator {
                     {"t", "t", "t", "t", "t"},
                     {"t", "t", "t", "t", "t"},
             };
+
     public static final String DEFAULT_USED_TILE = "t";
 
     private GamePanel gamePanel;
@@ -37,7 +39,7 @@ public class LevelCreator {
     private Stack<List<List<GameTile>>> undoStack;
     private Stack<List<List<GameTile>>> redoStack;
 
-    public LevelCreator(GamePanel panel){
+    public LevelCreator(GamePanel panel) {
         this.gamePanel = panel;
         usedTile = TilesFactory.parseTile(DEFAULT_USED_TILE);
         undoStack = new Stack<>();
@@ -46,7 +48,7 @@ public class LevelCreator {
 
     private void saveStateToStack(Stack<List<List<GameTile>>> statesStuck, boolean isRedo) {
         List<List<GameTile>> copiedList = new ArrayList<>();
-        for(List<GameTile> row : level.getTilesList()) {
+        for (List<GameTile> row : level.getTilesList()) {
             List<GameTile> copiedRow = new ArrayList<>();
 
             for (GameTile tile : row) {
@@ -98,19 +100,19 @@ public class LevelCreator {
         }
     }
 
-    public void setCreatorMenu(CreatorMenu creatorMenu){
+    public void setCreatorMenu(CreatorMenu creatorMenu) {
         this.creatorMenu = creatorMenu;
     }
 
-    public GameTile getUsedTile(){
+    public GameTile getUsedTile() {
         return usedTile;
     }
 
-    public void setUsedTile(GameTile usedTile){
+    public void setUsedTile(GameTile usedTile) {
         this.usedTile = usedTile;
     }
 
-    public void editTile(GameTile tile){
+    public void editTile(GameTile tile) {
         if (!tile.equals(usedTile)) {
             saveStateToStack(undoStack, false);
 
@@ -121,12 +123,12 @@ public class LevelCreator {
         }
     }
 
-    private void checkForLevelValidation(){
+    private void checkForLevelValidation() {
         int playersCounter = 0;
         int endsCounter = 0;
 
-        for (int i = 0; i < level.getRows(); i++){
-            for (int j = 0; j < level.getCols(); j++){
+        for (int i = 0; i < level.getRows(); i++) {
+            for (int j = 0; j < level.getCols(); j++) {
                 GameTile tile = level.getTileAt(i, j);
 
                 if (tile instanceof PlayerSpawnTile) {
@@ -142,12 +144,13 @@ public class LevelCreator {
     }
 
     public void start() {
-        EditableLevel level = new EditableLevel(TilesFactory.parseTilesMatrix(DEFAULT_LEVEL));
+        //EditableLevel level = new EditableLevel(TilesFactory.parseTilesMatrix(DEFAULT_LEVEL));
+        EditableLevel level = new EditableLevel(Levels.loadLevel(3));
         setLevel(level);
     }
 
     public void setLevel(EditableLevel level) {
-        if (this.level != null){
+        if (this.level != null) {
             saveStateToStack(undoStack, false);
         }
 
@@ -156,7 +159,7 @@ public class LevelCreator {
         gamePanel.setGameLevel(level);
     }
 
-    public EditableLevel getLevel(){
+    public EditableLevel getLevel() {
         return level;
     }
 
@@ -204,8 +207,8 @@ public class LevelCreator {
         int cols = board.get(0).size();
         String[][] boardFormat = new String[rows][cols];
 
-        for (int i = 0; i < rows; i++){
-            for (int j = 0; j < cols; j++){
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 boardFormat[i][j] = board.get(i).get(j).getTileStrFormat();
             }
         }
@@ -216,7 +219,7 @@ public class LevelCreator {
     public boolean importLevel(String boardFormat) {
         String[][] tilesMatrix = SerializeUtils.matrixFromString(boardFormat);
 
-        if (tilesMatrix != null){
+        if (tilesMatrix != null) {
             GameTile[][] board = TilesFactory.parseTilesMatrix(tilesMatrix);
 
             if (board != null) {

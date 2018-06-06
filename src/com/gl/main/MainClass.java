@@ -16,16 +16,16 @@ public class MainClass {
 
     public static boolean developerMode;
 
-    public static void setThrowable(Throwable throwable){
+    public static void setThrowable(Throwable throwable) {
         queuedThrowable = throwable;
 
-        synchronized (queuedThrowableLock){
+        synchronized (queuedThrowableLock) {
             queuedThrowableLock.notifyAll();
         }
     }
 
-    private static void handleException(Throwable throwable, JFrame frame){
-        if (developerMode){
+    private static void handleException(Throwable throwable, JFrame frame) {
+        if (developerMode) {
             queuedThrowable.printStackTrace();
         } else {
             if (frame != null) {
@@ -71,8 +71,8 @@ public class MainClass {
         }
     }
 
-    public static void main(String[] args){
-        if (args.length > 0 && args[0].equals("true")){
+    public static void main(String[] args) {
+        if (args.length > 0 && args[0].equals("true")) {
             developerMode = true;
         }
 
@@ -83,8 +83,8 @@ public class MainClass {
             frame = new CustomFrame(developerMode);
 
             // Wait for throwable and catch
-            if (queuedThrowable == null){
-                synchronized (queuedThrowableLock){
+            if (queuedThrowable == null) {
+                synchronized (queuedThrowableLock) {
                     queuedThrowableLock.wait();
                 }
 

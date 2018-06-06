@@ -1,12 +1,13 @@
 package com.gl.views.game_view;
 
 import com.gl.game.LevelsManager;
-import com.gl.graphics.*;
+import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.MenuButton;
+import com.gl.graphics.ScheduleManager;
 import com.gl.graphics.relative_items.RelativeLabel;
-import com.gl.views.main_view.MainView;
 import com.gl.levels.Levels;
 import com.gl.types.Direction;
+import com.gl.views.main_view.MainView;
 
 import java.awt.*;
 
@@ -22,7 +23,7 @@ public class GameMenu extends com.gl.graphics.Menu {
     private MenuButton prevBtn;
     private MenuButton nextBtn;
 
-    public GameMenu(LevelsManager levelsManager){
+    public GameMenu(LevelsManager levelsManager) {
         setBackground(BACKGROUND_COLOR);
 
         RelativeLabel levelName = new RelativeLabel(this,
@@ -51,11 +52,11 @@ public class GameMenu extends com.gl.graphics.Menu {
         addItem(backBtn);
     }
 
-    public void setEnabledPrev(boolean newEnabled){
+    public void setEnabledPrev(boolean newEnabled) {
         prevBtn.setEnabled(newEnabled);
     }
 
-    public void setEnabledNext(boolean newEnabled){
+    public void setEnabledNext(boolean newEnabled) {
         nextBtn.setEnabled(newEnabled);
     }
 }

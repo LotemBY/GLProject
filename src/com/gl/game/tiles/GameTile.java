@@ -10,6 +10,7 @@ import com.gl.types.TileColor;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class GameTile implements Drawable, Serializable {
@@ -44,16 +45,21 @@ public abstract class GameTile implements Drawable, Serializable {
     private boolean hasStar;
     private TileColor starOutlineColor;
 
-    public GameTile(GameTile other){
-        this(other.hasStar, other.starOutlineColor);
-        setTileStrFormat(other.tileStrFormat);
+    public GameTile(GameTile other) {
+        this.tileStrFormat = other.tileStrFormat;
+
+        this.col = other.col;
+        this.row = other.row;
+
+        this.hasStar = other.hasStar;
+        this.starOutlineColor = other.starOutlineColor;
     }
 
-    public GameTile(){
+    public GameTile() {
         this(false, null);
     }
 
-    public GameTile(boolean hasStar, TileColor starColor){
+    public GameTile(boolean hasStar, TileColor starColor) {
         this.hasStar = hasStar;
         this.starOutlineColor = starColor;
     }
@@ -66,12 +72,12 @@ public abstract class GameTile implements Drawable, Serializable {
         this.tileStrFormat = format;
     }
 
-    public void setBoardPosition(int row, int col){
+    public void setBoardPosition(int row, int col) {
         this.row = row;
         this.col = col;
     }
 
-    public static BufferedImage createTileOutline(int tileSize){
+    public static BufferedImage createTileOutline(int tileSize) {
         BufferedImage tileOutline = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics g = GraphicUtils.getGraphicsWithHints(tileOutline.getGraphics());
 
@@ -95,20 +101,20 @@ public abstract class GameTile implements Drawable, Serializable {
 
         // Left side
         GraphicUtils.drawImage(g, cornerLU, 0, 0);
-        for (int i = tileOutlineSize; i < outlineLength; i++){
+        for (int i = tileOutlineSize; i < outlineLength; i++) {
             GraphicUtils.drawImage(g, tileL, 0, i);
         }
         GraphicUtils.drawImage(g, cornerLD, 0, outlineLength);
 
         // Middle
-        for (int i = tileOutlineSize; i < outlineLength; i++){
+        for (int i = tileOutlineSize; i < outlineLength; i++) {
             GraphicUtils.drawImage(g, tileU, i, 0);
             GraphicUtils.drawImage(g, tileD, i, outlineLength);
         }
 
         // Right side
         GraphicUtils.drawImage(g, cornerRU, outlineLength, 0);
-        for (int i = tileOutlineSize; i < outlineLength; i++){
+        for (int i = tileOutlineSize; i < outlineLength; i++) {
             GraphicUtils.drawImage(g, tileR, outlineLength, i);
         }
         GraphicUtils.drawImage(g, cornerRD, outlineLength, outlineLength);
@@ -116,11 +122,11 @@ public abstract class GameTile implements Drawable, Serializable {
         return tileOutline;
     }
 
-    public void setOutline(BufferedImage outline){
+    public void setOutline(BufferedImage outline) {
         this.outline = outline;
     }
 
-    public void draw(Graphics g, int x, int y, int width, int height){
+    public void draw(Graphics g, int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.tileSize = Math.min(width, height); // Should be equal anyway
@@ -132,38 +138,57 @@ public abstract class GameTile implements Drawable, Serializable {
         drawTileContent(g, x + TILE_OUTLINE_SIZE, y + TILE_OUTLINE_SIZE, tileSize - 2 * TILE_OUTLINE_SIZE);
 
         //Draw star
-        if (hasStar){
+        if (hasStar) {
             drawStar(g, x + TILE_OUTLINE_SIZE, y + TILE_OUTLINE_SIZE, tileSize - 2 * TILE_OUTLINE_SIZE);
         }
     }
 
-    public void drawTileContent(Graphics g, int x, int y, int size){
+    public void drawTileContent(Graphics g, int x, int y, int size) {
         // None
     }
 
-    private void drawStar(Graphics g, int x, int y, int size){
-        Graphics2D g2d = (Graphics2D) g;
-        Color starColor = STAR_COLOR;
-        Color outlineColor = (starOutlineColor == null) ? null : starOutlineColor.getColor();
+    public boolean hasStar() {
+        return hasStar;
+    }
 
-        if (playerMove != null){
-            if (outlineColor == null){
-                starColor = GraphicUtils.changeTransparency(starColor, STAR_FADED_TRANSPARENCY);
+    public boolean starCollected() {
+        List<TileColor> colorsOnTile = null;
+
+        if (player != null) {
+            colorsOnTile = player.getColors();
+        } else if (playerMove != null) {
+            colorsOnTile = playerMove.getColors();
+        }
+
+        if (hasStar && colorsOnTile != null) {
+            if (starOutlineColor == null) {
+                return true;
             } else {
                 boolean containsColor = false;
-                for (TileColor color : playerMove.getColors()){
-                    if (color.equals(starOutlineColor)){
+                for (TileColor color : colorsOnTile) {
+                    if (color.equals(starOutlineColor)) {
                         containsColor = true;
                     }
                 }
 
-                if (containsColor){
-                    starColor = GraphicUtils.changeTransparency(starColor, STAR_FADED_TRANSPARENCY);
-                    outlineColor = GraphicUtils.changeTransparency(outlineColor, STAR_FADED_TRANSPARENCY);
-                }
+                return containsColor;
             }
         }
 
+        return false;
+    }
+
+    private void drawStar(Graphics g, int x, int y, int size) {
+        Graphics2D g2d = (Graphics2D) g;
+        Color starColor = STAR_COLOR;
+        Color outlineColor = (starOutlineColor == null) ? null : starOutlineColor.getColor();
+
+        if (starCollected()) {
+            starColor = GraphicUtils.changeTransparency(starColor, STAR_FADED_TRANSPARENCY);
+            if (starOutlineColor != null) {
+                outlineColor = GraphicUtils.changeTransparency(outlineColor, STAR_FADED_TRANSPARENCY);
+            }
+        }
 
         int rOuter = (int) (STAR_OUTER_SIZE_RATIO * size);
         int rInner = (int) (STAR_INNER_SIZE_RATIO * size);
@@ -173,7 +198,7 @@ public abstract class GameTile implements Drawable, Serializable {
                 y + size / 2 + (int) (rOuter * (1 - Math.sin(Math.PI / 2 - Math.PI / STAR_ARMS)) / 2)
         );
 
-        if (starOutlineColor == null){
+        if (starOutlineColor == null) {
             GraphicUtils.createStar(g2d, STAR_ARMS, starMid, rOuter, rInner, starColor);
         } else {
             GraphicUtils.createStar(g2d, STAR_ARMS, starMid, rOuter, rInner, outlineColor);
@@ -182,70 +207,70 @@ public abstract class GameTile implements Drawable, Serializable {
         }
     }
 
-    public void updateTextures(int tileSize){
+    public void updateTextures(int tileSize) {
         // None
     }
 
-    public void playerAction(GamePlayer player){
+    public void playerAction(GamePlayer player) {
         // None
     }
 
-    public boolean canPassFrom(Direction from, java.util.List<TileColor> playerColors){
+    public boolean canPassFrom(Direction from, java.util.List<TileColor> playerColors) {
         return (playerMove == null && !hasPlayer());
     }
 
-    public void setPlayer(GamePlayer player){
+    public void setPlayer(GamePlayer player) {
         this.player = player;
     }
 
-    public GamePlayer getPlayer(){
+    public GamePlayer getPlayer() {
         return player;
     }
 
-    public void removePlayer(){
+    public void removePlayer() {
         this.player = null;
     }
 
-    public boolean hasPlayer(){
+    public boolean hasPlayer() {
         return player != null;
     }
 
-    public int getRow(){
+    public int getRow() {
         return row;
     }
 
-    public int getCol(){
+    public int getCol() {
         return col;
     }
 
-    public void setPlayerMove(PlayerMove move){
+    public void setPlayerMove(PlayerMove move) {
         playerMove = move;
     }
 
-    public void drawPlayerMove(Graphics g, int spaceBetweenTiles){
-        if (playerMove != null){
+    public void drawPlayerMove(Graphics g, int spaceBetweenTiles) {
+        if (playerMove != null) {
             playerMove.setSpaceBetweenTiles(spaceBetweenTiles);
             playerMove.draw(g, x, y, tileSize, tileSize);
         }
     }
 
-    public PlayerMove getPlayerMove(){
+    public PlayerMove getPlayerMove() {
         return playerMove;
     }
 
     public abstract GameTile makeCopy();
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof GameTile)) return false;
-        GameTile gameTile = (GameTile) o;
-        return hasStar == gameTile.hasStar &&
-                starOutlineColor == gameTile.starOutlineColor;
+        GameTile tile = (GameTile) o;
+        return hasStar == tile.hasStar &&
+                starOutlineColor == tile.starOutlineColor;
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return Objects.hash(hasStar, starOutlineColor);
     }
 }

@@ -18,7 +18,7 @@ public class GameView extends View {
 
     private LevelsManager levelsManager;
 
-    public GameView(){
+    public GameView() {
         levelsManager = new LevelsManager();
 
         gamePanel = new GamePanel(BACKGROUND_IMG);
@@ -43,7 +43,7 @@ public class GameView extends View {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         gamePanel.requestFocusInWindow();
         levelsManager.startLevel();
     }

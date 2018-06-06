@@ -17,42 +17,42 @@ public class LevelsManager {
     private int currLevelId;
     private GameLevel currLevel;
 
-    public LevelsManager(){
+    public LevelsManager() {
         this(null, null);
     }
 
-    public LevelsManager(GamePanel gamePanel, GameMenu menu){
+    public LevelsManager(GamePanel gamePanel, GameMenu menu) {
         setPanelAndMenu(gamePanel, menu);
         currLevelId = FIRST_LEVEL;
     }
 
-    public int getCurrLevelId(){
+    public int getCurrLevelId() {
         return currLevelId;
     }
 
-    public void setPanelAndMenu(GamePanel gamePanel, GameMenu gameMenu){
+    public void setPanelAndMenu(GamePanel gamePanel, GameMenu gameMenu) {
         this.gamePanel = gamePanel;
         this.gameMenu = gameMenu;
     }
 
-    public void startNextLevel(){
-        if (currLevelId + 1 < Levels.getLevelsAmount()){
+    public void startNextLevel() {
+        if (currLevelId + 1 < Levels.getLevelsAmount()) {
             currLevelId++;
             gameMenu.setEnabledPrev(true);
             startLevel();
         }
     }
 
-    public void startPreviousLevel(){
-        if (currLevelId - 1 >= FIRST_LEVEL){
+    public void startPreviousLevel() {
+        if (currLevelId - 1 >= FIRST_LEVEL) {
             currLevelId--;
             gameMenu.setEnabledNext(true);
             startLevel();
         }
     }
 
-    public void startLevel(){
-        if (currLevel != null){
+    public void startLevel() {
+        if (currLevel != null) {
             currLevel.setFinished();
         }
 
@@ -66,11 +66,11 @@ public class LevelsManager {
             // Play win sound
             Runnable sound1 = (Runnable) Toolkit.getDefaultToolkit().
                     getDesktopProperty("win.sound.asterisk");
-            if (sound1 != null){
+            if (sound1 != null) {
                 sound1.run();
             }
 
-            if (currLevelId < Levels.getLevelsAmount() - 1){
+            if (currLevelId < Levels.getLevelsAmount() - 1) {
                 ScheduleManager.addTask(this::startNextLevel, 1000);
             } else {
                 ScheduleManager.addTask(() -> ScheduleManager.getFrame().setView(new MainView()), 1000);
@@ -86,8 +86,8 @@ public class LevelsManager {
         gameMenu.repaint();
     }
 
-    public void resetLevel(){
-        if (!currLevel.isFinished()){
+    public void resetLevel() {
+        if (!currLevel.isFinished()) {
             currLevel.reset();
         }
     }

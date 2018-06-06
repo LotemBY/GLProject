@@ -5,24 +5,21 @@ import com.gl.types.TileColor;
 
 public class BlankTile extends GameTile {
 
-    public BlankTile(){
-    }
-
-    public BlankTile(BlankTile other){
+    public BlankTile(BlankTile other) {
         super(other);
     }
 
-    public BlankTile(boolean hasStar, TileColor starColor){
+    public BlankTile(boolean hasStar, TileColor starColor) {
         super(hasStar, starColor);
     }
 
     @Override
-    public GameTile makeCopy(){
+    public GameTile makeCopy() {
         return new BlankTile(this);
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         return o instanceof BlankTile && super.equals(o);
     }
 }
