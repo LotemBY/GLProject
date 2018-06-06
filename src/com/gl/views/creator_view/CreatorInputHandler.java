@@ -17,7 +17,7 @@ public class CreatorInputHandler extends MouseAdapter implements KeyListener {
     private Integer lastRow;
     private Integer lastCol;
 
-    public CreatorInputHandler(GamePanel panel, LevelCreator creator){
+    public CreatorInputHandler(GamePanel panel, LevelCreator creator) {
         this.panel = panel;
         this.creator = creator;
 
@@ -26,11 +26,11 @@ public class CreatorInputHandler extends MouseAdapter implements KeyListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e){
-        if (panel.isInLevelScreen(e.getX(), e.getY())){
+    public void mousePressed(MouseEvent e) {
+        if (panel.isInLevelScreen(e.getX(), e.getY())) {
             GameTile tile = panel.getTileFromLoc(e.getX(), e.getY());
 
-            if (tile != null){
+            if (tile != null) {
                 lastRow = tile.getRow();
                 lastCol = tile.getCol();
                 creator.editTile(tile);
@@ -42,12 +42,12 @@ public class CreatorInputHandler extends MouseAdapter implements KeyListener {
     }
 
     @Override
-    public void mouseDragged(MouseEvent e){
-        if (panel.isInLevelScreen(e.getX(), e.getY())){
+    public void mouseDragged(MouseEvent e) {
+        if (panel.isInLevelScreen(e.getX(), e.getY())) {
             int newTileRow = panel.getRowFromY(e.getY());
             int newTileCol = panel.getColFromX(e.getX());
 
-            if (newTileRow != lastRow || newTileCol != lastCol){
+            if (newTileRow != lastRow || newTileCol != lastCol) {
                 lastRow = newTileRow;
                 lastCol = newTileCol;
                 creator.editTile(panel.getLevel().getTileAt(newTileRow, newTileCol));
@@ -56,19 +56,19 @@ public class CreatorInputHandler extends MouseAdapter implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e){
+    public void keyTyped(KeyEvent e) {
         // Nothing
     }
 
     @Override
-    public void keyPressed(KeyEvent e){
+    public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Z && e.isControlDown()) {
             creator.undo();
         }
     }
 
     @Override
-    public void keyReleased(KeyEvent e){
+    public void keyReleased(KeyEvent e) {
         // Nothing
     }
 }

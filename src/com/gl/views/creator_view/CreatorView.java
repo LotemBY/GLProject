@@ -25,7 +25,7 @@ public class CreatorView extends View {
 
     private Timer updateEndTiles;
 
-    public CreatorView(){
+    public CreatorView() {
         gamePanel = new GamePanel(BACKGROUND_IMG);
         levelCreator = new LevelCreator(gamePanel);
 
@@ -53,7 +53,7 @@ public class CreatorView extends View {
         updateEndTiles = new Timer((int) (1000 * EndTile.SECS_PER_CHANGE),
                 e -> {
                     GameTile previewTile = creatorMenu.getTilePreview();
-                    if (previewTile instanceof EndTile){
+                    if (previewTile instanceof EndTile) {
                         ((EndTile) previewTile).scrollTexture();
                         creatorMenu.updateTilePreviewImage();
                     }
@@ -64,7 +64,7 @@ public class CreatorView extends View {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         gamePanel.requestFocusInWindow();
         creatorMenu.setTilePreview(levelCreator.getUsedTile());
         levelCreator.start();
@@ -72,7 +72,7 @@ public class CreatorView extends View {
     }
 
     @Override
-    public void onEnd(){
+    public void onEnd() {
         updateEndTiles.stop();
     }
 
@@ -89,15 +89,32 @@ public class CreatorView extends View {
         creatorMenu.reset();
     }
 
-    public void startTesting(){
+    public void startTesting() {
         updateEndTiles.stop();
 
-        gamePanel.addGameInputHandler();
-        levelCreator.getLevel().start(this::startCreating);
+        allowUserInput();
+        levelCreator.getLevel().start(() -> {
+            // Play win sound
+            Runnable sound1 = (Runnable) Toolkit.getDefaultToolkit().
+                    getDesktopProperty("win.sound.asterisk");
+            if (sound1 != null) {
+                sound1.run();
+            }
+
+            ScheduleManager.addTask(this::startCreating, 1000);
+        });
 
         splitPane.setBottomComponent(testingMenu);
         ScheduleManager.getFrame().pack();
 
         testingMenu.reset();
+    }
+
+    public void denyUserInput() {
+        gamePanel.removeListener();
+    }
+
+    public void allowUserInput() {
+        gamePanel.addGameInputHandler();
     }
 }

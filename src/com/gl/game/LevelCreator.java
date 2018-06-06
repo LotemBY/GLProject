@@ -5,7 +5,6 @@ import com.gl.game.tiles.SerializeUtils;
 import com.gl.game.tiles.TilesFactory;
 import com.gl.game.tiles.tile_types.EndTile;
 import com.gl.game.tiles.tile_types.PlayerSpawnTile;
-import com.gl.levels.Levels;
 import com.gl.views.creator_view.CreatorMenu;
 import com.gl.views.game_view.GamePanel;
 
@@ -144,8 +143,8 @@ public class LevelCreator {
     }
 
     public void start() {
-        //EditableLevel level = new EditableLevel(TilesFactory.parseTilesMatrix(DEFAULT_LEVEL));
-        EditableLevel level = new EditableLevel(Levels.loadLevel(3));
+        EditableLevel level = new EditableLevel(TilesFactory.parseTilesMatrix(DEFAULT_LEVEL));
+        //EditableLevel level = new EditableLevel(Levels.loadLevel(3));
         setLevel(level);
     }
 

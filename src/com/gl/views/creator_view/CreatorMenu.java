@@ -51,7 +51,7 @@ public class CreatorMenu extends Menu {
     private MenuButton undoBtn;
     private MenuButton redoBtn;
 
-    public CreatorMenu(CreatorView view, LevelCreator levelCreator){
+    public CreatorMenu(CreatorView view, LevelCreator levelCreator) {
         setBackground(BACKGROUND_COLOR);
 
         playBtn = new MenuButton(this,
@@ -79,7 +79,7 @@ public class CreatorMenu extends Menu {
                 0.06, 0.2, 0.1, 0.2,
                 "Export",
                 () -> exportLevel(levelCreator)
-            );
+        );
         addItem(exportBtn);
 
         MenuButton importBtn = new MenuButton(this,
@@ -97,7 +97,7 @@ public class CreatorMenu extends Menu {
         // Resize handler
         addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e){
+            public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
 
                 ModifiedTileManager.clearAllCache();
@@ -112,11 +112,11 @@ public class CreatorMenu extends Menu {
                 () -> {
                     String formatInput = getTileFormatInput();
 
-                    if (formatInput != null){
+                    if (formatInput != null) {
                         StringBuffer parsingErrorBuffer = new StringBuffer();
                         GameTile newTile = TilesFactory.parseTile(formatInput, parsingErrorBuffer);
 
-                        if (newTile != null){
+                        if (newTile != null) {
                             levelCreator.setUsedTile(newTile);
                             setTilePreview(newTile);
                         } else {
@@ -140,7 +140,7 @@ public class CreatorMenu extends Menu {
     private void createLevelSizeSelection(LevelCreator levelCreator) {
         // Rows
         RelativeLabel rowsTitle = new RelativeLabel(this,
-                SIZE_SELECTION_X_RATIO, 0.2, 0.2, 0.17, () -> "Rows:");
+                SIZE_SELECTION_X_RATIO, 0.2, 0.2, 0.17, "Rows:");
         addItem(rowsTitle);
 
         RelativeLabel rowsNumber = new RelativeLabel(this,
@@ -160,7 +160,7 @@ public class CreatorMenu extends Menu {
 
         // Cols
         RelativeLabel colsTitle = new RelativeLabel(this,
-                SIZE_SELECTION_X_RATIO, 0.6, 0.2, 0.17, () -> "Columns:");
+                SIZE_SELECTION_X_RATIO, 0.6, 0.2, 0.17, "Columns:");
         addItem(colsTitle);
 
         RelativeLabel colsNumber = new RelativeLabel(this,
@@ -178,7 +178,7 @@ public class CreatorMenu extends Menu {
         addItem(colsIncBtn);
     }
 
-    private void showError(String error){
+    private void showError(String error) {
         JOptionPane.showMessageDialog(this,
                 error,
                 "Error",
@@ -191,7 +191,7 @@ public class CreatorMenu extends Menu {
                 "Enter new tile encoding:",
                 "Select New Tile",
                 JOptionPane.QUESTION_MESSAGE
-                );
+        );
     }
 
     private String getBoardFormatInput() {
@@ -217,21 +217,21 @@ public class CreatorMenu extends Menu {
         showExportConfirmation();
     }
 
-    private void importLevel(LevelCreator levelCreator){
+    private void importLevel(LevelCreator levelCreator) {
         String input = getBoardFormatInput();
 
-        if (input != null){
-            if (input.isEmpty()){
+        if (input != null) {
+            if (input.isEmpty()) {
                 showError("Empty input!");
             } else {
-                if (!levelCreator.importLevel(input)){
+                if (!levelCreator.importLevel(input)) {
                     showError("Invalid board encoding.");
                 }
             }
         }
     }
 
-    public GameTile getTilePreview(){
+    public GameTile getTilePreview() {
         return tilePreview;
     }
 
@@ -257,15 +257,15 @@ public class CreatorMenu extends Menu {
         repaint();
     }
 
-    public void setEnabledTesting(boolean newEnabled){
+    public void setEnabledTesting(boolean newEnabled) {
         playBtn.setEnabled(newEnabled);
     }
 
-    public void setEnabledUndo(boolean newEnabled){
+    public void setEnabledUndo(boolean newEnabled) {
         undoBtn.setEnabled(newEnabled);
     }
 
-    public void setEnabledRedo(boolean newEnabled){
+    public void setEnabledRedo(boolean newEnabled) {
         redoBtn.setEnabled(newEnabled);
     }
 }
