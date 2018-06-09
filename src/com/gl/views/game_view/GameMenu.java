@@ -27,7 +27,7 @@ public class GameMenu extends com.gl.graphics.Menu {
         setBackground(BACKGROUND_COLOR);
 
         RelativeLabel levelName = new RelativeLabel(this,
-                0.5, 0.2, 0.3, 0.3,
+                0.5, 0.2, 0.3, 0.4,
                 () -> String.format("Level %d/%d", levelsManager.getCurrLevelId() + 1, Levels.getLevelsAmount()));
         addItem(levelName);
 

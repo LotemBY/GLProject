@@ -1,4 +1,4 @@
-package com.gl.game.tiles;
+package com.gl.game;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,10 +9,10 @@ import java.util.Base64;
 public final class SerializeUtils {
 
     public static String[][] matrixFromString(String s) {
-        byte[] data = Base64.getDecoder().decode(s);
-        DataInputStream stream = new DataInputStream(new ByteArrayInputStream(data));
-
         try {
+            byte[] data = Base64.getDecoder().decode(s);
+            DataInputStream stream = new DataInputStream(new ByteArrayInputStream(data));
+
             int rows = stream.readShort();
             int cols = stream.readShort();
 
@@ -37,9 +37,9 @@ public final class SerializeUtils {
             writer.writeShort(board.length);
             writer.writeShort(board[0].length);
 
-            for (int i = 0; i < board.length; i++) {
-                for (int j = 0; j < board[0].length; j++) {
-                    writer.writeUTF(board[i][j]);
+            for (String[] row : board) {
+                for (String tile : row) {
+                    writer.writeUTF(tile);
                 }
             }
 

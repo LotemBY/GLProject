@@ -11,15 +11,16 @@ import java.util.List;
 
 public final class TilesFactory {
 
-    private static final String ANY_LETTER = "[a-z]";
-
-    private static final char AND_CHAR = '+';
-    private static final String AND_REGEX = "\\" + AND_CHAR;
-
-    private static final char OR_CHAR = '|';
-    private static final String OR_REGEX = "\\" + OR_CHAR;
-
     private static final char MODIFIERS_SEPARATOR = ':';
+
+    private static final String ANY_LETTER = "[a-z]";
+    private static final char AND_CHAR = '+';
+    private static final char OR_CHAR = '|';
+
+    private static final String ANY_OPERATOR = "[\\" + AND_CHAR + "\\" + OR_CHAR + "]";
+    private static final String SINGLE_EXP_REGEX = "\\(?" + ANY_LETTER + "(" + ANY_OPERATOR + ANY_LETTER + ")*\\)?";
+    private static final String MULTI_EXP_REGEX = SINGLE_EXP_REGEX + "(" + ANY_OPERATOR + SINGLE_EXP_REGEX + ")*";
+
 
     private static class TileParsingException extends RuntimeException {
         public TileParsingException(String message) {
@@ -95,7 +96,7 @@ public final class TilesFactory {
             new TileParsingInfo(
                     "EndTile",
                     "e",
-                    String.format("[()%s%s%s]+", ANY_LETTER, AND_REGEX, OR_REGEX),
+                    MULTI_EXP_REGEX,
                     false,
                     (format, hasStar, starColor) -> {
                         ColorExp exp = parseColor(format);
@@ -176,10 +177,14 @@ public final class TilesFactory {
         if (tileFormat.charAt(0) == 's') {
             hasStar = true;
 
+            if (tileFormat.length() == 1) {
+                throw new TileParsingException("Tile name must not be empty.");
+            }
+
             tileFormat = tileFormat.substring(1);
             if (tileFormat.charAt(0) == ':') {
                 if (tileFormat.length() < 3) {
-                    throw new TileParsingException("Star tile length is too short.");
+                    throw new TileParsingException("Star tile length is too short (no star color or tile name was provided).");
                 }
 
                 starColor = parseColor(tileFormat.charAt(1));
@@ -205,6 +210,7 @@ public final class TilesFactory {
         throw new TileParsingException("\"" + tileFormat + "\" doesn't match any tile format");
     }
 
+    // TODO: change end tile format
     private static ColorExp parseColor(String colorFormat) throws TileParsingException {
         ColorExp lastExp = null;
         ColorExp curExp;
@@ -225,6 +231,7 @@ public final class TilesFactory {
                         } else if (enclosed == ')') {
                             bracketCount--;
                         }
+
                         if (bracketCount == 0) {
                             curExp = parseColor(colorFormat.substring(i + 1, idxEnc + 1));
                             i = idxEnc;
@@ -234,11 +241,11 @@ public final class TilesFactory {
                     }
                     break;
 
-                case '+':
-                case '|':
+                case AND_CHAR:
+                case OR_CHAR:
                     LogicalExpNode exp = new LogicalExpNode();
                     exp.setFirst(lastExp);
-                    exp.setOperation(currChar == '+');
+                    exp.setOperation(currChar == AND_CHAR);
                     curExp = exp;
                     break;
 

@@ -72,7 +72,7 @@ public class Solver {
 //                movesCounter += player.getMoves().size();
 //            }
 //
-            if (statesHash.size() % 30000 == 0) {
+            if (statesHash.size() % 10000 == 0) {
                 EventQueue.invokeLater(() -> levelCreator.setLevel(new EditableLevel(state)));
             }
 //
@@ -153,7 +153,15 @@ public class Solver {
     public void startSolving() {
         if (canSolve) {
             // todo: consider shuffling the player order and trying few combinations
-            solvingThread = new Thread(() -> solveStateWithPlayers(level, 0));
+            solvingThread = new Thread(
+                    () -> {
+                        try {
+                            solveStateWithPlayers(level, 0);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+            );
             solvingThread.start();
         }
     }

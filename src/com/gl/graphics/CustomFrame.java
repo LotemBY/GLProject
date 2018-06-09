@@ -9,7 +9,7 @@ import java.awt.*;
 public class CustomFrame extends JFrame {
 
     private static final String TITLE = "GL Project | WIP | Version 0.1";
-    private static final int FRAME_SIZE = 900;
+    private static final double FRAME_SIZE_RATIO = 0.9;
     private static final int FRAME_MIN_SIZE = 300;
 
     private View view;
@@ -20,8 +20,10 @@ public class CustomFrame extends JFrame {
         getContentPane().setBackground(Color.RED);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        Dimension size = new Dimension(FRAME_SIZE, FRAME_SIZE);
-        setSize(size);
+        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+        int frameSize = (int) (Math.min(screenDim.getWidth(), screenDim.getHeight()) * FRAME_SIZE_RATIO);
+
+        setSize(new Dimension(frameSize, frameSize));
         setMinimumSize(new Dimension(FRAME_MIN_SIZE, FRAME_MIN_SIZE));
         pack();
 

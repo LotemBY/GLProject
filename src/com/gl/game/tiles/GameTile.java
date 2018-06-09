@@ -21,11 +21,11 @@ public abstract class GameTile implements Drawable, Serializable {
 
     // Star finals
     private static final int STAR_ARMS = 5;
-    private static final Color STAR_COLOR = new Color(250, 200, 20);
+    private static final Color STAR_COLOR = new Color(250, 191, 0);
     private static final int STAR_FADED_TRANSPARENCY = 30;
     private static final double STAR_INNER_SIZE_RATIO = 0.16;
     private static final double STAR_OUTER_SIZE_RATIO = 0.4;
-    private static final double STAR_OUTLINE_RATIO = 0.2;
+    private static final double STAR_OUTLINE_RATIO = 0.4;
 
     // Tile info
     private String tileStrFormat;

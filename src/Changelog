@@ -1,0 +1,9 @@
+v0.1.2
+    Added keyboard shortcuts for redo in the level editor (Ctrl+Y, or Ctrl+Shift+Z).
+    Changed menus background.
+    Changed colored stars outline.
+
+    Minor fixes:
+        Illegal level import format could crush the game.
+        The game window starting size was constant and didn't match all screen sizes.
+        And more...

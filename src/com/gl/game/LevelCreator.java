@@ -1,7 +1,6 @@
 package com.gl.game;
 
 import com.gl.game.tiles.GameTile;
-import com.gl.game.tiles.SerializeUtils;
 import com.gl.game.tiles.TilesFactory;
 import com.gl.game.tiles.tile_types.EndTile;
 import com.gl.game.tiles.tile_types.PlayerSpawnTile;

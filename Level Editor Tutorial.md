@@ -71,5 +71,5 @@ For example:
 * ```e:r+b``` - end tile colored red and blue
 * ```e:r|b``` - end tile colored red or blue
 * ```e:(r+b)|g``` - end tile colored [red and blue], or green
-* ```e:r+(b|g)``` - end tile colored red, and [blue or green]. This tile could also by written as e:(r+b)|(r+g)
+* ```e:r+(b|g)``` - end tile colored red, and [blue or green]. This tile could also by written as ```e:(r+b)|(r+g)```
 * ```e:w|y|c|(r+b)``` - end tile colored white, or yellow, or cyan, or [red and blue]

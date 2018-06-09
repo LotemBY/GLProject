@@ -90,7 +90,6 @@ public class TestingMenu extends Menu {
     }
 
     private void startSolving(CreatorView view, LevelCreator levelCreator) {
-        view.denyUserInput();
         stoppedSolving = false;
         finishedSolving = false;
 
@@ -101,6 +100,7 @@ public class TestingMenu extends Menu {
             return;
         }
 
+        view.denyUserInput();
         currSolver.startSolving();
 
         solveBtn.setEnabled(false);

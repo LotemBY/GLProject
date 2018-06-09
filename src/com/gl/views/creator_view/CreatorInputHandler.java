@@ -63,7 +63,15 @@ public class CreatorInputHandler extends MouseAdapter implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_Z && e.isControlDown()) {
-            creator.undo();
+            if (e.isShiftDown()) {
+                creator.redo();
+            } else {
+                creator.undo();
+            }
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_Y && e.isControlDown()) {
+                creator.redo();
         }
     }
 
