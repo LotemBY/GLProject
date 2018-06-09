@@ -43,7 +43,7 @@ There are 2 modifier types so far - color and direction.
 
 ### Star Information (Optional)
 **At the moment you can only add stars to the normal blank tiles.**   
-To add a star to a tile, just add "s" before the tile name.  
+To add a star to a tile, just add ```s``` before the tile name.  
 If you want to add a colored star, add a ```s:(color)``` before the tile name.
 
 ## Examples
