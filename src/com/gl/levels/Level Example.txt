@@ -1,7 +1,0 @@
-===========================================================
-This is an export of a level example.
-You can load it using the import button in the level editor.
-===========================================================
-
-
-AAgACQABdAABdAADYTpkAANhOnIAA2E6cgADYTpyAAF0AAF0AAF0AAF0AANhOmQAAnN0AANhOmQAA2U6YwADYTpkAAF0AAF0AANhOmwAA2E6ZAABdAABdAADYTpkAANhOnIAA2E6cgADYTpyAAF0AANhOmwAAXQAA2E6dQABdAADYTpsAANhOmQAAnN0AAF0AANhOnIAAXQAA2E6cgABdAADYTpsAANhOmwAAXQAA2E6cgADYTpyAAF0AANhOmQAAXQAA2E6ZAABdAADYTpkAANwOmMAA2E6ZAABdAADYTpkAAF0AAF0AANhOnIAA2E6cgABdAABdAADYTpkAAF0AAF0AAF0AAJzdAADYTp1AAF0AAF0AAF0AAF0AANhOnIAA2E6cgABdA==
