@@ -1,7 +1,9 @@
 package com.gl.views.creator_view;
 
+import com.gl.game.EditableLevel;
 import com.gl.game.GamePlayer;
 import com.gl.game.LevelCreator;
+import com.gl.game.SerializeUtils;
 import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.ModifiedTileManager;
 import com.gl.game.tiles.TilesFactory;
@@ -12,7 +14,9 @@ import com.gl.graphics.MenuButton;
 import com.gl.graphics.ScheduleManager;
 import com.gl.graphics.relative_items.RelativeImage;
 import com.gl.graphics.relative_items.RelativeLabel;
+import com.gl.levels.Levels;
 import com.gl.views.main_view.MainView;
+import javafx.util.Pair;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,6 +55,10 @@ public class CreatorMenu extends Menu {
     private MenuButton undoBtn;
     private MenuButton redoBtn;
 
+    private JPanel selectionPanel;
+    private JComboBox<Integer> worldSelection;
+    private JComboBox<Integer> levelSelection;
+
     public CreatorMenu(CreatorView view, LevelCreator levelCreator) {
         setBackground(BACKGROUND_COLOR);
 
@@ -88,6 +96,14 @@ public class CreatorMenu extends Menu {
                 () -> importLevel(levelCreator)
         );
         addItem(importBtn);
+
+        initLevelLoadingPanel();
+        MenuButton loadLevel = new MenuButton(this,
+                0.93, 0.8, 0.1, 0.2,
+                "Load",
+                () -> loadLevel(levelCreator)
+        );
+        addItem(loadLevel);
 
         MenuButton backBtn = new MenuButton(this,
                 0.06, 0.8, 0.1, 0.3,
@@ -227,6 +243,82 @@ public class CreatorMenu extends Menu {
                 if (!levelCreator.importLevel(input)) {
                     showError("Invalid board encoding.");
                 }
+            }
+        }
+    }
+
+    private void updateLevelsSelectionBox() {
+        int worldIndex = worldSelection.getSelectedIndex();
+        String[] worldLevel = Levels.getWorldLevels(worldIndex);
+
+        if (worldLevel != null) {
+            int levelsNum = worldLevel.length;
+
+            levelSelection.removeAllItems();
+            for (int i = 0; i < levelsNum; i++) {
+                levelSelection.addItem(i + 1);
+            }
+        }
+    }
+
+    private void initLevelLoadingPanel() {
+        selectionPanel = new JPanel();
+        selectionPanel.setLayout(new GridLayout(4, 1));
+
+        worldSelection = new JComboBox<>();
+        levelSelection = new JComboBox<>();
+
+        // Select world
+        selectionPanel.add(new JLabel("Select world:"));
+
+        int worldsNum = Levels.getWorldsAmount();
+        for (int i = 0; i < worldsNum; i++) {
+            worldSelection.addItem(i + 1);
+        }
+        worldSelection.addActionListener(
+                (e) -> {
+                    updateLevelsSelectionBox();
+                    selectionPanel.repaint();
+                }
+        );
+        worldSelection.setSelectedIndex(0);
+        selectionPanel.add(worldSelection);
+
+        // Select level
+        selectionPanel.add(new JLabel("Select level:"));
+
+        levelSelection.setSelectedIndex(0);
+        selectionPanel.add(levelSelection);
+    }
+
+    private Pair<Integer, Integer> getLoadedLevelInput() {
+        // Show panel
+        int option = JOptionPane.showConfirmDialog(this,
+                selectionPanel,
+                "Load Level",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        // Return value
+        if (option == JOptionPane.CANCEL_OPTION || option == JOptionPane.CLOSED_OPTION) {
+            return null;
+        } else {
+            int selectedWorld = worldSelection.getSelectedIndex();
+            int selectedLevel = levelSelection.getSelectedIndex();
+            return new Pair<>(selectedWorld, selectedLevel);
+        }
+    }
+
+    private void loadLevel(LevelCreator levelCreator) {
+        Pair<Integer, Integer> levelIndex = getLoadedLevelInput();
+
+        if (levelIndex != null) {
+            String[] world = Levels.getWorldLevels(levelIndex.getKey());
+            if (world != null) {
+                String levelFormat = world[levelIndex.getValue()];
+                String[][] tilesMatrix = SerializeUtils.matrixFromString(levelFormat);
+                GameTile[][] board = TilesFactory.parseTilesMatrix(tilesMatrix);
+                levelCreator.setLevel(new EditableLevel(board));
             }
         }
     }

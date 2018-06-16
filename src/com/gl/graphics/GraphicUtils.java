@@ -188,4 +188,8 @@ public final class GraphicUtils {
 
         return curSize;
     }
+
+    public static boolean isInArea(int x, int y, int areaX, int areaY, int areaWidth, int areaHeight) {
+        return (x > areaX && x < areaX + areaWidth) && (y > areaY && y < areaY + areaHeight);
+    }
 }

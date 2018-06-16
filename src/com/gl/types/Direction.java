@@ -66,7 +66,7 @@ public enum Direction implements TileModifier {
         return getDirection(player.getCol(), player.getRow(), toTile.getCol(), toTile.getRow());
     }
 
-    public static Direction[] getShuffeledValues() {
+    public static Direction[] getShuffledValues() {
         Direction[] values = values();
 
         Random rnd = ThreadLocalRandom.current();

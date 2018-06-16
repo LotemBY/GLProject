@@ -134,7 +134,7 @@ public class Solver {
                     return true;
                 }
             } else {
-                Direction[] dirs = Direction.getShuffeledValues();
+                Direction[] dirs = Direction.getShuffledValues();
                 for (Direction direction : dirs) {
                     if (currPlayer.getMoveTile(direction) != null) {
                         // Clone the state and move

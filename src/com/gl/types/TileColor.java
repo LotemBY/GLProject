@@ -10,7 +10,7 @@ public enum TileColor implements ColorExp, TileModifier {
     BLUE('b', 0, 0, 1, false),
     YELLOW('y', 1, 1, 0, true),
     CYAN('c', 0, 1, 1, true),
-    PURPLE('p', 1, 0, 1, true),
+    PURPLE('p', 1, 0, 1, false),
     ORANGE('o', 1, 0.3, 0, false),
     WHITE('w', 1, 1, 1, true);
 

@@ -1,7 +1,8 @@
 package com.gl.views.game_view;
 
-import com.gl.game.LevelsManager;
+import com.gl.levels.LevelsManager;
 import com.gl.graphics.GraphicUtils;
+import com.gl.levels.LevelsWorld;
 import com.gl.views.View;
 
 import javax.swing.*;
@@ -18,8 +19,8 @@ public class GameView extends View {
 
     private LevelsManager levelsManager;
 
-    public GameView() {
-        levelsManager = new LevelsManager();
+    public GameView(LevelsWorld world, int startingLevel) {
+        levelsManager = new LevelsManager(world, startingLevel);
 
         gamePanel = new GamePanel(BACKGROUND_IMG);
         gamePanel.addGameInputHandler(levelsManager);

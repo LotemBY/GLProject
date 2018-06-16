@@ -1,7 +1,7 @@
-package com.gl.game;
+package com.gl.levels;
 
+import com.gl.game.GameLevel;
 import com.gl.graphics.ScheduleManager;
-import com.gl.levels.Levels;
 import com.gl.views.game_view.GameMenu;
 import com.gl.views.game_view.GamePanel;
 import com.gl.views.main_view.MainView;
@@ -15,15 +15,18 @@ public class LevelsManager {
     private GamePanel gamePanel;
     private GameMenu gameMenu;
     private int currLevelId;
-    private GameLevel currLevel;
 
-    public LevelsManager() {
-        this(null, null);
+    private GameLevel currLevel;
+    private LevelsWorld world;
+
+    public LevelsManager(LevelsWorld world, int startingLevel) {
+        this(world, startingLevel, null, null);
     }
 
-    public LevelsManager(GamePanel gamePanel, GameMenu menu) {
+    public LevelsManager(LevelsWorld world, int currLevelId, GamePanel gamePanel, GameMenu menu) {
+        this.world = world;
+        this.currLevelId = currLevelId;
         setPanelAndMenu(gamePanel, menu);
-        currLevelId = FIRST_LEVEL;
     }
 
     public int getCurrLevelId() {
@@ -36,7 +39,7 @@ public class LevelsManager {
     }
 
     public void startNextLevel() {
-        if (currLevelId + 1 < Levels.getLevelsAmount()) {
+        if (currLevelId + 1 < world.getLevelsAmount()) {
             currLevelId++;
             gameMenu.setEnabledPrev(true);
             startLevel();
@@ -56,7 +59,7 @@ public class LevelsManager {
             currLevel.setFinished();
         }
 
-        currLevel = Levels.loadLevel(currLevelId);
+        currLevel = world.getLevel(currLevelId);
         gamePanel.setGameLevel(currLevel);
 
         //TODO: remaster onCompletion
@@ -70,7 +73,7 @@ public class LevelsManager {
                 sound1.run();
             }
 
-            if (currLevelId < Levels.getLevelsAmount() - 1) {
+            if (currLevelId < world.getLevelsAmount() - 1) {
                 ScheduleManager.addTask(this::startNextLevel, 1000);
             } else {
                 ScheduleManager.addTask(() -> ScheduleManager.getFrame().setView(new MainView()), 1000);
@@ -79,7 +82,7 @@ public class LevelsManager {
 
         if (currLevelId == FIRST_LEVEL) {
             gameMenu.setEnabledPrev(false);
-        } else if (currLevelId == Levels.getLevelsAmount() - 1) {
+        } else if (currLevelId == world.getLevelsAmount() - 1) {
             gameMenu.setEnabledNext(false);
         }
 
@@ -90,5 +93,9 @@ public class LevelsManager {
         if (!currLevel.isFinished()) {
             currLevel.reset();
         }
+    }
+
+    public LevelsWorld getWorld() {
+        return world;
     }
 }

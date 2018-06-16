@@ -1,7 +1,7 @@
 package com.gl.views.game_view;
 
 import com.gl.game.GamePlayer;
-import com.gl.game.LevelsManager;
+import com.gl.levels.LevelsManager;
 import com.gl.game.tiles.GameTile;
 import com.gl.main.MainClass;
 import com.gl.types.Direction;

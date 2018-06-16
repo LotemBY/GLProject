@@ -18,7 +18,7 @@ public class Menu extends JPanelWithBackground implements RelativeParent {
     private List<MenuButton> buttons;
 
     public Menu() {
-        setBackground(BACKGROUND_IMG);
+        super(BACKGROUND_IMG);
 
         items = Collections.synchronizedList(new ArrayList<>());
         buttons = Collections.synchronizedList(new ArrayList<>());

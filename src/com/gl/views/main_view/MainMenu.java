@@ -5,7 +5,7 @@ import com.gl.graphics.MenuButton;
 import com.gl.graphics.ScheduleManager;
 import com.gl.graphics.relative_items.RelativeLabel;
 import com.gl.views.creator_view.CreatorView;
-import com.gl.views.game_view.GameView;
+import com.gl.views.world_view.WorldView;
 
 import java.awt.*;
 
@@ -31,7 +31,10 @@ public class MainMenu extends com.gl.graphics.Menu {
 
         MenuButton playBtn = new MenuButton(this,
                 0.5, 0.6, 0.3, 0.15,
-                PLAY_IMG, () -> ScheduleManager.getFrame().setView(new GameView()));
+                PLAY_IMG,
+                //() -> ScheduleManager.getFrame().setView(new GameView(new LevelsWorld(0)))
+                () -> ScheduleManager.getFrame().setView(new WorldView())
+        );
         addItem(playBtn);
 
         MenuButton creatorBtn = new MenuButton(this,

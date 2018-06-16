@@ -1,7 +1,7 @@
 package com.gl.views.game_view;
 
 import com.gl.game.GameLevel;
-import com.gl.game.LevelsManager;
+import com.gl.levels.LevelsManager;
 import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.ModifiedTileManager;
 import com.gl.graphics.GraphicUtils;
@@ -13,13 +13,7 @@ import java.util.EventListener;
 
 public class GamePanel extends JPanelWithBackground {
 
-    //private static final Color BACKGROUND_COLOR = new Color(17, 17, 35);
-
-
-    // Level
     private static final int SPACE_FROM_BOUNDS = 10;
-
-    // TILES
     private static final double SPACE_BETWEEN_TILES_RATIO = 0.1;
 
     private GameLevel gameLevel;
@@ -28,7 +22,7 @@ public class GamePanel extends JPanelWithBackground {
     private EventListener listener;
 
     public GamePanel(Image bg) {
-        setBackground(bg);
+        super(bg);
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -114,11 +108,7 @@ public class GamePanel extends JPanelWithBackground {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D g2d = GraphicUtils.getGraphicsWithHints(g); // (Graphics2D) g;
-
-        // Draw the background
-        //PaintingUtils.fillRect(g2d, 0, 0, getWidth(), getHeight(), UNPRESSED_BACKGROUND_COLOR);
-
+        Graphics2D g2d = GraphicUtils.getGraphicsWithHints(g);
         gameLevel.draw(g2d, getLevelX(), getLevelY(), getWidth(), getWidth());
     }
 
@@ -161,11 +151,7 @@ public class GamePanel extends JPanelWithBackground {
     }
 
     public boolean isInLevelScreen(int x, int y) {
-        return isInArea(x, y, getLevelX(), getLevelY(), getLevelWidth(), getLevelHeight());
-    }
-
-    private boolean isInArea(int x, int y, int areaX, int areaY, int areaWidth, int areaHeight) {
-        return (x > areaX && x < areaX + areaWidth) && (y > areaY && y < areaY + areaHeight);
+        return GraphicUtils.isInArea(x, y, getLevelX(), getLevelY(), getLevelWidth(), getLevelHeight());
     }
 
     public void removeListener() {

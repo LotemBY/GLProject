@@ -11,8 +11,8 @@ public class JPanelWithBackground extends JPanel implements RelativeParent {
 
     private RelativeItem background;
 
-    public JPanelWithBackground() {
-        background = null;
+    public JPanelWithBackground(Image bg) {
+        setBackground(bg);
     }
 
     protected void setBackground(Image bgImage) {
