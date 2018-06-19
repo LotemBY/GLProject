@@ -6,7 +6,7 @@ import com.gl.graphics.GraphicUtils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class RelativeItem implements Drawable {
+public abstract class RelativeItem implements RelativeParent, Drawable {
 
     protected RelativeParent parent;
 
@@ -62,11 +62,11 @@ public abstract class RelativeItem implements Drawable {
     }
 
     public int getX() {
-        return (int) (midXRatio * parent.getWidth() - (getWidth() / 2));
+        return parent.getStartingX() + (int) (midXRatio * parent.getWidth() - (getWidth() / 2));
     }
 
     public int getY() {
-        return (int) (midYRatio * parent.getHeight() - (getHeight() / 2));
+        return parent.getStartingY() + (int) (midYRatio * parent.getHeight() - (getHeight() / 2));
     }
 
     public int getWidth() {
@@ -75,6 +75,21 @@ public abstract class RelativeItem implements Drawable {
 
     public int getHeight() {
         return (int) (heightRatio * parent.getHeight());
+    }
+
+    @Override
+    public int getStartingX() {
+        return 0;
+    }
+
+    @Override
+    public int getStartingY() {
+        return 0;
+    }
+
+    @Override
+    public void repaint() {
+        parent.repaint();
     }
 
     public void setVisible(boolean visible) {

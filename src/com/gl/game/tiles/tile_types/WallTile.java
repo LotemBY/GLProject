@@ -39,16 +39,6 @@ public class WallTile extends GameTile {
     public boolean equals(Object o) {
         return o instanceof WallTile && super.equals(o);
     }
-
-    /*@Override
-    public void drawTileContent() {
-        int x = getX() + OUTLINE_OFFSET,
-                y = getY() + OUTLINE_OFFSET,
-                size = getFinalTileSize();
-
-        panel.fillRect(x, y, size, size, TILE_COLOR);
-    }*/
-
 }
 
 

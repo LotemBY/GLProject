@@ -38,6 +38,7 @@ public class ArrowTile extends ModifiedTile {
 
     @Override
     public void playerAction(GamePlayer player) {
+        super.playerAction(player);
         player.move((Direction) modifier);
     }
 

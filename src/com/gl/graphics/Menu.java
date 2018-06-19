@@ -12,13 +12,17 @@ import java.util.List;
 
 public class Menu extends JPanelWithBackground implements RelativeParent {
 
-    private static final Image BACKGROUND_IMG = GraphicUtils.loadImage("MenuBG");
+    private static final Image DEFAULT_BG_IMG = GraphicUtils.loadImage("MenuBG");
 
     private List<RelativeItem> items;
     private List<MenuButton> buttons;
 
     public Menu() {
-        super(BACKGROUND_IMG);
+        this(DEFAULT_BG_IMG);
+    }
+
+    public Menu(Image bg) {
+        super(bg);
 
         items = Collections.synchronizedList(new ArrayList<>());
         buttons = Collections.synchronizedList(new ArrayList<>());
@@ -71,5 +75,15 @@ public class Menu extends JPanelWithBackground implements RelativeParent {
                 b.sendMousePos((int) mousePos.getX(), (int) mousePos.getY());
             }
         });
+    }
+
+    @Override
+    public int getStartingX() {
+        return 0;
+    }
+
+    @Override
+    public int getStartingY() {
+        return 0;
     }
 }

@@ -46,6 +46,7 @@ public class GameView extends View {
     @Override
     public void onStart() {
         gamePanel.requestFocusInWindow();
+        gameMenu.reset();
         levelsManager.startLevel();
     }
 }

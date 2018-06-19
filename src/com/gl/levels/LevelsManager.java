@@ -2,9 +2,10 @@ package com.gl.levels;
 
 import com.gl.game.GameLevel;
 import com.gl.graphics.ScheduleManager;
+import com.gl.main.GameData;
+import com.gl.views.ViewsManager;
 import com.gl.views.game_view.GameMenu;
 import com.gl.views.game_view.GamePanel;
-import com.gl.views.main_view.MainView;
 
 import java.awt.*;
 
@@ -64,6 +65,7 @@ public class LevelsManager {
 
         //TODO: remaster onCompletion
         currLevel.start(() -> {
+            GameData.setStarsCount(world.getIndex(), currLevelId, currLevel.getStarsNum(true));
             // On completion:
 
             // Play win sound
@@ -76,7 +78,7 @@ public class LevelsManager {
             if (currLevelId < world.getLevelsAmount() - 1) {
                 ScheduleManager.addTask(this::startNextLevel, 1000);
             } else {
-                ScheduleManager.addTask(() -> ScheduleManager.getFrame().setView(new MainView()), 1000);
+                ScheduleManager.addTask(() -> ViewsManager.loadView(ViewsManager.WORLD_VIEW), 1000);
             }
         });
 
@@ -97,5 +99,9 @@ public class LevelsManager {
 
     public LevelsWorld getWorld() {
         return world;
+    }
+
+    public GameLevel getCurrLevel() {
+        return currLevel;
     }
 }

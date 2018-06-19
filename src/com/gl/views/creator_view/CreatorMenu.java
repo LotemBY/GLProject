@@ -11,11 +11,10 @@ import com.gl.game.tiles.tile_types.PlayerSpawnTile;
 import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.Menu;
 import com.gl.graphics.MenuButton;
-import com.gl.graphics.ScheduleManager;
 import com.gl.graphics.relative_items.RelativeImage;
 import com.gl.graphics.relative_items.RelativeLabel;
 import com.gl.levels.Levels;
-import com.gl.views.main_view.MainView;
+import com.gl.views.ViewsManager;
 import javafx.util.Pair;
 
 import javax.swing.*;
@@ -28,9 +27,6 @@ import java.awt.image.BufferedImage;
 import static java.awt.image.BufferedImage.TYPE_4BYTE_ABGR;
 
 public class CreatorMenu extends Menu {
-
-    private static final Color BACKGROUND_COLOR = Color.GRAY;
-
     private static final Image PLAY_IMG = GraphicUtils.loadImage("playIcon");
     private static final Image UNDO_IMG = GraphicUtils.loadImage("undoIcon");
     private static final Image REDO_IMG = GraphicUtils.flipHorizontally(UNDO_IMG);
@@ -60,8 +56,6 @@ public class CreatorMenu extends Menu {
     private JComboBox<Integer> levelSelection;
 
     public CreatorMenu(CreatorView view, LevelCreator levelCreator) {
-        setBackground(BACKGROUND_COLOR);
-
         playBtn = new MenuButton(this,
                 0.5, 0.35, 0.2, 0.35,
                 PLAY_IMG, view::startTesting);
@@ -107,7 +101,8 @@ public class CreatorMenu extends Menu {
 
         MenuButton backBtn = new MenuButton(this,
                 0.06, 0.8, 0.1, 0.3,
-                BACK_IMG, () -> ScheduleManager.getFrame().setView(new MainView()));
+                BACK_IMG, () -> ViewsManager.loadView(ViewsManager.MAIN_VIEW)
+        );
         addItem(backBtn);
 
         // Resize handler

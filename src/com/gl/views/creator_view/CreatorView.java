@@ -11,6 +11,7 @@ import com.gl.views.game_view.GamePanel;
 import javax.swing.*;
 import java.awt.*;
 
+// todo: fix white pixel line at the bottom
 public class CreatorView extends View {
     private static final Image BACKGROUND_IMG = GraphicUtils.loadImage("EditorBG");
 

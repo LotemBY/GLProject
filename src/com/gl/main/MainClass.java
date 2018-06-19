@@ -77,6 +77,7 @@ public class MainClass {
         }
 
         Thread.setDefaultUncaughtExceptionHandler((t, trw) -> setThrowable(trw));
+        GameData.loadData();
 
         CustomFrame frame = null;
         try {

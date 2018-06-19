@@ -3,12 +3,11 @@ package com.gl.graphics;
 import com.gl.graphics.relative_items.RelativeImage;
 import com.gl.graphics.relative_items.RelativeItem;
 import com.gl.graphics.relative_items.RelativeLabel;
-import com.gl.graphics.relative_items.RelativeParent;
 
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class MenuButton extends RelativeItem implements RelativeParent {
+public class MenuButton extends RelativeItem {
 
     private static final double OUTLINE_SCALE = 0.05;
     private static final double ARC_SCALE = 0.6;
@@ -164,10 +163,5 @@ public class MenuButton extends RelativeItem implements RelativeParent {
             setUpdated();
             parent.repaint();
         }
-    }
-
-    @Override
-    public void repaint() {
-        parent.repaint();
     }
 }

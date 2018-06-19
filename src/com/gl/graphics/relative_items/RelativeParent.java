@@ -6,4 +6,8 @@ public interface RelativeParent {
     int getHeight();
 
     void repaint();
+
+    int getStartingX();
+
+    int getStartingY();
 }

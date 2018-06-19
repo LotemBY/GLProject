@@ -6,8 +6,16 @@ import java.awt.*;
 
 public class MainView extends View {
 
+    private final MainMenu mainMenu;
+
     public MainView() {
         setLayout(new BorderLayout());
-        add(new MainMenu(), BorderLayout.CENTER);
+        mainMenu = new MainMenu();
+        add(mainMenu, BorderLayout.CENTER);
+    }
+
+    @Override
+    public void onStart() {
+        mainMenu.reset();
     }
 }

@@ -33,4 +33,14 @@ public class JPanelWithBackground extends JPanel implements RelativeParent {
             background.draw(GraphicUtils.getGraphicsWithHints(g));
         }
     }
+
+    @Override
+    public int getStartingX() {
+        return 0;
+    }
+
+    @Override
+    public int getStartingY() {
+        return 0;
+    }
 }

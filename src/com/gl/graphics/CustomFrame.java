@@ -1,7 +1,7 @@
 package com.gl.graphics;
 
 import com.gl.views.View;
-import com.gl.views.main_view.MainView;
+import com.gl.views.ViewsManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,8 +33,8 @@ public class CustomFrame extends JFrame {
 
         ScheduleManager.setFrame(this);
 
-        View mainView = new MainView();
-        setView(mainView);
+        ViewsManager.loadView(ViewsManager.MAIN_VIEW);
+
         setVisible(true);
     }
 

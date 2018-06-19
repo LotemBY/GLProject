@@ -143,7 +143,6 @@ public class LevelCreator {
 
     public void start() {
         EditableLevel level = new EditableLevel(TilesFactory.parseTilesMatrix(DEFAULT_LEVEL));
-        //EditableLevel level = new EditableLevel(Levels.loadLevel(3));
         setLevel(level);
     }
 

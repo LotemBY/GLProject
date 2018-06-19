@@ -18,6 +18,8 @@ import java.util.Stack;
 
 public class GameLevel implements Drawable {
 
+    public static final int STARS_PER_LEVEL = 3;
+
     protected GamePanel panel;
     protected GameTile[][] tilesMatrix;
     protected ArrayList<GamePlayer> players;
@@ -163,7 +165,6 @@ public class GameLevel implements Drawable {
             return;
         }
 
-        // Todo: optimize by extracting the end tiles to a separated list
         for (EndTile tile : endTiles) {
             if (!tile.hasPlayer()) {
                 // Not completed!

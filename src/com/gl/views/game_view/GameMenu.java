@@ -1,32 +1,30 @@
 package com.gl.views.game_view;
 
+import com.gl.game.GameLevel;
 import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.MenuButton;
-import com.gl.graphics.ScheduleManager;
 import com.gl.graphics.relative_items.RelativeLabel;
 import com.gl.levels.LevelsManager;
 import com.gl.types.Direction;
-import com.gl.views.main_view.MainView;
+import com.gl.views.ViewsManager;
 
 import java.awt.*;
 
 public class GameMenu extends com.gl.graphics.Menu {
-
-    private static final Color BACKGROUND_COLOR = Color.GRAY;
-
     private static final Image RESET_IMG = GraphicUtils.loadImage("resetIcon");
     private static final Image NEXT_IMG = GraphicUtils.loadImage("nextIcon");
     private static final Image PREV_IMG = Direction.DOWN.modify(NEXT_IMG);
     private static final Image BACK_IMG = GraphicUtils.loadImage("backToMenuIcon");
 
+    private static final char COLLECTED_STAR_CHAR = '★';
+    private static final char UNCOLLECTED_STAR_CHAR = '✩';
+
     private MenuButton prevBtn;
     private MenuButton nextBtn;
 
     public GameMenu(LevelsManager levelsManager) {
-        setBackground(BACKGROUND_COLOR);
-
         RelativeLabel levelName = new RelativeLabel(this,
-                0.5, 0.2, 0.3, 0.4,
+                0.5, 0.17, 0.3, 0.4,
                 () -> String.format("Level %d/%d",
                         levelsManager.getCurrLevelId() + 1,
                         levelsManager.getWorld().getLevelsAmount()
@@ -34,8 +32,16 @@ public class GameMenu extends com.gl.graphics.Menu {
         );
         addItem(levelName);
 
+        RelativeLabel starsAmount = new RelativeLabel(this,
+                0.5, 0.45, 0.4, 0.4,
+                () -> getStarsString(levelsManager)
+        );
+        starsAmount.setFontColor(Color.YELLOW);
+        starsAmount.setFontName("Ariel");
+        addItem(starsAmount);
+
         MenuButton resetBtn = new MenuButton(this,
-                0.5, 0.7, 0.15, 0.4,
+                0.5, 0.8, 0.13, 0.3,
                 RESET_IMG, levelsManager::resetLevel);
         addItem(resetBtn);
 
@@ -51,8 +57,20 @@ public class GameMenu extends com.gl.graphics.Menu {
 
         MenuButton backBtn = new MenuButton(this,
                 0.06, 0.8, 0.1, 0.3,
-                BACK_IMG, () -> ScheduleManager.getFrame().setView(new MainView()));
+                BACK_IMG, () -> ViewsManager.loadView(ViewsManager.WORLD_VIEW)
+        );
         addItem(backBtn);
+    }
+
+    private String getStarsString(LevelsManager levelsManager) {
+        StringBuilder starsStr = new StringBuilder();
+
+        int amount = levelsManager.getCurrLevel().getStarsNum(true);
+        for (int i = 0; i < GameLevel.STARS_PER_LEVEL; i++) {
+            starsStr.append(i < amount ? COLLECTED_STAR_CHAR : UNCOLLECTED_STAR_CHAR);
+        }
+
+        return starsStr.toString();
     }
 
     public void setEnabledPrev(boolean newEnabled) {

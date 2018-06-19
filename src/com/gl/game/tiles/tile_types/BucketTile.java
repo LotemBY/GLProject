@@ -31,6 +31,7 @@ public class BucketTile extends ModifiedTile {
 
     @Override
     public void playerAction(GamePlayer player) {
+        super.playerAction(player);
         player.setColor((TileColor) modifier);
     }
 

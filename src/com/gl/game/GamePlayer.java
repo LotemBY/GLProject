@@ -15,8 +15,7 @@ import java.util.stream.Collectors;
 public class GamePlayer implements Drawable {
 
     public static final double SPACE_FROM_OUTLINE_RATIO = 0.13;
-    // TODO: fix this or just give it up and switch to circles
-    private static final double SPACE_BETWEEN_RINGS_RATIO = 0;
+    // private static final double SPACE_BETWEEN_RINGS_RATIO = 0;
     private static final double COLORS_TONE = 1.5;
 
     private GameLevel level;
@@ -52,9 +51,9 @@ public class GamePlayer implements Drawable {
         reorderColors();
     }
 
-    private static int getSpaceBetweenRings(int playerSize, List<TileColor> colors) {
-        return (int) (playerSize * SPACE_BETWEEN_RINGS_RATIO / colors.size());
-    }
+//    private static int getSpaceBetweenRings(int playerSize, List<TileColor> colors) {
+//        return (int) (playerSize * SPACE_BETWEEN_RINGS_RATIO / colors.size());
+//    }
 
     public static void drawPlayerByColors(Graphics g, int x, int y, int width, int height, List<TileColor> colors) {
         int tileSize = Math.min(width, height);
@@ -62,7 +61,7 @@ public class GamePlayer implements Drawable {
         int playerOffset = (tileSize - playerSize) / 2;
         playerSize = tileSize - 2 * playerOffset; // recalculate the size to make sure it's centered
         int ringThickness = playerSize / colors.size();
-        int spaceBetweenRings = getSpaceBetweenRings(playerSize, colors);
+        // int spaceBetweenRings = getSpaceBetweenRings(playerSize, colors);
 
         BufferedImage buffer = new BufferedImage(playerSize, playerSize, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = GraphicUtils.getGraphicsWithHints(buffer.getGraphics());
@@ -73,9 +72,11 @@ public class GamePlayer implements Drawable {
             curOuterLocation = (playerSize - outerDiameter) / 2;
 
             if (i != colors.size() - 1) {
-                int currThickness = (outerDiameter - (playerSize - (i + 1) * ringThickness)) / 2 - spaceBetweenRings;
-                GraphicUtils.fillRing(g2d, curOuterLocation, curOuterLocation, outerDiameter,
-                        currThickness, colors.get(i).changeTone(COLORS_TONE));
+//                int currThickness = (outerDiameter - (playerSize - (i + 1) * ringThickness)) / 2 - spaceBetweenRings;
+//                GraphicUtils.fillRing(g2d, curOuterLocation, curOuterLocation, outerDiameter,
+//                        currThickness, colors.get(i).changeTone(COLORS_TONE));
+                GraphicUtils.fillCircle(g2d, curOuterLocation, curOuterLocation, outerDiameter,
+                        colors.get(i).changeTone(COLORS_TONE));
             } else {
                 GraphicUtils.fillCircle(g2d, curOuterLocation, curOuterLocation, outerDiameter,
                         colors.get(i).changeTone(COLORS_TONE));
@@ -210,7 +211,7 @@ public class GamePlayer implements Drawable {
         row = tile.getRow();
         col = tile.getCol();
         colors = tile.getPlayerMove().getColors();
-        tile.setPlayerMove(null);
+        tile.removePlayerMove();
         tile.setPlayer(this);
     }
 }

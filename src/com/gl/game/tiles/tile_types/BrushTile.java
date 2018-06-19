@@ -31,6 +31,7 @@ public class BrushTile extends ModifiedTile {
 
     @Override
     public void playerAction(GamePlayer player) {
+        super.playerAction(player);
         player.addColor((TileColor) modifier);
     }
 

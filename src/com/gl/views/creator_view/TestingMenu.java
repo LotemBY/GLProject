@@ -13,9 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TestingMenu extends Menu {
-
-    private static final Color BACKGROUND_COLOR = Color.GRAY;
-
     private static final Image STOP_IMG = GraphicUtils.loadImage("stopIcon");
     private static final Image RESET_IMG = GraphicUtils.loadImage("resetIcon");
 
@@ -27,8 +24,6 @@ public class TestingMenu extends Menu {
     private boolean finishedSolving;
 
     public TestingMenu(CreatorView view, LevelCreator levelCreator) {
-        setBackground(BACKGROUND_COLOR);
-
         MenuButton playBtn = new MenuButton(this,
                 0.5, 0.35, 0.2, 0.35,
                 STOP_IMG,

@@ -212,7 +212,9 @@ public abstract class GameTile implements Drawable, Serializable {
     }
 
     public void playerAction(GamePlayer player) {
-        // None
+        if (starCollected()) {
+            // todo: repaint the menu for correct stars count
+        }
     }
 
     public boolean canPassFrom(Direction from, java.util.List<TileColor> playerColors) {
@@ -245,6 +247,14 @@ public abstract class GameTile implements Drawable, Serializable {
 
     public void setPlayerMove(PlayerMove move) {
         playerMove = move;
+    }
+
+    public void removePlayerMove() {
+        if (starCollected()) {
+            // todo: repaint the menu for correct stars count
+        }
+
+        playerMove = null;
     }
 
     public void drawPlayerMove(Graphics g, int spaceBetweenTiles) {
