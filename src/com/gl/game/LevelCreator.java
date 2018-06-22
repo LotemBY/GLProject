@@ -16,14 +16,9 @@ public class LevelCreator {
     private static final int MIN_LEVEL_SIZE = 1;
     private static final int MAX_LEVEL_SIZE = 12;
 
-    private static final String[][] DEFAULT_LEVEL =
-            {
-                    {"t", "t", "t", "t", "t"},
-                    {"t", "t", "t", "t", "t"},
-                    {"p:b", "t", "t", "t", "e:b"},
-                    {"t", "t", "t", "t", "t"},
-                    {"t", "t", "t", "t", "t"},
-            };
+    private static final String DEFAULT_LEVEL =
+            "AAUABQABdAABdAABdAABdAABdAABdAABdAABdAABdAABdAADcDpiA" +
+            "AF0AAF0AAF0AANlOmIAAXQAAXQAAXQAAXQAAXQAAXQAAXQAAXQAAXQAAXQ";
 
     public static final String DEFAULT_USED_TILE = "t";
 
@@ -39,6 +34,7 @@ public class LevelCreator {
 
     public LevelCreator(GamePanel panel) {
         this.gamePanel = panel;
+        level = null;
         usedTile = TilesFactory.parseTile(DEFAULT_USED_TILE);
         undoStack = new Stack<>();
         redoStack = new Stack<>();
@@ -142,7 +138,11 @@ public class LevelCreator {
     }
 
     public void start() {
-        EditableLevel level = new EditableLevel(TilesFactory.parseTilesMatrix(DEFAULT_LEVEL));
+        EditableLevel level = new EditableLevel(
+                TilesFactory.parseTilesMatrix(
+                        SerializeUtils.matrixFromString(DEFAULT_LEVEL)
+                )
+        );
         setLevel(level);
     }
 

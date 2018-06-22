@@ -6,6 +6,7 @@ import com.gl.graphics.Drawable;
 import com.gl.graphics.GraphicUtils;
 import com.gl.types.Direction;
 import com.gl.types.TileColor;
+import com.gl.views.ViewsManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -213,7 +214,7 @@ public abstract class GameTile implements Drawable, Serializable {
 
     public void playerAction(GamePlayer player) {
         if (starCollected()) {
-            // todo: repaint the menu for correct stars count
+            ViewsManager.repaintView();
         }
     }
 
@@ -230,6 +231,10 @@ public abstract class GameTile implements Drawable, Serializable {
     }
 
     public void removePlayer() {
+        if (playerMove == null && starCollected()) {
+            ViewsManager.repaintView();
+        }
+
         this.player = null;
     }
 
@@ -251,7 +256,7 @@ public abstract class GameTile implements Drawable, Serializable {
 
     public void removePlayerMove() {
         if (starCollected()) {
-            // todo: repaint the menu for correct stars count
+            ViewsManager.repaintView();
         }
 
         playerMove = null;

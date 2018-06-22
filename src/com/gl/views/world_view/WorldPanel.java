@@ -33,7 +33,7 @@ public class WorldPanel extends Menu {
     private static final double SPACE_BETWEEN_LEVELS_Y_RATIO = 0.3;
 
     private static final int MAX_LEVELS_PER_RAW = 4;
-    public static final int NO_INDEX = -1;
+    public static final int NONE_SELECTED = -1;
 
     private static final double LEVEL_ARC_SCALE = 0.6;
     private static final Color LEVEL_BG_COLOR = Color.RED;
@@ -55,7 +55,6 @@ public class WorldPanel extends Menu {
 
     private int rowsNum;
     private int lastRowLevelsNum;
-    private int levelsAmount;
 
     private int levelsSize;
 
@@ -161,7 +160,7 @@ public class WorldPanel extends Menu {
 
     public WorldPanel(WorldView view, Image bg) {
         super(bg);
-        selectedLevelIndex = NO_INDEX;
+        selectedLevelIndex = NONE_SELECTED;
         levelIcons = new ArrayList<>();
 
         RelativeLabel levelName = new RelativeLabel(this,
@@ -182,7 +181,7 @@ public class WorldPanel extends Menu {
 
         RelativeLabel starsCount = new RelativeLabel(this,
                 0.5, 0.9, 0.5, 0.2,
-                String.format("Total Stars: %s/%s", getTotalStarsCount(), TOTAL_STARS_TO_COLLECT)
+                () -> String.format("Total Stars: %s/%s", getTotalStarsCount(), TOTAL_STARS_TO_COLLECT)
         );
         addItem(starsCount);
 
@@ -206,9 +205,9 @@ public class WorldPanel extends Menu {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                if (selectedLevelIndex != NO_INDEX) {
+                if (selectedLevelIndex != NONE_SELECTED) {
                     ViewsManager.loadView(new GameView(world, selectedLevelIndex));
-                    selectedLevelIndex = NO_INDEX;
+                    selectedLevelIndex = NONE_SELECTED;
                 }
             }
         };
@@ -220,7 +219,7 @@ public class WorldPanel extends Menu {
     public void setWorld(LevelsWorld world) {
         this.world = world;
 
-        levelsAmount = world.getLevelsAmount();
+        int levelsAmount = world.getLevelsAmount();
 
         rowsNum = levelsAmount / MAX_LEVELS_PER_RAW;
         if (levelsAmount % MAX_LEVELS_PER_RAW != 0) {
@@ -306,7 +305,7 @@ public class WorldPanel extends Menu {
             }
         }
 
-        return NO_INDEX;
+        return NONE_SELECTED;
     }
 
     public int getColFromX(int x, boolean isLastRow) {
@@ -349,9 +348,5 @@ public class WorldPanel extends Menu {
 
     public void setEnabledNext(boolean newEnabled) {
         nextBtn.setEnabled(newEnabled);
-    }
-
-    public int getSelectedLevelIndex() {
-        return selectedLevelIndex;
     }
 }

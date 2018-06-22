@@ -38,4 +38,8 @@ public final class ViewsManager {
     public static void loadView(View view) {
         ScheduleManager.getFrame().setView(view);
     }
+
+    public static void repaintView() {
+        ScheduleManager.getFrame().repaint();
+    }
 }
