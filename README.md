@@ -36,3 +36,13 @@ You are more than welcome to submit new levels, using the in-game level editor!
 * More tile types and game mechanics
 * More levels and worlds
 * Unlock worlds with stars
+
+## Credits
+
+| User | Contribution |
+| ---- | ------------ |
+| https://github.com/Leonathanael | Created 2 levels | 
+
+### Beta Testers
+* https://github.com/Leonathanael
+* https://github.com/queenofopera
