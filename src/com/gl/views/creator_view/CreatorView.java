@@ -27,7 +27,7 @@ public class CreatorView extends View {
     private Timer updateEndTiles;
 
     public CreatorView() {
-        gamePanel = new GamePanel(BACKGROUND_IMG);
+        gamePanel = new GamePanel(BACKGROUND_IMG, null);
         levelCreator = new LevelCreator(gamePanel);
 
         creatorMenu = new CreatorMenu(this, levelCreator);

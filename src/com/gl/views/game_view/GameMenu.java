@@ -23,17 +23,8 @@ public class GameMenu extends com.gl.graphics.Menu {
     private MenuButton nextBtn;
 
     public GameMenu(LevelsManager levelsManager) {
-        RelativeLabel levelName = new RelativeLabel(this,
-                0.5, 0.17, 0.3, 0.4,
-                () -> String.format("Level %d/%d",
-                        levelsManager.getCurrLevelId() + 1,
-                        levelsManager.getWorld().getLevelsAmount()
-                )
-        );
-        addItem(levelName);
-
         RelativeLabel starsAmount = new RelativeLabel(this,
-                0.5, 0.45, 0.4, 0.4,
+                0.5, 0.3, 0.4, 0.75,
                 () -> getStarsString(levelsManager)
         );
         starsAmount.setFontColor(Color.YELLOW);
@@ -41,7 +32,7 @@ public class GameMenu extends com.gl.graphics.Menu {
         addItem(starsAmount);
 
         MenuButton resetBtn = new MenuButton(this,
-                0.5, 0.8, 0.13, 0.3,
+                0.5, 0.8, 0.1, 0.3,
                 RESET_IMG, levelsManager::resetLevel);
         addItem(resetBtn);
 

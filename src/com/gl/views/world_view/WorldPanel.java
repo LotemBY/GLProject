@@ -20,6 +20,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gl.main.GameData.UNSOLVED;
 import static com.gl.main.GameData.getTotalStarsCount;
 
 public class WorldPanel extends Menu {
@@ -35,9 +36,13 @@ public class WorldPanel extends Menu {
     private static final int MAX_LEVELS_PER_RAW = 4;
     public static final int NONE_SELECTED = -1;
 
-    private static final double LEVEL_ARC_SCALE = 0.6;
-    private static final Color LEVEL_BG_COLOR = Color.RED;
-    private static final Color LEVEL_SELECTED_COLOR = new Color(255, 135, 0);
+    private static final double LEVEL_OUTLINE_SCALE = 0.03;
+    private static final double LEVEL_ARC_SCALE = 0.5;
+    private static final Color LEVEL_BG_COLOR = new Color(203, 0, 2);
+    private static final Color LEVEL_SELECTED_BG_COLOR = new Color(255, 135, 0);
+    private static final Color LEVEL_UNSOLVED_OUTLINE = new Color(203, 0, 2);
+    private static final Color LEVEL_SOLVED_OUTLINE = new Color(241, 229, 0);
+    private static final Color LEVEL_PERFECT_OUTLINE = new Color(36, 206, 0);
     private static final char COLLECTED_STAR_CHAR = '★';
     private static final char UNCOLLECTED_STAR_CHAR = '✩';
 
@@ -81,7 +86,7 @@ public class WorldPanel extends Menu {
             isLastRow = row == (rowsNum - 1);
 
             boolean isSolved = GameData.getStarsCount(world.getIndex(), index) != GameData.UNSOLVED;
-            double indexLabelYRatio = isSolved ? 0.4 : 0.5;
+            double indexLabelYRatio = isSolved ? 0.37 : 0.5;
 
             indexLabel = new RelativeLabel(this,
                     0.5, indexLabelYRatio, 0.9, 0.8,
@@ -90,7 +95,7 @@ public class WorldPanel extends Menu {
 
             if (isSolved) {
                 starsLabel = new RelativeLabel(this,
-                        0.5, 0.8, 0.9, 0.4,
+                        0.5, 0.75, 0.9, 0.4,
                         getStarsString()
                 );
                 starsLabel.setFontColor(Color.YELLOW);
@@ -138,15 +143,56 @@ public class WorldPanel extends Menu {
             return getLevelIconY(row);
         }
 
-        public void draw(Graphics g) {
-            Shape levelIcon = new RoundRectangle2D.Double(
-                    getStartingX(), getStartingY(),
-                    levelsSize, levelsSize,
-                    levelsSize * LEVEL_ARC_SCALE, levelsSize * LEVEL_ARC_SCALE
+        private void drawIconBg(Graphics g) {
+            Shape levelIconOutline = new RoundRectangle2D.Double(
+                    getStartingX(),
+                    getStartingY(),
+                    levelsSize,
+                    levelsSize,
+                    levelsSize * LEVEL_ARC_SCALE,
+                    levelsSize * LEVEL_ARC_SCALE
             );
 
-            g.setColor(index == selectedLevelIndex ? LEVEL_SELECTED_COLOR : LEVEL_BG_COLOR);
-            ((Graphics2D) g).fill(levelIcon);
+            int insideOffset = (int) (levelsSize * LEVEL_OUTLINE_SCALE);
+            int insideSize = levelsSize - 2 * insideOffset;
+
+            Shape levelIconInside = new RoundRectangle2D.Double(
+                    getStartingX() + insideOffset,
+                    getStartingY() + insideOffset,
+                    insideSize,
+                    insideSize,
+                    insideSize * LEVEL_ARC_SCALE,
+                    insideSize * LEVEL_ARC_SCALE
+            );
+
+
+            Color outlineColor;
+            int stars = GameData.getStarsCount(world.getIndex(), index);
+
+            switch (stars) {
+                case UNSOLVED:
+                    outlineColor = LEVEL_UNSOLVED_OUTLINE;
+                    break;
+                case GameLevel.STARS_PER_LEVEL:
+                    outlineColor = LEVEL_PERFECT_OUTLINE;
+                    break;
+                default:
+                    outlineColor = LEVEL_SOLVED_OUTLINE;
+                    break;
+            }
+
+
+            // outline
+            g.setColor(outlineColor);
+            ((Graphics2D) g).fill(levelIconOutline);
+
+            // inside
+            g.setColor(index == selectedLevelIndex ? LEVEL_SELECTED_BG_COLOR : LEVEL_BG_COLOR);
+            ((Graphics2D) g).fill(levelIconInside);
+        }
+
+        public void draw(Graphics g) {
+            drawIconBg(g);
 
             indexLabel.draw(g);
 

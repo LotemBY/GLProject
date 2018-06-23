@@ -22,7 +22,7 @@ public class GameView extends View {
     public GameView(LevelsWorld world, int startingLevel) {
         levelsManager = new LevelsManager(world, startingLevel);
 
-        gamePanel = new GamePanel(BACKGROUND_IMG);
+        gamePanel = new GamePanel(BACKGROUND_IMG, levelsManager);
         gamePanel.addGameInputHandler(levelsManager);
 
         gameMenu = new GameMenu(levelsManager);

@@ -1,28 +1,47 @@
 package com.gl.views.game_view;
 
 import com.gl.game.GameLevel;
-import com.gl.levels.LevelsManager;
 import com.gl.game.tiles.GameTile;
 import com.gl.game.tiles.ModifiedTileManager;
 import com.gl.graphics.GraphicUtils;
 import com.gl.graphics.JPanelWithBackground;
+import com.gl.graphics.relative_items.RelativeLabel;
+import com.gl.graphics.relative_items.RelativeParent;
+import com.gl.levels.LevelsManager;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.EventListener;
 
-public class GamePanel extends JPanelWithBackground {
+public class GamePanel extends JPanelWithBackground implements RelativeParent {
 
+    private static final double SPACE_FROM_TOP_RATIO = 0.1;
     private static final int SPACE_FROM_BOUNDS = 10;
     private static final double SPACE_BETWEEN_TILES_RATIO = 0.1;
 
+    private RelativeLabel levelName;
     private GameLevel gameLevel;
     private int tileSize;
 
     private EventListener listener;
 
-    public GamePanel(Image bg) {
+    public GamePanel(Image bg, LevelsManager levelsManager) {
         super(bg);
+
+        RelativeLabel.StringGetter levelNameGetter;
+        if (levelsManager != null) {
+            levelNameGetter = () ->
+                    String.format("Level %d/%d",
+                            levelsManager.getCurrLevelId() + 1,
+                            levelsManager.getWorld().getLevelsAmount()
+                    );
+        } else {
+            levelNameGetter = () -> "Level Editor";
+        }
+
+        levelName = new RelativeLabel(this,
+                0.5, 0.05, 0.9, 0.1, levelNameGetter
+        );
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -74,7 +93,7 @@ public class GamePanel extends JPanelWithBackground {
 
     public int getLevelY() {
         int tilesNum = gameLevel.getRows();
-        return (int) (SPACE_FROM_BOUNDS +
+        return (int) (getHeight() * SPACE_FROM_TOP_RATIO + SPACE_FROM_BOUNDS +
                 (getLevelMaxHeight() -
                         (tilesNum * tileSize) -
                         (tilesNum - 1) * tileSize * SPACE_BETWEEN_TILES_RATIO)
@@ -83,7 +102,7 @@ public class GamePanel extends JPanelWithBackground {
     }
 
     public int getLevelMaxHeight() {
-        return getHeight() - 2 * SPACE_FROM_BOUNDS;
+        return (int) (getHeight() * (1 - SPACE_FROM_TOP_RATIO) - 2 * SPACE_FROM_BOUNDS);
     }
 
     public int getLevelMaxWidth() {
@@ -109,6 +128,7 @@ public class GamePanel extends JPanelWithBackground {
         super.paintComponent(g);
 
         Graphics2D g2d = GraphicUtils.getGraphicsWithHints(g);
+        levelName.draw(g2d);
         gameLevel.draw(g2d, getLevelX(), getLevelY(), getWidth(), getWidth());
     }
 
