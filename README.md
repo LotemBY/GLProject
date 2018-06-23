@@ -21,19 +21,18 @@ You are more than welcome to submit new levels, using the in-game level editor!
 ## Screenshots
 ### The main menu and the first levels
 <img src="/screenshots/first_levels.gif" width="400">
-![demo](screenshots/first_levels.gif)
 
 
 ### More simple level examples
-< img src="https://i.imgur.com/RtJIShW.gif" width="400">
+<img src="/screenshots/more_levels.gif" width="400">
 
 
 ### The level editor
-< img src="https://i.imgur.com/bQKsyG7.gif" width="400">
+<img src="/screenshots/level_editor.gif" width="400">
 
 
 ## Planned Features
-* *Save progress*
+* **Save progress**
 * More tile types and game mechanics
 * More levels and worlds
 * Unlock worlds with stars
