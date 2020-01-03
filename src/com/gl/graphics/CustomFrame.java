@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class CustomFrame extends JFrame {
 
-    private static final String TITLE = "GL Project | WIP | Version 0.1";
+    private static final String TITLE = "GL Project | WIP | Version 0.2";
     private static final double FRAME_SIZE_RATIO = 0.9;
     private static final int FRAME_MIN_SIZE = 300;
 

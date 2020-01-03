@@ -61,7 +61,9 @@ public final class Levels {
                     "AAQABgACc3QAA2E6cgADYjpnAAF0AANlOnIAA2E6ZAADYTpyAANiOnIAA2E6dQADYTpkAANwOmcAAXQAAXQAA2I6ZwADZ" +
                             "TpnAAF0AAF0AANhOnUAAnN0AANhOnUAA3A6cgABdAABdAACc3Q=",
                     // Arrow & Bucket (By Leonathan) - challenging arrows level with 3 players
-                    "AAUACAABdwAEczpydAABdAADYTpyAANhOmQAA2U6ZwABdAADcDpyAAF0AANhOmwAAXcAAXQABHM6Z3QAA2E6cgADYTpkAAF0AANwOmIAA2I6cgADZTpyAANhOmwAAXQAA3A6ZwABdAABdAABdAADYTpkAARzOnJ0AANhOnIAA2E6ZAABdAADYTp1AAF0AAF0AANhOnIAAXQAA2E6dQABdAABdAABdAADZTpi",
+                    "AAUACAABdwAEczpydAABdAADYTpyAANhOmQAA2U6ZwABdAADcDpyAAF0AANhOmwAAXcAAXQABHM6Z3QAA2E6cgADYTpkA" +
+                            "AF0AANwOmIAA2I6cgADZTpyAANhOmwAAXQAA3A6ZwABdAABdAABdAADYTpkAARzOnJ0AANhOnIAA2E6ZAABdA" +
+                            "ADYTp1AAF0AAF0AANhOnIAAXQAA2E6dQABdAABdAABdAADZTpi",
                     //Arrow - arrows maze with 1 player
                     "AAgACQABdAABdAADYTpkAANhOnIAA2E6cgADYTpyAAF0AAF0AAF0AAF0AANhOmQAAnN0AANhOmQAA2U6YwADYTpkAAF0A" +
                             "AF0AANhOmwAA2E6ZAABdAABdAADYTpkAANhOnIAA2E6cgADYTpyAAF0AANhOmwAAXQAA2E6dQABdAADYTpsAA" +
@@ -106,7 +108,7 @@ public final class Levels {
         if (index >= 0 && index < worldsArray.length) {
             return worldsArray[index];
         } else {
-            return null;
+            throw new RuntimeException("No such world index: " + index);
         }
     }
 
